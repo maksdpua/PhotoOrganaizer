@@ -3,12 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MSMainVC" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MSMainVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MSMainVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,9 +17,30 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lW3-zh-xvq">
+                                <rect key="frame" x="102" y="258" width="116" height="51"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wdq-7a-ICg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.59076954219083677" green="0.82240042896360532" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="lW3-zh-xvq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="86" id="GBj-9k-FMs"/>
+                            <constraint firstItem="lW3-zh-xvq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="238" id="S1v-Ae-wrp"/>
+                            <constraint firstItem="lW3-zh-xvq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Zcp-yh-bkR"/>
+                            <constraint firstItem="lW3-zh-xvq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cGO-cS-Z7a"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WaR-03-oWG"/>
+                    <connections>
+                        <outlet property="loginButton" destination="lW3-zh-xvq" id="3FR-PZ-Xqn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -27,7 +49,7 @@
         <!--MainNC-->
         <scene sceneID="bQp-K2-bve">
             <objects>
-                <navigationController id="nzW-Mw-vng" customClass="MSMainNC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MSMainNC" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="nzW-Mw-vng" customClass="MSMainNC" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2EJ-Lm-UPI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

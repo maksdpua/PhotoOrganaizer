@@ -51,6 +51,7 @@
 		2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIRequestManager.m; path = Classes/APIRequestManager/MSAPIRequestManager.m; sourceTree = "<group>"; };
 		2D4570721C40186400934FF5 /* LoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Classes/LoginService/LoginService.h; sourceTree = "<group>"; };
 		2D4570731C40186400934FF5 /* LoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Classes/LoginService/LoginService.m; sourceTree = "<group>"; };
+		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
 		2D906FAA1C3EFD5400DF01A4 /* PhotoOrganaizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoOrganaizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D906FAE1C3EFD5400DF01A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2D906FB01C3EFD5400DF01A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -208,6 +209,7 @@
 			children = (
 				2D906FAE1C3EFD5400DF01A4 /* main.m */,
 				2D18BCC61C3F0D4000F923DF /* PrefixHeader.pch */,
+				2D5328C21C412973006D9B6B /* SharedConstants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

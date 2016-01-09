@@ -7,8 +7,11 @@
 //
 
 #import "MSMainVC.h"
+#import "LoginService.h"
 
-@interface MSMainVC ()
+@interface MSMainVC ()<POPAnimationDelegate>
+
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
 
 @end
 
@@ -16,10 +19,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 
-
-
+- (IBAction)loginAction :(id)sender {
+    
+    POPSpringAnimation *sprintAnimation = [POPSpringAnimation animationWithPropertyNamed:kPOPViewScaleXY];
+    
+    sprintAnimation.velocity = [NSValue valueWithCGPoint:CGPointMake(20, 20)];
+    sprintAnimation.springBounciness = 10.f;
+    [self.loginButton pop_addAnimation:sprintAnimation forKey:@"sendAnimation"];
+}
 
 @end
