@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MSMainVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="519" y="439"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--MainNC-->
         <scene sceneID="bQp-K2-bve">
             <objects>
-                <navigationController id="nzW-Mw-vng" sceneMemberID="viewController">
+                <navigationController id="nzW-Mw-vng" customClass="MSMainNC" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2EJ-Lm-UPI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

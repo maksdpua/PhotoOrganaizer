@@ -108,7 +108,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
     responseBlock compl = response;
     failBlock fail = failure;
     
-    [self.managerRequest POST:_urlString parameters:_parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    [self.managerRequest GET:_urlString parameters:_parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         dispatch_async(dispatch_get_main_queue(), ^(void){
@@ -218,10 +218,10 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
     [self connectionStartPOSTresponse:response fail:failure];
 }
 
-- (void)GETConnectionWithURLString:(NSString *)urlString classMapping:(Class)classMapping requestSerializer:(BOOL)withSerializer showProgressOnView:(UIView *)view response:(void (^)(NSURLSessionDataTask *task, id responseObject))response fail:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+- (void)GETConnectionWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters classMapping:(Class)classMapping requestSerializer:(BOOL)withSerializer showProgressOnView:(UIView *)view response:(void (^)(NSURLSessionDataTask *task, id responseObject))response fail:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     
     
-    [self fillManagerURLString:urlString parameters:nil classMapping:classMapping showProgressOnView:view];
+    [self fillManagerURLString:urlString parameters:parameters classMapping:classMapping showProgressOnView:view];
     
     if (withSerializer) {
         [self requestSerializer];

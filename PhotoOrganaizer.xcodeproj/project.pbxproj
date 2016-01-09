@@ -10,6 +10,7 @@
 		2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCBF1C3F0B1200F923DF /* NSObject+Extension.m */; };
 		2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC41C3F0CC200F923DF /* MSValidator.m */; };
 		2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */; };
+		2D4570741C40186400934FF5 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4570731C40186400934FF5 /* LoginService.m */; };
 		2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FAE1C3EFD5400DF01A4 /* main.m */; };
 		2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FB11C3EFD5400DF01A4 /* AppDelegate.m */; };
 		2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D906FB61C3EFD5400DF01A4 /* Main.storyboard */; };
@@ -48,6 +49,8 @@
 		2D18BCC61C3F0D4000F923DF /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Support/PrefixHeader.pch; sourceTree = "<group>"; };
 		2D18BCC71C3F0E9C00F923DF /* MSAPIRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAPIRequestManager.h; path = Classes/APIRequestManager/MSAPIRequestManager.h; sourceTree = "<group>"; };
 		2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIRequestManager.m; path = Classes/APIRequestManager/MSAPIRequestManager.m; sourceTree = "<group>"; };
+		2D4570721C40186400934FF5 /* LoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Classes/LoginService/LoginService.h; sourceTree = "<group>"; };
+		2D4570731C40186400934FF5 /* LoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Classes/LoginService/LoginService.m; sourceTree = "<group>"; };
 		2D906FAA1C3EFD5400DF01A4 /* PhotoOrganaizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoOrganaizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D906FAE1C3EFD5400DF01A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2D906FB01C3EFD5400DF01A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D45706B1C4017A100934FF5 /* LoginService */,
 				2D18BCC21C3F0C8B00F923DF /* Validator */,
 				2D18BCBB1C3F071C00F923DF /* APIRequestManager */,
 			);
@@ -148,6 +152,15 @@
 				2D18BCC41C3F0CC200F923DF /* MSValidator.m */,
 			);
 			name = Validator;
+			sourceTree = "<group>";
+		};
+		2D45706B1C4017A100934FF5 /* LoginService */ = {
+			isa = PBXGroup;
+			children = (
+				2D4570721C40186400934FF5 /* LoginService.h */,
+				2D4570731C40186400934FF5 /* LoginService.m */,
+			);
+			name = LoginService;
 			sourceTree = "<group>";
 		};
 		2D906FA11C3EFD5400DF01A4 = {
@@ -449,6 +462,7 @@
 				2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */,
 				2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */,
 				2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */,
+				2D4570741C40186400934FF5 /* LoginService.m in Sources */,
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,

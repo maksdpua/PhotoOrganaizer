@@ -7,6 +7,7 @@
 //
 
 #import "MSMainNC.h"
+#import "LoginService.h"
 
 @interface MSMainNC ()
 
@@ -16,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [LoginService startLogin];
 }
 
 - (void)didReceiveMemoryWarning {
