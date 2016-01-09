@@ -11,7 +11,7 @@
 #import <AFNetworking.h>
 
 static NSString *const kAuthRequestURL  = @"https://www.dropbox.com/1/oauth2/authorize";
-static NSString *const kRedirectURI = @"https://datarecevier";
+static NSString *const kRedirectURI = @"datarecevier://https";
 static NSString *const kResponseType = @"token";
 static NSString *const kClientID = @"lgfw6aan5s7raaj";
 static NSString *const kClientSecret = @"39tw5d52v977l3v";

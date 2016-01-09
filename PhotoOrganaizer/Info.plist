@@ -27,16 +27,12 @@
 			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>db-lgfw6aan5s7raaj</string>
+				<string>datarecevier</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>dbapi-2</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
