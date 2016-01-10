@@ -8,6 +8,7 @@
 
 #import "MSMainVC.h"
 #import "LoginService.h"
+#import "MSMainVCWebView.h"
 
 @interface MSMainVC ()<POPAnimationDelegate>
 
@@ -28,6 +29,9 @@
     sprintAnimation.velocity = [NSValue valueWithCGPoint:CGPointMake(20, 20)];
     sprintAnimation.springBounciness = 10.f;
     [self.loginButton pop_addAnimation:sprintAnimation forKey:@"sendAnimation"];
+    
+    MSMainVCWebView *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVCWebView class])];
+    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 @end

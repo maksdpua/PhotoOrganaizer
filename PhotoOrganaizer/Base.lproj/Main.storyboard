@@ -6,6 +6,41 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--MainVC Web View-->
+        <scene sceneID="VSy-ue-qmh">
+            <objects>
+                <viewController storyboardIdentifier="MSMainVCWebView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zck-Sv-T4J" customClass="MSMainVCWebView" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pUa-9U-1bb"/>
+                        <viewControllerLayoutGuide type="bottom" id="TM1-v2-Igh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="I13-5i-dyv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HfN-X4-a1R">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HfN-X4-a1R" firstAttribute="bottom" secondItem="TM1-v2-Igh" secondAttribute="top" id="7Lc-Q1-fZt"/>
+                            <constraint firstAttribute="trailing" secondItem="HfN-X4-a1R" secondAttribute="trailing" id="EMt-0n-5ah"/>
+                            <constraint firstItem="HfN-X4-a1R" firstAttribute="top" secondItem="pUa-9U-1bb" secondAttribute="bottom" id="dWV-6p-nia"/>
+                            <constraint firstItem="HfN-X4-a1R" firstAttribute="leading" secondItem="I13-5i-dyv" secondAttribute="leading" id="ef4-xU-wgd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="f0t-Tf-nEI"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="webView" destination="HfN-X4-a1R" id="BcW-Ni-OMc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bFf-By-JFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="54" y="1072"/>
+        </scene>
         <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -38,13 +73,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WaR-03-oWG"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="loginButton" destination="lW3-zh-xvq" id="3FR-PZ-Xqn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="519" y="439"/>
+            <point key="canvasLocation" x="508" y="439"/>
         </scene>
         <!--MainNC-->
         <scene sceneID="bQp-K2-bve">
@@ -56,7 +92,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="JRT-nC-mgg"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="HzF-yb-8YK"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOw-NV-7i7" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -12,7 +12,7 @@
 
 + (void)loginWithURL:(NSURL*)url;
 
-+ (void)startLogin;
++ (NSURL *)startLogin;
 
 
 

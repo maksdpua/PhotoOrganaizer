@@ -11,6 +11,7 @@
 		2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC41C3F0CC200F923DF /* MSValidator.m */; };
 		2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */; };
 		2D4570741C40186400934FF5 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4570731C40186400934FF5 /* LoginService.m */; };
+		2D644D511C42654200AD2FA1 /* MSMainVCWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D644D501C42654200AD2FA1 /* MSMainVCWebView.m */; };
 		2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FAE1C3EFD5400DF01A4 /* main.m */; };
 		2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FB11C3EFD5400DF01A4 /* AppDelegate.m */; };
 		2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D906FB61C3EFD5400DF01A4 /* Main.storyboard */; };
@@ -52,6 +53,8 @@
 		2D4570721C40186400934FF5 /* LoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Classes/LoginService/LoginService.h; sourceTree = "<group>"; };
 		2D4570731C40186400934FF5 /* LoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Classes/LoginService/LoginService.m; sourceTree = "<group>"; };
 		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
+		2D644D4F1C42654200AD2FA1 /* MSMainVCWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainVCWebView.h; path = Model/ViewController/MainVC/MSMainVCWebView.h; sourceTree = "<group>"; };
+		2D644D501C42654200AD2FA1 /* MSMainVCWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVCWebView.m; path = Model/ViewController/MainVC/MSMainVCWebView.m; sourceTree = "<group>"; };
 		2D906FAA1C3EFD5400DF01A4 /* PhotoOrganaizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoOrganaizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D906FAE1C3EFD5400DF01A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2D906FB01C3EFD5400DF01A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -254,6 +257,8 @@
 			children = (
 				2D906FE71C3EFE4700DF01A4 /* MSMainVC.h */,
 				2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */,
+				2D644D4F1C42654200AD2FA1 /* MSMainVCWebView.h */,
+				2D644D501C42654200AD2FA1 /* MSMainVCWebView.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -461,6 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D906FBB1C3EFD5400DF01A4 /* PhotoOrganaizer.xcdatamodeld in Sources */,
+				2D644D511C42654200AD2FA1 /* MSMainVCWebView.m in Sources */,
 				2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */,
 				2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */,
 				2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */,

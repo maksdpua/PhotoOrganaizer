@@ -29,9 +29,10 @@ static NSString *const kState = @"phorg";
     [[NSUserDefaults standardUserDefaults]setObject:uid forKey:kUID];
 }
 
-+ (void)startLogin {
++ (NSURL *)startLogin {
     NSString *urlString = [NSString stringWithFormat:@"%@?client_id=%@&response_type=%@&redirect_uri=%@&state=%@", kAuthRequestURL, kClientID, kResponseType, kRedirectURI, kState];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+//    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+    return [NSURL URLWithString:urlString];
 }
 
 
