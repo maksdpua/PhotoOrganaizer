@@ -10,10 +10,6 @@
 
 @interface LoginService : NSObject
 
-+ (void)loginWithURL:(NSURL*)url;
-
-+ (NSURL *)startLogin;
-
-
++ (void)startLogin;
 
 @end

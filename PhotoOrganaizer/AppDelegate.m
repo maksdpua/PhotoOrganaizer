@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginService.h"
+#import "MSMainNC.h"
 
 @interface AppDelegate ()
 
@@ -22,7 +22,7 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    [LoginService loginWithURL:url];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthURLwasAccepted object:url];
     return YES;
 }
 
@@ -41,7 +41,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

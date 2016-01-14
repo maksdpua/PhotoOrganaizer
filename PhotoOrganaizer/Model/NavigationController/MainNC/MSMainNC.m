@@ -9,6 +9,9 @@
 #import "MSMainNC.h"
 #import "LoginService.h"
 #import "MSMainVC.h"
+#import "MSAuth.h"
+#import "MSDefaultFolderVC.h"
+#import "AuthConstants.h"
 
 @interface MSMainNC ()
 
@@ -16,25 +19,37 @@
 
 @end
 
-@implementation MSMainNC
+@implementation MSMainNC {
+    NSMutableArray *arrayVC;
+    MSDefaultFolderVC *defaultFolderVC;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [LoginService startLogin];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushDefaultFolderVC) name:kTokenWasAccepted object:nil];
     MSMainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
-    NSMutableArray *arrayVC = [NSMutableArray new];
+    arrayVC = [NSMutableArray new];
+    defaultFolderVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSDefaultFolderVC class])];
     [arrayVC addObject:mainVC];
     
-//    if ([AuthorizeManager userID] && [AuthorizeManager sessionHash]) {
-//        MenuVC *menuVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MenuVC class])];
-//        [arrayVC addObject:menuVC];
-//    }
+    if ([MSAuth token] || [MSAuth uid]) {
+        defaultFolderVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSDefaultFolderVC class])];
+        [arrayVC addObject:defaultFolderVC];
+    }
     [self setViewControllers:arrayVC animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)pushDefaultFolderVC {
+    [self pushViewController:defaultFolderVC animated:NO];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

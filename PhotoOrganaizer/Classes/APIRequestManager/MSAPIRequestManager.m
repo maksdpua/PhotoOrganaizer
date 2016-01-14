@@ -7,6 +7,7 @@
 //
 
 #import "MSAPIRequestManager.h"
+#import "MSAuth.h"
 
 @interface MSAPIRequestManager()
 
@@ -19,7 +20,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
 @end
 
 @implementation MSAPIRequestManager {
-    NSDictionary *_parameters;
+    id _parameters;
     NSString *_urlString;
     UIView *_view;
     Class _class;
@@ -58,7 +59,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
 //    _manager = [AFHTTPRequestOperationManager manager];
 //}
 
-- (void)setParameters:(NSDictionary *)dictionary {
+- (void)setParameters:(id)dictionary {
     _parameters = dictionary;
 }
 
@@ -80,8 +81,9 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
 }
 
 - (void)requestSerializer {
-//    [self.managerRequest.requestSerializer setValue:[AuthorizeManager userID] forHTTPHeaderField:userIDKey];
-//    [self.managerRequest.requestSerializer setValue:[AuthorizeManager sessionHash] forHTTPHeaderField:sessionHashKey];
+    [self.managerRequest.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@" ,[MSAuth token]] forHTTPHeaderField:@"Authorization"];
+    [self.managerRequest.requestSerializer setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
+//    self.managerRequest set
 }
 
 - (void)connectionStartPOSTresponse:(void (^)(NSURLSessionDataTask *task, id responseObject))response fail:(void (^)(NSURLSessionDataTask *operation, NSError *error))failure {
@@ -145,6 +147,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
         });
     }];
     
+    
 }
 
 - (void)connectionStartPUTresponse:(void (^)(NSURLSessionDataTask *task, id responseObject))response fail:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
@@ -184,7 +187,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
     [MBProgressHUD hideHUDForView:view animated:YES];
 }
 
-- (void)fillManagerURLString:(NSString *)urlString parameters:(NSDictionary *)parameters classMapping:(__unsafe_unretained Class)classMapping showProgressOnView:(UIView *)view {
+- (void)fillManagerURLString:(NSString *)urlString parameters:(id)parameters classMapping:(__unsafe_unretained Class)classMapping showProgressOnView:(UIView *)view {
     //    [self manager];
     
     [self setURLString:urlString];
@@ -195,7 +198,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
     [self showProgressOnView:view];
 }
 
-- (void)POSTConnectionWithURLStringAndData:(NSString *)urlString parameters:(NSDictionary *)parameters key:(NSString*)key image:(UIImage *)image classMapping:(Class)classMapping requestSerializer:(BOOL)withSerializer showProgressOnView:(UIView *)view response:(void (^)(NSURLSessionDataTask *operation, id responseObject))response fail:(void (^)(NSURLSessionDataTask *operation, NSError *error))failure {
+- (void)POSTConnectionWithURLStringAndData:(NSString *)urlString parameters:(id )parameters key:(NSString*)key image:(UIImage *)image classMapping:(Class)classMapping requestSerializer:(BOOL)withSerializer showProgressOnView:(UIView *)view response:(void (^)(NSURLSessionDataTask *operation, id responseObject))response fail:(void (^)(NSURLSessionDataTask *operation, NSError *error))failure {
     
     [self fillManagerURLString:urlString parameters:parameters classMapping:classMapping showProgressOnView:view];
     
@@ -208,7 +211,7 @@ typedef void (^multipartBlock)(id<AFMultipartFormData> formData);
 }
 
 
-- (void)POSTConnectionWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters classMapping:(Class)classMapping requestSerializer:(BOOL)withSerializer showProgressOnView:(UIView *)view response:(void (^)(NSURLSessionDataTask *task, id responseObject))response fail:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
+- (void)POSTConnectionWithURLString:(NSString *)urlString parameters:(id )parameters classMapping:(Class)classMapping requestSerializer:(BOOL)withSerializer showProgressOnView:(UIView *)view response:(void (^)(NSURLSessionDataTask *task, id responseObject))response fail:(void (^)(NSURLSessionDataTask *task, NSError *error))failure {
     
     [self fillManagerURLString:urlString parameters:parameters classMapping:classMapping showProgressOnView:view];
     

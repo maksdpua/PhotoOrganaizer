@@ -10,8 +10,12 @@
 		2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCBF1C3F0B1200F923DF /* NSObject+Extension.m */; };
 		2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC41C3F0CC200F923DF /* MSValidator.m */; };
 		2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */; };
+		2D18C4C91C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18C4C81C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.m */; };
+		2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DF31C42E29A008897C7 /* MSAuth.m */; };
+		2D330DFC1C4306C2008897C7 /* MSDefaultFolderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DFB1C4306C2008897C7 /* MSDefaultFolderVC.m */; };
 		2D4570741C40186400934FF5 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4570731C40186400934FF5 /* LoginService.m */; };
 		2D644D511C42654200AD2FA1 /* MSMainVCWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D644D501C42654200AD2FA1 /* MSMainVCWebView.m */; };
+		2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */; };
 		2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FAE1C3EFD5400DF01A4 /* main.m */; };
 		2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FB11C3EFD5400DF01A4 /* AppDelegate.m */; };
 		2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D906FB61C3EFD5400DF01A4 /* Main.storyboard */; };
@@ -50,11 +54,19 @@
 		2D18BCC61C3F0D4000F923DF /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrefixHeader.pch; path = Support/PrefixHeader.pch; sourceTree = "<group>"; };
 		2D18BCC71C3F0E9C00F923DF /* MSAPIRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAPIRequestManager.h; path = Classes/APIRequestManager/MSAPIRequestManager.h; sourceTree = "<group>"; };
 		2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIRequestManager.m; path = Classes/APIRequestManager/MSAPIRequestManager.m; sourceTree = "<group>"; };
+		2D18C4C71C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+DictionaryToJSON.h"; path = "Category/NSDictionary+DictionaryToJSON/NSDictionary+DictionaryToJSON.h"; sourceTree = "<group>"; };
+		2D18C4C81C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+DictionaryToJSON.m"; path = "Category/NSDictionary+DictionaryToJSON/NSDictionary+DictionaryToJSON.m"; sourceTree = "<group>"; };
+		2D330DF21C42E29A008897C7 /* MSAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAuth.h; path = Classes/Auth/MSAuth.h; sourceTree = "<group>"; };
+		2D330DF31C42E29A008897C7 /* MSAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAuth.m; path = Classes/Auth/MSAuth.m; sourceTree = "<group>"; };
+		2D330DF51C42E897008897C7 /* AuthConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuthConstants.h; path = Support/AuthConstants.h; sourceTree = "<group>"; };
+		2D330DFA1C4306C2008897C7 /* MSDefaultFolderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDefaultFolderVC.h; sourceTree = "<group>"; };
+		2D330DFB1C4306C2008897C7 /* MSDefaultFolderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDefaultFolderVC.m; sourceTree = "<group>"; };
 		2D4570721C40186400934FF5 /* LoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Classes/LoginService/LoginService.h; sourceTree = "<group>"; };
 		2D4570731C40186400934FF5 /* LoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Classes/LoginService/LoginService.m; sourceTree = "<group>"; };
 		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
 		2D644D4F1C42654200AD2FA1 /* MSMainVCWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainVCWebView.h; path = Model/ViewController/MainVC/MSMainVCWebView.h; sourceTree = "<group>"; };
 		2D644D501C42654200AD2FA1 /* MSMainVCWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVCWebView.m; path = Model/ViewController/MainVC/MSMainVCWebView.m; sourceTree = "<group>"; };
+		2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy_emoticon_button.png; sourceTree = "<group>"; };
 		2D906FAA1C3EFD5400DF01A4 /* PhotoOrganaizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoOrganaizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D906FAE1C3EFD5400DF01A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2D906FB01C3EFD5400DF01A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -116,6 +128,7 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D330DF11C42E268008897C7 /* Auth */,
 				2D45706B1C4017A100934FF5 /* LoginService */,
 				2D18BCC21C3F0C8B00F923DF /* Validator */,
 				2D18BCBB1C3F071C00F923DF /* APIRequestManager */,
@@ -135,6 +148,7 @@
 		2D18BCBC1C3F0ABD00F923DF /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				2D18C4C31C46FF1700EF7FA4 /* NSDictionary+DictionaryToJSON */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
 			);
 			name = Category;
@@ -158,6 +172,33 @@
 			name = Validator;
 			sourceTree = "<group>";
 		};
+		2D18C4C31C46FF1700EF7FA4 /* NSDictionary+DictionaryToJSON */ = {
+			isa = PBXGroup;
+			children = (
+				2D18C4C71C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.h */,
+				2D18C4C81C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.m */,
+			);
+			name = "NSDictionary+DictionaryToJSON";
+			sourceTree = "<group>";
+		};
+		2D330DF11C42E268008897C7 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				2D330DF21C42E29A008897C7 /* MSAuth.h */,
+				2D330DF31C42E29A008897C7 /* MSAuth.m */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
+		2D330DF61C43064F008897C7 /* DefaultFolderVC */ = {
+			isa = PBXGroup;
+			children = (
+				2D330DFA1C4306C2008897C7 /* MSDefaultFolderVC.h */,
+				2D330DFB1C4306C2008897C7 /* MSDefaultFolderVC.m */,
+			);
+			name = DefaultFolderVC;
+			sourceTree = "<group>";
+		};
 		2D45706B1C4017A100934FF5 /* LoginService */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,6 +206,14 @@
 				2D4570731C40186400934FF5 /* LoginService.m */,
 			);
 			name = LoginService;
+			sourceTree = "<group>";
+		};
+		2D8E46D81C4578D50035B8B9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		2D906FA11C3EFD5400DF01A4 = {
@@ -192,6 +241,7 @@
 		2D906FAC1C3EFD5400DF01A4 /* PhotoOrganaizer */ = {
 			isa = PBXGroup;
 			children = (
+				2D8E46D81C4578D50035B8B9 /* Resources */,
 				2D18BCBC1C3F0ABD00F923DF /* Category */,
 				2D18BCBA1C3F070700F923DF /* Classes */,
 				2D906FE31C3EFD7400DF01A4 /* Model */,
@@ -213,6 +263,7 @@
 				2D906FAE1C3EFD5400DF01A4 /* main.m */,
 				2D18BCC61C3F0D4000F923DF /* PrefixHeader.pch */,
 				2D5328C21C412973006D9B6B /* SharedConstants.h */,
+				2D330DF51C42E897008897C7 /* AuthConstants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -247,6 +298,7 @@
 		2D906FE41C3EFD8900DF01A4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2D330DF61C43064F008897C7 /* DefaultFolderVC */,
 				2D906FE61C3EFDDF00DF01A4 /* Main */,
 			);
 			name = ViewController;
@@ -392,6 +444,7 @@
 			files = (
 				2D906FC01C3EFD5400DF01A4 /* LaunchScreen.storyboard in Resources */,
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
+				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
 				2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -465,6 +518,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D330DFC1C4306C2008897C7 /* MSDefaultFolderVC.m in Sources */,
+				2D18C4C91C46FF9E00EF7FA4 /* NSDictionary+DictionaryToJSON.m in Sources */,
 				2D906FBB1C3EFD5400DF01A4 /* PhotoOrganaizer.xcdatamodeld in Sources */,
 				2D644D511C42654200AD2FA1 /* MSMainVCWebView.m in Sources */,
 				2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */,
@@ -473,6 +528,7 @@
 				2D4570741C40186400934FF5 /* LoginService.m in Sources */,
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
+				2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
 			);

@@ -13,6 +13,7 @@
 #import "NSObject+Extension.h"
 #import "MBProgressHUD.h"
 #import "SharedConstants.h"
-#import <POP/POP.h>#import <POP/POP.h>
+#import <POP/POP.h>
+#import "NSDictionary+DictionaryToJSON.h"
 
 #endif /* PrefixHeader_pch */

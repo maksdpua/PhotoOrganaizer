@@ -19,7 +19,7 @@
 }
 
 - (void)viewDidLoad {
-    [webView loadRequest:[NSURLRequest requestWithURL:[LoginService startLogin]]];
+//    [webView loadRequest:[NSURLRequest requestWithURL:[LoginService startLogin]]];
     isauth = NO;
 }
 
@@ -66,9 +66,9 @@ didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler {
     NSLog(@"received response via nsurlconnection");
     
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[LoginService startLogin]];
+//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[LoginService startLogin]];
     
-    [webView loadRequest:urlRequest];
+//    [webView loadRequest:urlRequest];
 }
 
 
