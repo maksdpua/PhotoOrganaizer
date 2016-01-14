@@ -13,9 +13,9 @@
 + (NSString *)convertDictionaryToJSONstringWith: (NSDictionary *)dictionary {
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary
-                                                       options:2
+                                                       options:NSJSONWritingPrettyPrinted
                                                          error:&error];
-    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:4];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     return jsonString;
 }

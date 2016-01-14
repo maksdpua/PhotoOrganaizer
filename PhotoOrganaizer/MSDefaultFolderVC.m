@@ -25,19 +25,23 @@ static NSString *const kPlaceholder = @"Type folder name for photos stack...";
 
 - (void)viewDidLoad {
     NSDictionary *parametrs = @{@"path" : @"",
-                                @"recursive": @"",
-                                @"include_media_info": @"false",
-                                @"include_deleted": @"false"};
+                                @"recursive": @NO,
+                                @"include_media_info": @NO,
+                                @"include_deleted": @NO};
     NSString *jsonParametrs =[NSDictionary convertDictionaryToJSONstringWith:parametrs];
     NSString *string = [NSString stringWithFormat: @"{\"path\": \"\",\"recursive\": false,\"include_media_info\": false,\"include_deleted\": false}"];
     
+
     NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parametrs
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:&error];
     AFHTTPSessionManager *managerRequest = [AFHTTPSessionManager manager];
     NSMutableURLRequest *request = [managerRequest.requestSerializer requestWithMethod:@"POST" URLString:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] parameters:nil error:&error];
-    NSData *postData = [jsonParametrs dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSData *postData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     [request setValue: [NSString stringWithFormat:@"Bearer %@" ,[MSAuth token]] forHTTPHeaderField:@"Authorization"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:postData];
+    [request setHTTPBody:jsonData];
     
     
     __block NSURLSessionDataTask *task = [managerRequest dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
