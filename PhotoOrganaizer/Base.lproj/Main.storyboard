@@ -99,6 +99,9 @@
                                 <state key="normal" title="Save">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="createFolderAction:" destination="BaF-eo-J9z" eventType="touchUpInside" id="TNA-4V-HI9"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Photo Organaizer folder" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ngs-f6-WQj">
                                 <rect key="frame" x="40" y="266" width="240" height="36"/>

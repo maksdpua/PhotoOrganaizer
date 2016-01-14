@@ -37,7 +37,6 @@ static NSString *const kState = @"phorg";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginWithURL:) name:kAuthURLwasAccepted object:nil];
     NSString *urlString = [NSString stringWithFormat:@"%@?client_id=%@&response_type=%@&redirect_uri=%@&state=%@", kAuthRequestURL, kClientID, kResponseType, kRedirectURI, kState];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-//    return [NSURL URLWithString:urlString];
 }
 
 

@@ -10,64 +10,56 @@
 #import "MSAPIRequestManager.h"
 #import "MSAuth.h"
 #import <AFNetworking.h>
+#import "MSRequestManager.h"
 
 static NSString *const kPlaceholder = @"Type folder name for photos stack...";
 
-@interface MSDefaultFolderVC()<UITextViewDelegate>
+@interface MSDefaultFolderVC()<UITextViewDelegate, MSRequestManagerDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextView *folderNameTextView;
 @property (nonatomic, weak) IBOutlet UIButton *smileButton;
 @property IBOutlet NSLayoutConstraint *textViewHeightCosntraint;
+@property (nonatomic, strong) MSRequestManager *requestManager;
 
 @end
 
 @implementation MSDefaultFolderVC
 
 - (void)viewDidLoad {
-    NSDictionary *parametrs = @{@"path" : @"",
-                                @"recursive": @NO,
-                                @"include_media_info": @NO,
-                                @"include_deleted": @NO};
-    NSString *jsonParametrs =[NSDictionary convertDictionaryToJSONstringWith:parametrs];
-    NSString *string = [NSString stringWithFormat: @"{\"path\": \"\",\"recursive\": false,\"include_media_info\": false,\"include_deleted\": false}"];
+    self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     
-
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parametrs
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
-    AFHTTPSessionManager *managerRequest = [AFHTTPSessionManager manager];
-    NSMutableURLRequest *request = [managerRequest.requestSerializer requestWithMethod:@"POST" URLString:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] parameters:nil error:&error];
-    NSData *postData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    [request setValue: [NSString stringWithFormat:@"Bearer %@" ,[MSAuth token]] forHTTPHeaderField:@"Authorization"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody:jsonData];
-    
-    
-    __block NSURLSessionDataTask *task = [managerRequest dataTaskWithRequest:request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
-        if (error) {
-            NSLog(@"%@", error);
-        } else {
-            NSLog(@"%@", responseObject);
-        }
-    }];
-    
-    [task resume];
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
+#pragma mark - Actions
+
+- (IBAction)createFolderAction:(id)sender {
+    [self createFolder];
+}
+
+#pragma mark - UITextView delegate methods
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
 
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
+- (void)textViewDidEndEditing:(UITextView *)textView {
 
-//    [textView resignFirstResponder];
+
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
     [self updateTextViewConstraint];
+}
+
+- (void)createFolder {
+//    NSDictionary *parametrs = @{@"path" : [NSString stringWithFormat:@"/%@",self.folderNameTextView.text]};
+    NSDictionary *parametrs = @{@"path" : @"", @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@NO};
+    
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@", responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error);
+    }];
 }
 
 - (void)updateTextViewConstraint {
