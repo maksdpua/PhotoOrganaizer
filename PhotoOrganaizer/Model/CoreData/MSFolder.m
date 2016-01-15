@@ -13,7 +13,7 @@
 
 - (instancetype)initClassWithDictionary:(NSDictionary *)dictionary {
     for (NSDictionary *element in [dictionary valueForKey:@"entries"]) {
-        if ([element valueForKey:@"name"]) {
+        if ([[element valueForKey:@"name"] hasPrefix:@".jpg"]) {
             
         }
     }
