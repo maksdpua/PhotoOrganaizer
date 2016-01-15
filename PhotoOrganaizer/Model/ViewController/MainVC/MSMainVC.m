@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loginButton];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:3.0f
                                                     target:self
                                                   selector:@selector(loginButtonAnimation)

@@ -14,5 +14,6 @@
 #import "MBProgressHUD.h"
 #import "SharedConstants.h"
 #import <POP/POP.h>
+#import <MagicalRecord/MagicalRecord.h>
 
 #endif /* PrefixHeader_pch */

@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
-    <entity name="MSMainFolder" syncable="YES">
+    <entity name="MSFolder" representedClassName="MSFolder" syncable="YES">
+        <attribute name="idFolder" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nameOfFolder" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="folders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MSFolder" inverseName="folders" inverseEntity="MSFolder" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MSPhoto" inverseName="toFolder" inverseEntity="MSPhoto" syncable="YES"/>
+    </entity>
+    <entity name="MSPhoto" representedClassName="MSPhoto" syncable="YES">
+        <attribute name="clientModified" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="namePhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="revPhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serverModified" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sizePhoto" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MSFolder" inverseName="photos" inverseEntity="MSFolder" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MSMainFolder" positionX="-63" positionY="-18" width="128" height="60"/>
+        <element name="MSFolder" positionX="106" positionY="275" width="128" height="133"/>
+        <element name="MSPhoto" positionX="-83" positionY="233" width="128" height="178"/>
     </elements>
 </model>
