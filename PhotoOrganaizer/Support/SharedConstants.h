@@ -20,5 +20,7 @@ static NSString *const kListFolder = @"files/list_folder";
 static NSString *const kCreateFolder = @"files/create_folder";
 
 
+static NSString *const kFolderPic = @"folder-generic";
+
 
 #endif /* SharedConstants_h */

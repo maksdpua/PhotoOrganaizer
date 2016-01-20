@@ -30,6 +30,10 @@
 		2D906FD61C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FD51C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m */; };
 		2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */; };
 		2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */; };
+		2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DDF2B061C4FEEF100330CEA /* folder-generic.png */; };
+		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
+		2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */; };
+		2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B121C501CB100330CEA /* MSAnimation.m */; };
 		B2B89E49FB466602F6785C61 /* libPods-PhotoOrganaizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +102,13 @@
 		2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVC.m; path = Model/ViewController/MainVC/MSMainVC.m; sourceTree = "<group>"; };
 		2D906FEC1C3F03AA00DF01A4 /* MSMainNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainNC.h; path = Model/NavigationController/MainNC/MSMainNC.h; sourceTree = "<group>"; };
 		2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainNC.m; path = Model/NavigationController/MainNC/MSMainNC.m; sourceTree = "<group>"; };
+		2DDF2B061C4FEEF100330CEA /* folder-generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder-generic.png"; sourceTree = "<group>"; };
+		2DDF2B091C4FF12B00330CEA /* UIImage+SharedPics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+SharedPics.h"; path = "Category/UIImage+SharedPics/UIImage+SharedPics.h"; sourceTree = "<group>"; };
+		2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SharedPics.m"; path = "Category/UIImage+SharedPics/UIImage+SharedPics.m"; sourceTree = "<group>"; };
+		2DDF2B0D1C50095700330CEA /* MSAPIMethodsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAPIMethodsManager.h; path = Classes/MSAPIMethodsManager/MSAPIMethodsManager.h; sourceTree = "<group>"; };
+		2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIMethodsManager.m; path = Classes/MSAPIMethodsManager/MSAPIMethodsManager.m; sourceTree = "<group>"; };
+		2DDF2B111C501CB100330CEA /* MSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAnimation.h; path = Classes/MSAnimation/MSAnimation.h; sourceTree = "<group>"; };
+		2DDF2B121C501CB100330CEA /* MSAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAnimation.m; path = Classes/MSAnimation/MSAnimation.m; sourceTree = "<group>"; };
 		929ADEFCCC27CDCD3BB38851 /* Pods-PhotoOrganaizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.debug.xcconfig"; sourceTree = "<group>"; };
 		A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoOrganaizer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81833BD983100BAAE17E6DF /* Pods-PhotoOrganaizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.release.xcconfig"; sourceTree = "<group>"; };
@@ -140,6 +151,8 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2DDF2B101C501C8500330CEA /* MSAnimation */,
+				2DDF2B0C1C5008AF00330CEA /* MSAPIMethodsManager */,
 				2D1DAB951C47FA1900C7AA19 /* MSRequestManager */,
 				2D330DF11C42E268008897C7 /* Auth */,
 				2D45706B1C4017A100934FF5 /* LoginService */,
@@ -161,6 +174,7 @@
 		2D18BCBC1C3F0ABD00F923DF /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
 			);
 			name = Category;
@@ -255,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */,
+				2DDF2B061C4FEEF100330CEA /* folder-generic.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -366,6 +381,33 @@
 				2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */,
 			);
 			name = NavigationController;
+			sourceTree = "<group>";
+		};
+		2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */ = {
+			isa = PBXGroup;
+			children = (
+				2DDF2B091C4FF12B00330CEA /* UIImage+SharedPics.h */,
+				2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */,
+			);
+			name = "UIImage+SharedPics";
+			sourceTree = "<group>";
+		};
+		2DDF2B0C1C5008AF00330CEA /* MSAPIMethodsManager */ = {
+			isa = PBXGroup;
+			children = (
+				2DDF2B0D1C50095700330CEA /* MSAPIMethodsManager.h */,
+				2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */,
+			);
+			name = MSAPIMethodsManager;
+			sourceTree = "<group>";
+		};
+		2DDF2B101C501C8500330CEA /* MSAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				2DDF2B111C501CB100330CEA /* MSAnimation.h */,
+				2DDF2B121C501CB100330CEA /* MSAnimation.m */,
+			);
+			name = MSAnimation;
 			sourceTree = "<group>";
 		};
 		3CC96BF3FFF0F9A4A8BC495E /* Pods */ = {
@@ -486,6 +528,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */,
 				2D906FC01C3EFD5400DF01A4 /* LaunchScreen.storyboard in Resources */,
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
 				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
@@ -571,11 +614,14 @@
 				2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */,
 				2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */,
 				2D4570741C40186400934FF5 /* LoginService.m in Sources */,
+				2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */,
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
 				2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */,
 				2D38C77D1C4925C70081028D /* MSPhoto.m in Sources */,
+				2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */,
 				2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */,
+				2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */,
 				2D38C77A1C4925C70081028D /* MSFolder+CoreDataProperties.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,

@@ -10,6 +10,8 @@
 
 @interface MSValidator : NSObject
 
++ (BOOL)isPhotoPathExtension:(NSString *)name;
+
 + (BOOL)checkForSymbolsInString:(NSString *)string;
 
 @end

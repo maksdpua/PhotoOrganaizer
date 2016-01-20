@@ -11,8 +11,8 @@
 #import "MSAuth.h"
 #import <AFNetworking.h>
 #import "MSRequestManager.h"
-
-static NSString *const kPlaceholder = @"Type folder name for photos stack...";
+#import "MSFolder.h"
+#import "MSAPIMethodsManager.h"
 
 @interface MSDefaultFolderVC()<UITextViewDelegate, MSRequestManagerDelegate>
 
@@ -23,17 +23,26 @@ static NSString *const kPlaceholder = @"Type folder name for photos stack...";
 
 @end
 
-@implementation MSDefaultFolderVC
+@implementation MSDefaultFolderVC {
+    MSAPIMethodsManager *_apiMethodManager;
+}
 
 - (void)viewDidLoad {
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    _apiMethodManager = [[MSAPIMethodsManager alloc]init];
     
 }
 
 #pragma mark - Actions
 
 - (IBAction)createFolderAction:(id)sender {
-    [self createFolder];
+//    [NSString stringWithFormat:@"/%@",self.folderNameTextView.text]
+    [_apiMethodManager getFolderContentWithPath:@"/Jessica Jones Wallpapres"];
+    
+}
+
+- (IBAction)chooseDefaultFolder:(id)sender {
+    
 }
 
 #pragma mark - UITextView delegate methods
@@ -49,17 +58,6 @@ static NSString *const kPlaceholder = @"Type folder name for photos stack...";
 
 - (void)textViewDidChange:(UITextView *)textView {
     [self updateTextViewConstraint];
-}
-
-- (void)createFolder {
-//    NSDictionary *parametrs = @{@"path" : [NSString stringWithFormat:@"/%@",self.folderNameTextView.text]};
-    NSDictionary *parametrs = @{@"path" : @"", @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@NO};
-    
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@", responseObject);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@", error);
-    }];
 }
 
 - (void)updateTextViewConstraint {

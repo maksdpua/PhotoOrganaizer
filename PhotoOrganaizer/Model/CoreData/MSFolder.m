@@ -9,12 +9,13 @@
 #import "MSFolder.h"
 #import "MSPhoto.h"
 
+
 @implementation MSFolder
 
 - (instancetype)initClassWithDictionary:(NSDictionary *)dictionary {
     for (NSDictionary *element in [dictionary valueForKey:@"entries"]) {
-        if ([[element valueForKey:@"name"] hasPrefix:@".jpg"]) {
-            
+        if ([MSValidator isPhotoPathExtension:[element valueForKey:@"name"]]) {
+            NSLog(@"%@", [[element valueForKey:@"name"] pathExtension]);
         }
     }
     

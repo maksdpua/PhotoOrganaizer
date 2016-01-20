@@ -10,6 +10,17 @@
 
 @implementation MSValidator
 
++ (BOOL)isPhotoPathExtension:(NSString *)name {
+    
+    NSArray *arrayOfPhotosFilePath = @[@"png",@"jpeg",@"jpg"];
+    for (NSString* photoFilePath in arrayOfPhotosFilePath) {
+        if ([photoFilePath isEqualToString:[name pathExtension]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 + (BOOL)checkForSymbolsInString:(NSString *)string {
     NSString *checkString = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
     
