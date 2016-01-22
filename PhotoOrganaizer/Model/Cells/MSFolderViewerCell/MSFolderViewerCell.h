@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSFolder.h"
 
 @interface MSFolderViewerCell : UITableViewCell
+
+- (void)setupWithModel: (MSFolder*)model;
 
 @end

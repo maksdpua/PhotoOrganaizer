@@ -246,10 +246,10 @@
             </objects>
             <point key="canvasLocation" x="508" y="1072"/>
         </scene>
-        <!--View Controller-->
+        <!--Folder Viewer-->
         <scene sceneID="nhF-kL-lZi">
             <objects>
-                <viewController id="leL-vS-maa" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MSFolderViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="leL-vS-maa" customClass="MSFolderViewer" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WqJ-uq-L94"/>
                         <viewControllerLayoutGuide type="bottom" id="bM4-Zp-4ga"/>
@@ -262,7 +262,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="nCo-Bi-VZg">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" id="nCo-Bi-VZg" customClass="MSFolderViewerCell">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nCo-Bi-VZg" id="TWR-Xr-SWY">
@@ -270,21 +270,34 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCp-6N-rdq">
-                                                    <rect key="frame" x="8" y="0.0" width="279" height="35"/>
+                                                    <rect key="frame" x="81" y="0.0" width="198" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="Wai-0L-Sa9"/>
+                                                        <constraint firstAttribute="height" constant="35" id="CFD-gb-OL1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LBf-Zt-eXB">
+                                                    <rect key="frame" x="16" y="0.0" width="43" height="43"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="43" id="NXR-p3-htl"/>
+                                                        <constraint firstAttribute="height" constant="43" id="WLh-H9-A5X"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="5nE-JN-K5d"/>
-                                                <constraint firstAttribute="trailing" secondItem="GCp-6N-rdq" secondAttribute="trailing" id="oL5-jC-TLA"/>
-                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="leading" secondItem="TWR-Xr-SWY" secondAttribute="leading" constant="8" id="phq-Ns-fuz"/>
+                                                <constraint firstAttribute="trailing" secondItem="GCp-6N-rdq" secondAttribute="trailing" constant="8" id="9ek-S1-yYE"/>
+                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="leading" secondItem="TWR-Xr-SWY" secondAttribute="leading" constant="16" id="STB-b3-vRU"/>
+                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="ZXs-wv-nMh"/>
+                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="bNu-7O-pqT"/>
+                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="leading" secondItem="LBf-Zt-eXB" secondAttribute="trailing" constant="22" id="c7k-tO-EWw"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="folderPicImageView" destination="LBf-Zt-eXB" id="fsw-LO-agr"/>
+                                            <outlet property="nameFolderLabel" destination="GCp-6N-rdq" id="xpX-8E-eeV"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -302,6 +315,9 @@
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="tableView" destination="D8s-bh-R2P" id="eyK-Ir-lZs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GCo-tZ-yNM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

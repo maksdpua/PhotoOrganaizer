@@ -22,5 +22,7 @@ static NSString *const kCreateFolder = @"files/create_folder";
 
 static NSString *const kFolderPic = @"folder-generic";
 
+static NSString *const kMSFolderViewerCell = @"MSFolderViewerCell";
+
 
 #endif /* SharedConstants_h */

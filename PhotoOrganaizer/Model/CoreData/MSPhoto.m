@@ -11,6 +11,8 @@
 
 @implementation MSPhoto
 
-// Insert code here to add functionality to your managed object subclass
+- (NSDictionary *)dictionaryInstructionManager {
+    return @{@"name" : @"namePhoto", @".tag" : @"tag", @"id" : @"idPhoto", @"path_lower" : @"path", @"size" : @"sizePhoto", @"server_modified" : @"serverModified", @"client_modified" : @"clientModified", @"rev" : @"revPhoto"};
+}
 
 @end

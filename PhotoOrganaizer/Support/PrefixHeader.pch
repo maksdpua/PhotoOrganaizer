@@ -15,5 +15,6 @@
 #import "SharedConstants.h"
 #import <POP/POP.h>
 #import <MagicalRecord/MagicalRecord.h>
+#import "UIImage+SharedPics.h"
 
 #endif /* PrefixHeader_pch */

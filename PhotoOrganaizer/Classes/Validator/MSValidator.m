@@ -31,4 +31,8 @@
     }
 }
 
++ (BOOL)isRootFolders:(NSString *)path {
+    return YES;
+}
+
 @end

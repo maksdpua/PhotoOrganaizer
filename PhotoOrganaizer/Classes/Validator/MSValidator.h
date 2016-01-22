@@ -14,4 +14,6 @@
 
 + (BOOL)checkForSymbolsInString:(NSString *)string;
 
++ (BOOL)isRootFolders:(NSString *)path;
+
 @end
