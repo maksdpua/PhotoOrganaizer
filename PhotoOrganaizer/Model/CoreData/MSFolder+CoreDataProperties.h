@@ -2,7 +2,7 @@
 //  MSFolder+CoreDataProperties.h
 //  PhotoOrganaizer
 //
-//  Created by Maks on 1/15/16.
+//  Created by Maks on 1/23/16.
 //  Copyright © 2016 Maks. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,12 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MSFolder (CoreDataProperties)
 
+@property (nullable, nonatomic, retain) NSString *idFolder;
 @property (nullable, nonatomic, retain) NSString *nameOfFolder;
 @property (nullable, nonatomic, retain) NSString *path;
 @property (nullable, nonatomic, retain) NSString *tag;
-@property (nullable, nonatomic, retain) NSString *idFolder;
 @property (nullable, nonatomic, retain) NSSet<MSFolder *> *folders;
-@property (nullable, nonatomic, retain) NSSet<MSPhoto *> *photos;
+@property (nullable, nonatomic, retain) MSFolder *backFolder;
+@property (nullable, nonatomic, retain) MSPhoto *photos;
 
 @end
 
@@ -35,6 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removePhotosObject:(MSPhoto *)value;
 - (void)addPhotos:(NSSet<MSPhoto *> *)values;
 - (void)removePhotos:(NSSet<MSPhoto *> *)values;
+
+- (void)addBackFolderObject:(MSFolder *)value;
+- (void)removeBackFolderObject:(MSFolder *)value;
+
+
+
 
 @end
 

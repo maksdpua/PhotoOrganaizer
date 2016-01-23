@@ -30,6 +30,11 @@
 - (void)viewDidLoad {
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     _apiMethodManager = [[MSAPIMethodsManager alloc]init];
+    MSFolder *folder = [MSFolder MR_findFirstByAttribute:@"nameOfFolder" withValue:@"Jessica Jones Wallpapres"];
+    for (MSFolder *f in folder.folders) {
+         NSLog(@"%@", f.nameOfFolder);
+    }
+   
     
 }
 

@@ -2,13 +2,12 @@
 //  MSFolder.m
 //  PhotoOrganaizer
 //
-//  Created by Maks on 1/15/16.
+//  Created by Maks on 1/23/16.
 //  Copyright © 2016 Maks. All rights reserved.
 //
 
 #import "MSFolder.h"
 #import "MSPhoto.h"
-
 
 @implementation MSFolder
 
@@ -29,24 +28,23 @@
                 self = [super loadClassWithDictionary:element InstructionDictionary:[self dictionaryInstructionManager]];
                 NSArray *pathArray = [self.path componentsSeparatedByString:@"/"];
                 if (pathArray.count>2) {
-                    NSString *nameContentFolder = [pathArray objectAtIndex:pathArray.count-2];
-//                    [[MSFolder MR_findFirstByAttribute:@"path" withValue:[NSString stringWithFormat:@"/%@", nameContentFolder]] addFoldersObject:self];
-                    NSLog(@"%@", nameContentFolder);
+                    
+                    NSString *backFolderPath = [self.path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@",[pathArray lastObject]] withString:@""];
+                    [[MSFolder MR_findFirstByAttribute:@"path" withValue:backFolderPath] addFoldersObject:self];
                 }
-//                [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+                
             }
             
             
             
             
         } else {
-            
-//            if ([MSValidator isPhotoPathExtension:[element valueForKey:@"name"]]) {
-//                
-//            }
+            if ([MSValidator isPhotoPathExtension:[element valueForKey:@"name"]] && ![MSPhoto MR_findFirstByAttribute:@"idPhoto" withValue:[NSString stringWithFormat:@"%@", [element valueForKey:@"id"]]]) {
+                MSPhoto *photo = [[MSPhoto MR_createEntity]initClassWithDictionary:element];
+            }
         }
     }
-    
+//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     return self;
 }

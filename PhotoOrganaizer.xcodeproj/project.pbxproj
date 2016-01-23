@@ -13,8 +13,6 @@
 		2D1DAB981C47FA5500C7AA19 /* MSRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */; };
 		2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DF31C42E29A008897C7 /* MSAuth.m */; };
 		2D330DFC1C4306C2008897C7 /* MSDefaultFolderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DFB1C4306C2008897C7 /* MSDefaultFolderVC.m */; };
-		2D38C77A1C4925C70081028D /* MSFolder+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38C7731C4925C70081028D /* MSFolder+CoreDataProperties.m */; };
-		2D38C77B1C4925C70081028D /* MSFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38C7751C4925C70081028D /* MSFolder.m */; };
 		2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38C7771C4925C70081028D /* MSPhoto+CoreDataProperties.m */; };
 		2D38C77D1C4925C70081028D /* MSPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38C7791C4925C70081028D /* MSPhoto.m */; };
 		2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D42EF801C5121F200DCDBD2 /* MSFolderViewerCell.m */; };
@@ -37,6 +35,8 @@
 		2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */; };
 		2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B121C501CB100330CEA /* MSAnimation.m */; };
 		B2B89E49FB466602F6785C61 /* libPods-PhotoOrganaizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */; };
+		FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBA44B01C53932C00471F0B /* MSFolder+CoreDataProperties.m */; };
+		FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBA44B21C53932C00471F0B /* MSFolder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,10 +71,6 @@
 		2D330DF51C42E897008897C7 /* AuthConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuthConstants.h; path = Support/AuthConstants.h; sourceTree = "<group>"; };
 		2D330DFA1C4306C2008897C7 /* MSDefaultFolderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDefaultFolderVC.h; sourceTree = "<group>"; };
 		2D330DFB1C4306C2008897C7 /* MSDefaultFolderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDefaultFolderVC.m; sourceTree = "<group>"; };
-		2D38C7721C4925C70081028D /* MSFolder+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MSFolder+CoreDataProperties.h"; path = "Model/CoreData/MSFolder+CoreDataProperties.h"; sourceTree = "<group>"; };
-		2D38C7731C4925C70081028D /* MSFolder+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MSFolder+CoreDataProperties.m"; path = "Model/CoreData/MSFolder+CoreDataProperties.m"; sourceTree = "<group>"; };
-		2D38C7741C4925C70081028D /* MSFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSFolder.h; path = Model/CoreData/MSFolder.h; sourceTree = "<group>"; };
-		2D38C7751C4925C70081028D /* MSFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSFolder.m; path = Model/CoreData/MSFolder.m; sourceTree = "<group>"; };
 		2D38C7761C4925C70081028D /* MSPhoto+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MSPhoto+CoreDataProperties.h"; path = "Model/CoreData/MSPhoto+CoreDataProperties.h"; sourceTree = "<group>"; };
 		2D38C7771C4925C70081028D /* MSPhoto+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MSPhoto+CoreDataProperties.m"; path = "Model/CoreData/MSPhoto+CoreDataProperties.m"; sourceTree = "<group>"; };
 		2D38C7781C4925C70081028D /* MSPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhoto.h; path = Model/CoreData/MSPhoto.h; sourceTree = "<group>"; };
@@ -118,6 +114,10 @@
 		929ADEFCCC27CDCD3BB38851 /* Pods-PhotoOrganaizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.debug.xcconfig"; sourceTree = "<group>"; };
 		A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoOrganaizer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81833BD983100BAAE17E6DF /* Pods-PhotoOrganaizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.release.xcconfig"; sourceTree = "<group>"; };
+		FCBA44AF1C53932C00471F0B /* MSFolder+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MSFolder+CoreDataProperties.h"; path = "Model/CoreData/MSFolder+CoreDataProperties.h"; sourceTree = "<group>"; };
+		FCBA44B01C53932C00471F0B /* MSFolder+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MSFolder+CoreDataProperties.m"; path = "Model/CoreData/MSFolder+CoreDataProperties.m"; sourceTree = "<group>"; };
+		FCBA44B11C53932C00471F0B /* MSFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSFolder.h; path = Model/CoreData/MSFolder.h; sourceTree = "<group>"; };
+		FCBA44B21C53932C00471F0B /* MSFolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSFolder.m; path = Model/CoreData/MSFolder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,10 +243,10 @@
 		2D38C7701C491E8D0081028D /* MSFolder */ = {
 			isa = PBXGroup;
 			children = (
-				2D38C7721C4925C70081028D /* MSFolder+CoreDataProperties.h */,
-				2D38C7731C4925C70081028D /* MSFolder+CoreDataProperties.m */,
-				2D38C7741C4925C70081028D /* MSFolder.h */,
-				2D38C7751C4925C70081028D /* MSFolder.m */,
+				FCBA44AF1C53932C00471F0B /* MSFolder+CoreDataProperties.h */,
+				FCBA44B01C53932C00471F0B /* MSFolder+CoreDataProperties.m */,
+				FCBA44B11C53932C00471F0B /* MSFolder.h */,
+				FCBA44B21C53932C00471F0B /* MSFolder.m */,
 			);
 			name = MSFolder;
 			sourceTree = "<group>";
@@ -640,7 +640,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D330DFC1C4306C2008897C7 /* MSDefaultFolderVC.m in Sources */,
-				2D38C77B1C4925C70081028D /* MSFolder.m in Sources */,
 				2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */,
 				2D906FBB1C3EFD5400DF01A4 /* PhotoOrganaizer.xcdatamodeld in Sources */,
 				2D644D511C42654200AD2FA1 /* MSMainVCWebView.m in Sources */,
@@ -651,6 +650,8 @@
 				2D4570741C40186400934FF5 /* LoginService.m in Sources */,
 				2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */,
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
+				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
+				FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
 				2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */,
 				2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */,
@@ -658,7 +659,6 @@
 				2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */,
 				2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */,
 				2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */,
-				2D38C77A1C4925C70081028D /* MSFolder+CoreDataProperties.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
 			);

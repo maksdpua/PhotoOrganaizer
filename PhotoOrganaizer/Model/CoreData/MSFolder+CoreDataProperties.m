@@ -2,7 +2,7 @@
 //  MSFolder+CoreDataProperties.m
 //  PhotoOrganaizer
 //
-//  Created by Maks on 1/15/16.
+//  Created by Maks on 1/23/16.
 //  Copyright © 2016 Maks. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -13,11 +13,12 @@
 
 @implementation MSFolder (CoreDataProperties)
 
+@dynamic idFolder;
 @dynamic nameOfFolder;
 @dynamic path;
 @dynamic tag;
-@dynamic idFolder;
 @dynamic folders;
+@dynamic backFolder;
 @dynamic photos;
 
 @end

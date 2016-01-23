@@ -2,7 +2,7 @@
 //  MSFolder.h
 //  PhotoOrganaizer
 //
-//  Created by Maks on 1/15/16.
+//  Created by Maks on 1/23/16.
 //  Copyright © 2016 Maks. All rights reserved.
 //
 
