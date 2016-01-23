@@ -32,16 +32,13 @@
                     NSString *backFolderPath = [self.path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@",[pathArray lastObject]] withString:@""];
                     [[MSFolder MR_findFirstByAttribute:@"path" withValue:backFolderPath] addFoldersObject:self];
                 }
-                
             }
-            
-            
-            
-            
-        } else {
+        } else if ([[element valueForKey:@".tag"] isEqualToString:@"file"]){
             if ([MSValidator isPhotoPathExtension:[element valueForKey:@"name"]] && ![MSPhoto MR_findFirstByAttribute:@"idPhoto" withValue:[NSString stringWithFormat:@"%@", [element valueForKey:@"id"]]]) {
                 MSPhoto *photo = [[MSPhoto MR_createEntity]initClassWithDictionary:element];
             }
+        } else if ([[element valueForKey:@".tag"] isEqualToString:@"deleted"]){
+            
         }
     }
 //    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
