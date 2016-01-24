@@ -14,6 +14,7 @@
 #import "MSFolder.h"
 #import "MSAPIMethodsManager.h"
 #import "MSPhoto.h"
+#import "MSFolderViewer.h"
 
 @interface MSDefaultFolderVC()<UITextViewDelegate, MSRequestManagerDelegate>
 
@@ -53,7 +54,8 @@
 }
 
 - (IBAction)chooseDefaultFolder:(id)sender {
-    
+    MSFolderViewer *folderViewerVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
+    [self.navigationController pushViewController:folderViewerVC animated:YES];
 }
 
 #pragma mark - UITextView delegate methods

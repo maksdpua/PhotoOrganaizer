@@ -207,7 +207,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="createFolderAction:" destination="BaF-eo-J9z" eventType="touchUpInside" id="7eV-c1-1t0"/>
+                                    <action selector="chooseDefaultFolder:" destination="BaF-eo-J9z" eventType="touchUpInside" id="hYh-yE-Cz1"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, choose folder name and location in your DropBox" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHK-TF-1W6">
@@ -262,7 +262,7 @@
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" id="nCo-Bi-VZg" customClass="MSFolderViewerCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" editingAccessoryType="checkmark" id="nCo-Bi-VZg" customClass="MSFolderViewerCell">
                                         <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nCo-Bi-VZg" id="TWR-Xr-SWY">
@@ -275,7 +275,7 @@
                                                         <constraint firstAttribute="height" constant="35" id="CFD-gb-OL1"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LBf-Zt-eXB">
@@ -286,6 +286,7 @@
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.5907695422" green="0.82240042899999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="GCp-6N-rdq" secondAttribute="trailing" constant="8" id="9ek-S1-yYE"/>
                                                 <constraint firstItem="LBf-Zt-eXB" firstAttribute="leading" secondItem="TWR-Xr-SWY" secondAttribute="leading" constant="16" id="STB-b3-vRU"/>
@@ -294,6 +295,7 @@
                                                 <constraint firstItem="GCp-6N-rdq" firstAttribute="leading" secondItem="LBf-Zt-eXB" secondAttribute="trailing" constant="22" id="c7k-tO-EWw"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.5907695422" green="0.82240042899999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <outlet property="folderPicImageView" destination="LBf-Zt-eXB" id="fsw-LO-agr"/>
                                             <outlet property="nameFolderLabel" destination="GCp-6N-rdq" id="xpX-8E-eeV"/>

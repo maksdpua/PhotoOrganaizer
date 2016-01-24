@@ -17,31 +17,52 @@
 
 @end
 
-@implementation MSFolderViewer
+@implementation MSFolderViewer {
+    NSString *_path;
+    BOOL isFirstStart;
+    NSArray *contentArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    NSDictionary *parameters = @{@"path" : @"", @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@NO};
+    [self firstStartVC];
+}
+
+- (void)firstStartVC {
+    _path = @"";
+    NSDictionary *parameters = @{@"path" : @"", @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@", responseObject);
-//        [MSFolder MR_findByAttribute:<#(NSString *)#> withValue:<#(id)#>];
+        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"idFolder" withValue:@"root"];
+        contentArray = folderContent.folders.allObjects;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
-
-    
 }
 
+#pragma mark - UITableViewDelegate methdods
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return contentArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolderViewerCell *cell = [tableView dequeueReusableCellWithIdentifier:kMSFolderViewerCell];
     
+    [cell setupWithModel:[contentArray objectAtIndex:indexPath.row]];
+    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    MSFolder *folderInfo = [contentArray objectAtIndex:indexPath.row];
+    NSLog(@"Folder Info %@", folderInfo);
 }
 
 @end
