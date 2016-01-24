@@ -11,6 +11,7 @@
 
 static NSString *const kNameOfFolder = @"nameOfFolder";
 static NSString *const kIdFolder = @"idFolder";
+static NSString *const kRoot = @"root";
 
 
 @implementation MSFolder
@@ -20,30 +21,22 @@ static NSString *const kIdFolder = @"idFolder";
 }
 
 - (instancetype)initClassWithDictionary:(NSDictionary *)dictionary {
+    [self checkOrCreateRootFolderEntity];
     for (NSDictionary *element in [dictionary valueForKey:@"entries"]) {
         if ([[element valueForKey:kDotTag] isEqualToString:@"folder"]) {
             NSString *pathString = [NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]];
-            
             id obj = [self.class MR_findFirstByAttribute:kPath withValue:pathString];
             if (obj) {
                 self = obj;
             } else {
-                self = [MSFolder MR_createEntity];
+                self = [self.class MR_createEntity];
                 self = [super loadClassWithDictionary:element InstructionDictionary:[self dictionaryInstructionManager]];
-                NSArray *pathArray = [self.path componentsSeparatedByString:@"/"];
-                if (pathArray.count>2) {
-                    NSString *backFolderPath = [self.path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@",[pathArray lastObject]] withString:@""];
-                    [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addFoldersObject:self];
-                }
+                [self checkForBackFolderAndAddWith:self.path photoObject:nil];
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"file"]){
             if ([MSValidator isPhotoPathExtension:[element valueForKey:kName]] && ![MSPhoto MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
                 MSPhoto *photo = [[MSPhoto alloc]initClassWithDictionary:element];
-                NSArray *pathArray = [self.path componentsSeparatedByString:@"/"];
-                if (pathArray.count>2) {
-                    NSString *backFolderPath = [self.path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@",[pathArray lastObject]] withString:@""];
-                    [[self.class MR_findFirstByAttribute:kPath withValue:backFolderPath] addPhotosObject:photo];
-                }
+                [self checkForBackFolderAndAddWith:photo.path photoObject:photo];
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"deleted"]){
             if ([self.class MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
@@ -51,12 +44,38 @@ static NSString *const kIdFolder = @"idFolder";
             } else if ([MSPhoto MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
                 [[MSPhoto MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]] MR_deleteEntity];
             }
-            
         }
     }
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-    
     return self;
+}
+
+- (void)checkForBackFolderAndAddWith:(NSString *)path photoObject:(MSPhoto *)object {
+    NSArray *pathArray = [path componentsSeparatedByString:@"/"];
+    if (pathArray.count>2) {
+        NSString *backFolderPath = [path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@",[pathArray lastObject]] withString:@""];
+        if (object) {
+            [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addPhotosObject:object];
+        } else {
+            [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addFoldersObject:self];
+        }
+    } else {
+        if (object) {
+            [[MSFolder MR_findFirstByAttribute:kIdFolder withValue:kRoot] addPhotosObject:object];
+        } else {
+           [[MSFolder MR_findFirstByAttribute:kIdFolder withValue:kRoot] addFoldersObject:self];
+        }
+        
+    }
+}
+
+- (void)checkOrCreateRootFolderEntity {
+    if (![self.class MR_findFirstByAttribute:kIdFolder withValue:kRoot]) {
+        MSFolder *root = [self.class MR_createEntity];
+        [root setValue:kRoot forKey:kIdFolder];
+        [root setValue:kRoot forKey:kNameOfFolder];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    }
 }
 
 @end

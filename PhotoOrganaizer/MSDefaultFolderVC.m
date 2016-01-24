@@ -13,6 +13,7 @@
 #import "MSRequestManager.h"
 #import "MSFolder.h"
 #import "MSAPIMethodsManager.h"
+#import "MSPhoto.h"
 
 @interface MSDefaultFolderVC()<UITextViewDelegate, MSRequestManagerDelegate>
 
@@ -30,11 +31,16 @@
 - (void)viewDidLoad {
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     _apiMethodManager = [[MSAPIMethodsManager alloc]init];
-    MSFolder *folder = [MSFolder MR_findFirstByAttribute:@"nameOfFolder" withValue:@"Jessica Jones Wallpapres"];
-    for (MSFolder *f in folder.folders) {
-         NSLog(@"%@", f.nameOfFolder);
+    
+    NSArray *array = [MSPhoto MR_findAll];
+    NSArray *arra2 = [MSFolder MR_findAll];
+    for (MSPhoto *ee in array) {
+        NSLog(@"PHOTOS -- %@", ee.namePhoto);
     }
-   
+    for (MSFolder *fold in arra2) {
+        NSLog(@"FOLDERS -- %@", fold.nameOfFolder);
+    }
+    
     
 }
 
@@ -42,7 +48,7 @@
 
 - (IBAction)createFolderAction:(id)sender {
 //    [NSString stringWithFormat:@"/%@",self.folderNameTextView.text]
-    [_apiMethodManager getFolderContentWithPath:@"/Jessica Jones Wallpapres"];
+    [_apiMethodManager getFolderContentWithPath:@""];
     
 }
 

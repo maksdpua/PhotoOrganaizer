@@ -43,7 +43,7 @@
 
 - (void)getFolderContentWithPath:(NSString *)path {
     [self setParametersForFolderWithPath:path];
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:_parameters classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:_parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@", responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);

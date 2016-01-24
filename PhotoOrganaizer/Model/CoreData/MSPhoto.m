@@ -20,7 +20,7 @@
 - (instancetype)initClassWithDictionary:(NSDictionary *)dictionary {
     NSString *pathString = [NSString stringWithFormat:@"%@", [dictionary valueForKey:kPathLower]];
     
-    id obj = [self.class MR_findFirstByAttribute:kPathLower withValue:pathString];
+    id obj = [self.class MR_findFirstByAttribute:kPath withValue:pathString];
     if (obj) {
         self = obj;
     } else {
