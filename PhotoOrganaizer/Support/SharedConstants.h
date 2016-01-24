@@ -24,5 +24,14 @@ static NSString *const kFolderPic = @"folder-generic";
 
 static NSString *const kMSFolderViewerCell = @"MSFolderViewerCell";
 
+#pragma mark - CoreDataModelsEntriesKeys
+
+static NSString *const kID = @"id";
+static NSString *const kPathLower = @"path_lower";
+static NSString *const kDotTag = @".tag";
+static NSString *const kName = @"name";
+static NSString *const kPath = @"path";
+static NSString *const kTag = @"tag";
+
 
 #endif /* SharedConstants_h */

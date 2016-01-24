@@ -9,10 +9,26 @@
 #import "MSPhoto.h"
 #import "MSFolder.h"
 
+
+
 @implementation MSPhoto
 
 - (NSDictionary *)dictionaryInstructionManager {
-    return @{@"name" : @"namePhoto", @".tag" : @"tag", @"id" : @"idPhoto", @"path_lower" : @"path", @"size" : @"sizePhoto", @"server_modified" : @"serverModified", @"client_modified" : @"clientModified", @"rev" : @"revPhoto"};
+    return @{kName : @"namePhoto", kDotTag : @"tag", kID : @"idPhoto", kPathLower : kPath, @"size" : @"sizePhoto", @"server_modified" : @"serverModified", @"client_modified" : @"clientModified", @"rev" : @"revPhoto"};
+}
+
+- (instancetype)initClassWithDictionary:(NSDictionary *)dictionary {
+    NSString *pathString = [NSString stringWithFormat:@"%@", [dictionary valueForKey:kPathLower]];
+    
+    id obj = [self.class MR_findFirstByAttribute:kPathLower withValue:pathString];
+    if (obj) {
+        self = obj;
+    } else {
+        self = [self.class MR_createEntity];
+        self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
+    }
+    
+    return self;
 }
 
 @end
