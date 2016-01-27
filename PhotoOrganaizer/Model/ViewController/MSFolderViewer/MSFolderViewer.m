@@ -18,42 +18,31 @@
 @end
 
 @implementation MSFolderViewer {
-    NSString *_path;
-    BOOL isFirstStart;
-    NSArray *contentArray;
+    
+    NSArray *_contentArray;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self firstStartVC];
+    [self requestForData];
 }
 
-- (void)firstStartVC {
-    _path = @"";
-    NSDictionary *parameters = @{@"path" : @"", @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
+- (void)requestForData {
+    NSDictionary *parameters = @{@"path" : self.path, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@", responseObject);
-        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"idFolder" withValue:@"root"];
-        contentArray = folderContent.folders.allObjects;
+        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
+        NSArray *all = [MSFolder MR_findAll];
+        for (MSFolder *f in all) {
+            NSLog(@"Folder %@", f.nameOfFolder);
+        }
+        _contentArray = folderContent.folders.allObjects;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
 }
 
-
-- (void)checkButtonTapped:(id)sender event:(id)event{
-    NSSet *touches = [event allTouches];
-    UITouch *touch = [touches anyObject];
-    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
-    if (indexPath != nil){
-        [self tableView: self.tableView accessoryButtonTappedForRowWithIndexPath: indexPath];
-        MSFolder *folderInfo = [contentArray objectAtIndex:indexPath.row];
-        NSLog(@"Folder Info %@", folderInfo);
-    }
-}
 
 - (void)viewWillAppear:(BOOL)animated {
     [self addOKbuttonOnNavBar];
@@ -73,22 +62,29 @@
     
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - UITableViewDelegate methdods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return contentArray.count;
+    return _contentArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolderViewerCell *cell = [tableView dequeueReusableCellWithIdentifier:kMSFolderViewerCell];
     
-    [cell setupWithModel:[contentArray objectAtIndex:indexPath.row]];
+    [cell setupWithModel:[_contentArray objectAtIndex:indexPath.row]];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
+    MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
+    toNextFolder.path = folderInfo.path;
+    [self.navigationController pushViewController:toNextFolder animated:YES];
 }
 
 

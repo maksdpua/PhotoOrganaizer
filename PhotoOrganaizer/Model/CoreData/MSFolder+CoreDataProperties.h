@@ -20,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *path;
 @property (nullable, nonatomic, retain) NSString *tag;
 @property (nullable, nonatomic, retain) NSSet<MSFolder *> *folders;
-@property (nullable, nonatomic, retain) MSFolder *backFolder;
 @property (nullable, nonatomic, retain) NSSet<MSPhoto *> *photos;
 
 
@@ -37,11 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removePhotosObject:(MSPhoto *)value;
 - (void)addPhotos:(NSSet<MSPhoto *> *)values;
 - (void)removePhotos:(NSSet<MSPhoto *> *)values;
-
-- (void)addBackFolderObject:(MSFolder *)value;
-- (void)removeBackFolderObject:(MSFolder *)value;
-
-
 
 
 @end

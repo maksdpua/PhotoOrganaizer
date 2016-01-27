@@ -74,6 +74,7 @@ static NSString *const kRoot = @"root";
         MSFolder *root = [self.class MR_createEntity];
         [root setValue:kRoot forKey:kIdFolder];
         [root setValue:kRoot forKey:kNameOfFolder];
+        [root setValue:@"" forKey:kPath];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
 }

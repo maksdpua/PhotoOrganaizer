@@ -18,7 +18,6 @@
 @dynamic path;
 @dynamic tag;
 @dynamic folders;
-@dynamic backFolder;
 @dynamic photos;
 
 @end

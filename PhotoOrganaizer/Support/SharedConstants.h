@@ -33,5 +33,6 @@ static NSString *const kName = @"name";
 static NSString *const kPath = @"path";
 static NSString *const kTag = @"tag";
 
+static NSString *const kStringRecevied = @"stringRecevied";
 
 #endif /* SharedConstants_h */

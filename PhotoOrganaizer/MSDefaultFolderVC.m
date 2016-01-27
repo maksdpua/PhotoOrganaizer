@@ -59,6 +59,7 @@
 
 - (IBAction)chooseDefaultFolder:(id)sender {
     MSFolderViewer *folderViewerVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
+    folderViewerVC.path = @"";
     [self.navigationController pushViewController:folderViewerVC animated:YES];
 }
 
