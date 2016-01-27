@@ -55,11 +55,23 @@
     }
 }
 
-- (IBAction)accessoryTaped:(id)sender {
-    
+- (void)viewWillAppear:(BOOL)animated {
+    [self addOKbuttonOnNavBar];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
+- (void)addOKbuttonOnNavBar {
+    UIBarButtonItem *btnSave = [[UIBarButtonItem alloc]
+                                initWithTitle:@"OK"
+                                style:UIBarButtonItemStyleDone
+                                target:self
+                                action:@selector(doneAction)];
+    self.navigationItem.rightBarButtonItem = btnSave;
+}
 
+- (void)doneAction {
+    
+}
 
 #pragma mark - UITableViewDelegate methdods
 

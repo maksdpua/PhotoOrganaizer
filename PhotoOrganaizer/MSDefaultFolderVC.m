@@ -45,6 +45,10 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
 #pragma mark - Actions
 
 - (IBAction)createFolderAction:(id)sender {
