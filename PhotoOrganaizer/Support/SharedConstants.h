@@ -20,7 +20,7 @@ static NSString *const kListFolder = @"files/list_folder";
 static NSString *const kCreateFolder = @"files/create_folder";
 
 
-static NSString *const kFolderPic = @"folder-generic";
+static NSString *const kFolderPic = @"blackfolder";
 
 static NSString *const kMSFolderViewerCell = @"MSFolderViewerCell";
 

@@ -10,4 +10,14 @@
 
 @implementation UIButton (PathString)
 
+@dynamic pathString;
+
+- (void)setPathString:(NSString *)pathString {
+    [self setValue:pathString forKey:@"path"];
+}
+
+- (NSString *)pathString {
+    return [self valueForKey:@"path"];
+}
+
 @end

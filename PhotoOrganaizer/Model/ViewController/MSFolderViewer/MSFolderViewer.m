@@ -42,6 +42,25 @@
     }];
 }
 
+
+- (void)checkButtonTapped:(id)sender event:(id)event{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
+    if (indexPath != nil){
+        [self tableView: self.tableView accessoryButtonTappedForRowWithIndexPath: indexPath];
+        MSFolder *folderInfo = [contentArray objectAtIndex:indexPath.row];
+        NSLog(@"Folder Info %@", folderInfo);
+    }
+}
+
+- (IBAction)accessoryTaped:(id)sender {
+    
+}
+
+
+
 #pragma mark - UITableViewDelegate methdods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -60,9 +79,5 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    MSFolder *folderInfo = [contentArray objectAtIndex:indexPath.row];
-    NSLog(@"Folder Info %@", folderInfo);
-}
 
 @end

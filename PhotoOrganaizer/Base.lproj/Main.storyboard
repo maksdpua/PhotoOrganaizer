@@ -258,40 +258,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="D8s-bh-R2P">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="D8s-bh-R2P">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" editingAccessoryType="checkmark" id="nCo-Bi-VZg" customClass="MSFolderViewerCell">
-                                        <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" editingAccessoryType="checkmark" id="nCo-Bi-VZg" customClass="MSFolderViewerCell">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nCo-Bi-VZg" id="TWR-Xr-SWY">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCp-6N-rdq">
-                                                    <rect key="frame" x="81" y="0.0" width="198" height="35"/>
+                                                    <rect key="frame" x="59" y="4" width="200" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="CFD-gb-OL1"/>
+                                                        <constraint firstAttribute="height" constant="35" id="LM0-6o-K8x"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.5907695422" green="0.82240042899999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.80122451241134751" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LBf-Zt-eXB">
                                                     <rect key="frame" x="8" y="0.0" width="43" height="43"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="NXR-p3-htl"/>
-                                                        <constraint firstAttribute="height" constant="43" id="WLh-H9-A5X"/>
+                                                        <constraint firstAttribute="height" constant="43" id="8h0-UV-eZ9"/>
+                                                        <constraint firstAttribute="width" constant="43" id="ktM-Dp-QTC"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyo-yR-KN7">
+                                                    <rect key="frame" x="267" y="7" width="45" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="5RL-nm-Vtt"/>
+                                                        <constraint firstAttribute="width" constant="45" id="uHn-Ho-oEv"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Enter">
+                                                        <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.80122451240000003" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="GCp-6N-rdq" secondAttribute="trailing" constant="8" id="9ek-S1-yYE"/>
-                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="leading" secondItem="TWR-Xr-SWY" secondAttribute="leading" constant="8" id="STB-b3-vRU"/>
-                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="ZXs-wv-nMh"/>
-                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="bNu-7O-pqT"/>
-                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="leading" secondItem="LBf-Zt-eXB" secondAttribute="trailing" constant="30" id="c7k-tO-EWw"/>
+                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" constant="4" id="8ak-3S-ck7"/>
+                                                <constraint firstAttribute="bottom" secondItem="lyo-yR-KN7" secondAttribute="bottom" constant="6" id="AEI-YP-tKh"/>
+                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="Mut-zv-YM7"/>
+                                                <constraint firstAttribute="trailing" secondItem="lyo-yR-KN7" secondAttribute="trailing" constant="8" id="NMU-2h-nSZ"/>
+                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="leading" secondItem="TWR-Xr-SWY" secondAttribute="leading" constant="8" id="TKk-bE-ZAX"/>
+                                                <constraint firstItem="lyo-yR-KN7" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" constant="7" id="XZc-qg-sVN"/>
+                                                <constraint firstAttribute="bottom" secondItem="LBf-Zt-eXB" secondAttribute="bottom" id="kvU-t2-Bbg"/>
+                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="leading" secondItem="LBf-Zt-eXB" secondAttribute="trailing" constant="8" id="oq4-BO-0sJ"/>
+                                                <constraint firstItem="lyo-yR-KN7" firstAttribute="leading" secondItem="GCp-6N-rdq" secondAttribute="trailing" constant="8" id="rdK-Ab-R70"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -309,12 +323,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="D8s-bh-R2P" firstAttribute="bottom" secondItem="bM4-Zp-4ga" secondAttribute="top" id="9XI-YH-51u"/>
-                            <constraint firstAttribute="trailing" secondItem="D8s-bh-R2P" secondAttribute="trailing" id="Egb-gS-hFM"/>
-                            <constraint firstItem="D8s-bh-R2P" firstAttribute="top" secondItem="WqJ-uq-L94" secondAttribute="bottom" id="mUq-Ic-DHG"/>
-                            <constraint firstItem="D8s-bh-R2P" firstAttribute="leading" secondItem="pmF-kx-5D2" secondAttribute="leading" id="nEp-Xk-ggE"/>
+                            <constraint firstItem="bM4-Zp-4ga" firstAttribute="top" secondItem="D8s-bh-R2P" secondAttribute="bottom" id="3J7-DD-S2u"/>
+                            <constraint firstItem="D8s-bh-R2P" firstAttribute="leading" secondItem="pmF-kx-5D2" secondAttribute="leading" id="Kdx-ME-AXf"/>
+                            <constraint firstAttribute="trailing" secondItem="D8s-bh-R2P" secondAttribute="trailing" id="m5f-HP-Ouv"/>
+                            <constraint firstItem="D8s-bh-R2P" firstAttribute="top" secondItem="WqJ-uq-L94" secondAttribute="bottom" id="xIB-Td-0Y2"/>
                         </constraints>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="D8s-bh-R2P" id="eyK-Ir-lZs"/>

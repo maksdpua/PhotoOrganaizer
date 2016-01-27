@@ -10,4 +10,6 @@
 
 @interface UIButton (PathString)
 
+@property (nonatomic, retain) NSString *pathString;
+
 @end

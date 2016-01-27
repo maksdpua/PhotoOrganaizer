@@ -11,6 +11,8 @@
 		2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC41C3F0CC200F923DF /* MSValidator.m */; };
 		2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */; };
 		2D1DAB981C47FA5500C7AA19 /* MSRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */; };
+		2D2AE90D1C57CFD100A726AD /* blackfolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D2AE90C1C57CFD100A726AD /* blackfolder.png */; };
+		2D2AE9111C57D28B00A726AD /* UIButton+PathString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2AE9101C57D28B00A726AD /* UIButton+PathString.m */; };
 		2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DF31C42E29A008897C7 /* MSAuth.m */; };
 		2D330DFC1C4306C2008897C7 /* MSDefaultFolderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DFB1C4306C2008897C7 /* MSDefaultFolderVC.m */; };
 		2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38C7771C4925C70081028D /* MSPhoto+CoreDataProperties.m */; };
@@ -66,6 +68,9 @@
 		2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIRequestManager.m; path = Classes/APIRequestManager/MSAPIRequestManager.m; sourceTree = "<group>"; };
 		2D1DAB961C47FA5500C7AA19 /* MSRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSRequestManager.h; path = Classes/MSRequestManager/MSRequestManager.h; sourceTree = "<group>"; };
 		2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSRequestManager.m; path = Classes/MSRequestManager/MSRequestManager.m; sourceTree = "<group>"; };
+		2D2AE90C1C57CFD100A726AD /* blackfolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackfolder.png; sourceTree = "<group>"; };
+		2D2AE90F1C57D28B00A726AD /* UIButton+PathString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+PathString.h"; path = "Category/UIButton+StringPath/UIButton+PathString.h"; sourceTree = "<group>"; };
+		2D2AE9101C57D28B00A726AD /* UIButton+PathString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+PathString.m"; path = "Category/UIButton+StringPath/UIButton+PathString.m"; sourceTree = "<group>"; };
 		2D330DF21C42E29A008897C7 /* MSAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAuth.h; path = Classes/Auth/MSAuth.h; sourceTree = "<group>"; };
 		2D330DF31C42E29A008897C7 /* MSAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAuth.m; path = Classes/Auth/MSAuth.m; sourceTree = "<group>"; };
 		2D330DF51C42E897008897C7 /* AuthConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AuthConstants.h; path = Support/AuthConstants.h; sourceTree = "<group>"; };
@@ -180,6 +185,7 @@
 		2D18BCBC1C3F0ABD00F923DF /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				2D2AE90E1C57D24F00A726AD /* UIButton+PathString */,
 				2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
 			);
@@ -211,6 +217,15 @@
 				2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */,
 			);
 			name = MSRequestManager;
+			sourceTree = "<group>";
+		};
+		2D2AE90E1C57D24F00A726AD /* UIButton+PathString */ = {
+			isa = PBXGroup;
+			children = (
+				2D2AE90F1C57D28B00A726AD /* UIButton+PathString.h */,
+				2D2AE9101C57D28B00A726AD /* UIButton+PathString.m */,
+			);
+			name = "UIButton+PathString";
 			sourceTree = "<group>";
 		};
 		2D330DF11C42E268008897C7 /* Auth */ = {
@@ -302,6 +317,7 @@
 			children = (
 				2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */,
 				2DDF2B061C4FEEF100330CEA /* folder-generic.png */,
+				2D2AE90C1C57CFD100A726AD /* blackfolder.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -567,6 +583,7 @@
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
 				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
 				2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */,
+				2D2AE90D1C57CFD100A726AD /* blackfolder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +670,7 @@
 				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
 				FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
+				2D2AE9111C57D28B00A726AD /* UIButton+PathString.m in Sources */,
 				2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */,
 				2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */,
 				2D38C77D1C4925C70081028D /* MSPhoto.m in Sources */,
