@@ -9,11 +9,13 @@
 #import "MSFolderViewer.h"
 #import "MSFolderViewerCell.h"
 #import "MSRequestManager.h"
+#import "MSDefaultFolderVC.h"
 
 @interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
+
 
 @end
 
@@ -26,9 +28,11 @@
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     [self requestForData];
+    
 }
 
 - (void)requestForData {
+    NSLog(@"Self Path %@", self.path);
     NSDictionary *parameters = @{@"path" : self.path, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
@@ -59,11 +63,12 @@
 }
 
 - (void)doneAction {
-    
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDefaultFolderPathSelected object:self.path];
+    for (id controller in [self.navigationController viewControllers]) {
+        if ([controller isKindOfClass:[MSDefaultFolderVC class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
 }
 
 #pragma mark - UITableViewDelegate methdods

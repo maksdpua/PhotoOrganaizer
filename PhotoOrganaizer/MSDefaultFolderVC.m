@@ -22,16 +22,19 @@
 @property (nonatomic, weak) IBOutlet UIButton *smileButton;
 @property IBOutlet NSLayoutConstraint *textViewHeightCosntraint;
 @property (nonatomic, strong) MSRequestManager *requestManager;
+@property (nonatomic ,strong) NSString *defaultFolderPath;
 
 @end
 
 @implementation MSDefaultFolderVC {
     MSAPIMethodsManager *_apiMethodManager;
+    
 }
 
 - (void)viewDidLoad {
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     _apiMethodManager = [[MSAPIMethodsManager alloc]init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializeDefaultFolderPathWith:) name:kDefaultFolderPathSelected object:nil];
     
     NSArray *array = [MSPhoto MR_findAll];
     NSArray *arra2 = [MSFolder MR_findAll];
@@ -51,9 +54,14 @@
 
 #pragma mark - Actions
 
+- (void)initializeDefaultFolderPathWith:(NSNotification *)notification {
+    self.defaultFolderPath = notification.object;
+}
+
 - (IBAction)createFolderAction:(id)sender {
-//    [NSString stringWithFormat:@"/%@",self.folderNameTextView.text]
-    [_apiMethodManager getFolderContentWithPath:@""];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", self.defaultFolderPath, self.folderNameTextView.text];
+    [_apiMethodManager createFolderWithPath:fullPath];
+    [[NSUserDefaults standardUserDefaults] setObject:fullPath forKey:kDefaultFolderPathSelected];
     
 }
 
@@ -88,6 +96,10 @@
         self.textViewHeightCosntraint.constant = newFrame.size.height;
         [self.view layoutIfNeeded];
     }];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

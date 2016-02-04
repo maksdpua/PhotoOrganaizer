@@ -14,4 +14,6 @@
 + (NSString *)token;
 + (NSString *)uid;
 
+
+
 @end

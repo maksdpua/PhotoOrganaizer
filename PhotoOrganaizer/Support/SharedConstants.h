@@ -34,5 +34,6 @@ static NSString *const kPath = @"path";
 static NSString *const kTag = @"tag";
 
 static NSString *const kStringRecevied = @"stringRecevied";
+static NSString *const kDefaultFolderPathSelected = @"defaultFolderPathSelected";
 
 #endif /* SharedConstants_h */
