@@ -15,6 +15,9 @@
 #import "MSAPIMethodsManager.h"
 #import "MSPhoto.h"
 #import "MSFolderViewer.h"
+#import "MSGalleryRoll.h"
+
+static NSString *const kEmptyString = @"";
 
 @interface MSDefaultFolderVC()<UITextViewDelegate, MSRequestManagerDelegate>
 
@@ -34,17 +37,7 @@
 - (void)viewDidLoad {
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     _apiMethodManager = [[MSAPIMethodsManager alloc]init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializeDefaultFolderPathWith:) name:kDefaultFolderPathSelected object:nil];
-    
-    NSArray *array = [MSPhoto MR_findAll];
-    NSArray *arra2 = [MSFolder MR_findAll];
-    for (MSPhoto *ee in array) {
-        NSLog(@"PHOTOS -- %@", ee.namePhoto);
-    }
-    for (MSFolder *fold in arra2) {
-        NSLog(@"FOLDERS -- %@", fold.nameOfFolder);
-    }
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializeDefaultFolderPathWith:) name:kDefaultFolderPath object:nil];
     
 }
 
@@ -59,9 +52,14 @@
 }
 
 - (IBAction)createFolderAction:(id)sender {
+    if (!self.defaultFolderPath) {
+        self.defaultFolderPath = kEmptyString;
+    }
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", self.defaultFolderPath, self.folderNameTextView.text];
     [_apiMethodManager createFolderWithPath:fullPath];
-    [[NSUserDefaults standardUserDefaults] setObject:fullPath forKey:kDefaultFolderPathSelected];
+    [[NSUserDefaults standardUserDefaults] setObject:fullPath forKey:kDefaultFolderPath];
+    MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
+    [self.navigationController pushViewController:galleryRoll animated:YES];
     
 }
 

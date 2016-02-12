@@ -63,7 +63,7 @@
 }
 
 - (void)doneAction {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDefaultFolderPathSelected object:self.path];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDefaultFolderPath object:self.path];
     for (id controller in [self.navigationController viewControllers]) {
         if ([controller isKindOfClass:[MSDefaultFolderVC class]]) {
             [self.navigationController popToViewController:controller animated:YES];

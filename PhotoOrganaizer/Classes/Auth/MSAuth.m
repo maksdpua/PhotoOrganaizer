@@ -34,6 +34,10 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
++ (NSString *)defaulFolderPath {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultFolderPath];
+}
+
 
 
 

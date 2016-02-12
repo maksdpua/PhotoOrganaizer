@@ -13,6 +13,7 @@
 + (void)beginObservingForAuthData;
 + (NSString *)token;
 + (NSString *)uid;
++ (NSString *)defaulFolderPath;
 
 
 

@@ -32,9 +32,9 @@
 }
 
 - (void)createFolderWithPath:(NSString *)path {
-    [self setParametersForFolderWithPath:path];
+    NSDictionary *parametrs = @{@"path" : path};
     
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:_parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@", responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);

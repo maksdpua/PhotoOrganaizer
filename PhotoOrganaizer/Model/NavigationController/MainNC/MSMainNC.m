@@ -12,6 +12,7 @@
 #import "MSAuth.h"
 #import "MSDefaultFolderVC.h"
 #import "AuthConstants.h"
+#import "MSGalleryRoll.h"
 
 @interface MSMainNC ()
 
@@ -22,6 +23,7 @@
 @implementation MSMainNC {
     NSMutableArray *arrayVC;
     MSDefaultFolderVC *defaultFolderVC;
+    
 }
 
 - (void)viewDidLoad {
@@ -35,6 +37,10 @@
     if ([MSAuth token] || [MSAuth uid]) {
         defaultFolderVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSDefaultFolderVC class])];
         [arrayVC addObject:defaultFolderVC];
+    }
+    if ([MSAuth defaulFolderPath]) {
+        MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
+        [arrayVC addObject:galleryRoll];
     }
     [self setViewControllers:arrayVC animated:NO];
 }

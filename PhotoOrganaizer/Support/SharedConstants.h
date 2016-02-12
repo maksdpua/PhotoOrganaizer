@@ -23,6 +23,7 @@ static NSString *const kCreateFolder = @"files/create_folder";
 static NSString *const kFolderPic = @"blackfolder";
 
 static NSString *const kMSFolderViewerCell = @"MSFolderViewerCell";
+static NSString *const kMSGalleryRollCell = @"MSGalleryRollCell";
 
 #pragma mark - CoreDataModelsEntriesKeys
 
@@ -34,6 +35,6 @@ static NSString *const kPath = @"path";
 static NSString *const kTag = @"tag";
 
 static NSString *const kStringRecevied = @"stringRecevied";
-static NSString *const kDefaultFolderPathSelected = @"defaultFolderPathSelected";
+static NSString *const kDefaultFolderPath = @"defaultFolderPath";
 
 #endif /* SharedConstants_h */
