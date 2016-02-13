@@ -56,10 +56,11 @@ static NSString *const kEmptyString = @"";
         self.defaultFolderPath = kEmptyString;
     }
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", self.defaultFolderPath, self.folderNameTextView.text];
-    [_apiMethodManager createFolderWithPath:fullPath];
-    [[NSUserDefaults standardUserDefaults] setObject:fullPath forKey:kDefaultFolderPath];
-    MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
-    [self.navigationController pushViewController:galleryRoll animated:YES];
+    [_apiMethodManager createFolderWithPath:fullPath complite:^{
+        [[NSUserDefaults standardUserDefaults] setObject:fullPath forKey:kDefaultFolderPath];
+        MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
+        [self.navigationController pushViewController:galleryRoll animated:YES];        
+    }];
     
 }
 

@@ -10,7 +10,7 @@
 
 @interface MSAPIMethodsManager : MSRequestManager
 
-- (void)createFolderWithPath:(NSString *)path;
+- (void)createFolderWithPath:(NSString *)path complite:(void(^)())complite;
 
 - (void)getFolderContentWithPath:(NSString *)path;
 

@@ -31,11 +31,12 @@
     _parameters = @{@"path" : pathString, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
 }
 
-- (void)createFolderWithPath:(NSString *)path {
+- (void)createFolderWithPath:(NSString *)path complite:(void(^)())complite{
     NSDictionary *parametrs = @{@"path" : path};
     
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@", responseObject);
+        complite();
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
     }];
