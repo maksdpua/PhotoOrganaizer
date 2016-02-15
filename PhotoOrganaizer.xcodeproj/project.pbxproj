@@ -32,6 +32,7 @@
 		2D906FD61C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FD51C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m */; };
 		2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */; };
 		2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */; };
+		2DC2E2751C7223D900767E2D /* UINavigationController+CompletionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC2E2741C7223D900767E2D /* UINavigationController+CompletionHandler.m */; };
 		2DD1082C1C6CC18B00EB1757 /* MSGalleryRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */; };
 		2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DDF2B061C4FEEF100330CEA /* folder-generic.png */; };
 		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
@@ -110,6 +111,8 @@
 		2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVC.m; path = Model/ViewController/MainVC/MSMainVC.m; sourceTree = "<group>"; };
 		2D906FEC1C3F03AA00DF01A4 /* MSMainNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainNC.h; path = Model/NavigationController/MainNC/MSMainNC.h; sourceTree = "<group>"; };
 		2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainNC.m; path = Model/NavigationController/MainNC/MSMainNC.m; sourceTree = "<group>"; };
+		2DC2E2731C7223D900767E2D /* UINavigationController+CompletionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+CompletionHandler.h"; path = "Category/UINavigationController+CompletionHandler/UINavigationController+CompletionHandler.h"; sourceTree = "<group>"; };
+		2DC2E2741C7223D900767E2D /* UINavigationController+CompletionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+CompletionHandler.m"; path = "Category/UINavigationController+CompletionHandler/UINavigationController+CompletionHandler.m"; sourceTree = "<group>"; };
 		2DD1082A1C6CC18B00EB1757 /* MSGalleryRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGalleryRoll.h; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.h; sourceTree = "<group>"; };
 		2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGalleryRoll.m; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.m; sourceTree = "<group>"; };
 		2DDF2B061C4FEEF100330CEA /* folder-generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder-generic.png"; sourceTree = "<group>"; };
@@ -188,6 +191,7 @@
 		2D18BCBC1C3F0ABD00F923DF /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				2DC2E2721C72239200767E2D /* UINavigationController+CompletionHandler */,
 				2D2AE90E1C57D24F00A726AD /* UIButton+PathString */,
 				2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
@@ -445,6 +449,15 @@
 			name = NavigationController;
 			sourceTree = "<group>";
 		};
+		2DC2E2721C72239200767E2D /* UINavigationController+CompletionHandler */ = {
+			isa = PBXGroup;
+			children = (
+				2DC2E2731C7223D900767E2D /* UINavigationController+CompletionHandler.h */,
+				2DC2E2741C7223D900767E2D /* UINavigationController+CompletionHandler.m */,
+			);
+			name = "UINavigationController+CompletionHandler";
+			sourceTree = "<group>";
+		};
 		2DD108291C6CC15A00EB1757 /* MSGalleryRoll */ = {
 			isa = PBXGroup;
 			children = (
@@ -689,6 +702,7 @@
 				2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */,
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
+				2DC2E2751C7223D900767E2D /* UINavigationController+CompletionHandler.m in Sources */,
 				FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
 				2D2AE9111C57D28B00A726AD /* UIButton+PathString.m in Sources */,

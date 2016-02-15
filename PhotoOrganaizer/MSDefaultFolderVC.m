@@ -66,7 +66,7 @@ static NSString *const kEmptyString = @"";
 
 - (IBAction)chooseDefaultFolder:(id)sender {
     MSFolderViewer *folderViewerVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
-    folderViewerVC.path = @"";
+//    folderViewerVC.path = @"";
     [self.navigationController pushViewController:folderViewerVC animated:YES];
 }
 

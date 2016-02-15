@@ -10,7 +10,7 @@
 #import "LoginService.h"
 #import "MSMainVC.h"
 #import "MSAuth.h"
-#import "MSDefaultFolderVC.h"
+#import "MSFolderViewer.h"
 #import "AuthConstants.h"
 #import "MSGalleryRoll.h"
 
@@ -22,21 +22,18 @@
 
 @implementation MSMainNC {
     NSMutableArray *arrayVC;
-    MSDefaultFolderVC *defaultFolderVC;
     
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushDefaultFolderVC) name:kTokenWasAccepted object:nil];
     MSMainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
     arrayVC = [NSMutableArray new];
-    defaultFolderVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSDefaultFolderVC class])];
     [arrayVC addObject:mainVC];
     
-    if ([MSAuth token] || [MSAuth uid]) {
-        defaultFolderVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSDefaultFolderVC class])];
-        [arrayVC addObject:defaultFolderVC];
+    if ([MSAuth token]) {
+        MSFolderViewer *folderViewer = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
+        [arrayVC addObject:folderViewer];
     }
     if ([MSAuth defaulFolderPath]) {
         MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
@@ -48,14 +45,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)pushDefaultFolderVC {
-    [self pushViewController:defaultFolderVC animated:NO];
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

@@ -15,12 +15,13 @@
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
-
+@property (nonatomic, strong) NSString *path;
+typedef NSString * (^folderSet)();
 
 @end
 
 @implementation MSFolderViewer {
-    
+    folderSet _folderBlock;
     NSArray *_contentArray;
 }
 
@@ -32,7 +33,10 @@
 }
 
 - (void)requestForData {
-    NSLog(@"Self Path %@", self.path);
+    if (!self.path) {
+        self.path = @"";
+    }
+    
     NSDictionary *parameters = @{@"path" : self.path, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
@@ -87,9 +91,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
+    
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = folderInfo.path;
     [self.navigationController pushViewController:toNextFolder animated:YES];
+    
 }
 
 

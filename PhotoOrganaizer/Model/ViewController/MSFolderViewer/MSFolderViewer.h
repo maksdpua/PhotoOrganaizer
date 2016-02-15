@@ -10,6 +10,4 @@
 
 @interface MSFolderViewer : UIViewController
 
-@property (nonatomic, strong) NSString *path;
-
 @end
