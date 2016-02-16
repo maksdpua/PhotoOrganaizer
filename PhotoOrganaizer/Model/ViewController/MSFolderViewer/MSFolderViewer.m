@@ -16,12 +16,10 @@
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *path;
-typedef NSString * (^folderSet)();
 
 @end
 
 @implementation MSFolderViewer {
-    folderSet _folderBlock;
     NSArray *_contentArray;
 }
 
@@ -29,14 +27,13 @@ typedef NSString * (^folderSet)();
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     [self requestForData];
-    
+ 
 }
 
 - (void)requestForData {
     if (!self.path) {
         self.path = @"";
     }
-    
     NSDictionary *parameters = @{@"path" : self.path, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
@@ -51,10 +48,14 @@ typedef NSString * (^folderSet)();
     }];
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
     [self addOKbuttonOnNavBar];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
+    if ([self.path isEqualToString:@""]) {
+        self.navigationItem.hidesBackButton = YES;
+    } else {
+        self.navigationItem.hidesBackButton = NO;
+    }
 }
 
 - (void)addOKbuttonOnNavBar {
@@ -67,12 +68,8 @@ typedef NSString * (^folderSet)();
 }
 
 - (void)doneAction {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDefaultFolderPath object:self.path];
-    for (id controller in [self.navigationController viewControllers]) {
-        if ([controller isKindOfClass:[MSDefaultFolderVC class]]) {
-            [self.navigationController popToViewController:controller animated:YES];
-        }
-    }
+   [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableViewDelegate methdods

@@ -37,8 +37,6 @@
     }
     [self changeButtonBeforeLogin];
     [self performSelector:@selector(login) withObject:nil afterDelay:1.0f];
-//    MSMainVCWebView *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVCWebView class])];
-//    [self.navigationController pushViewController:webViewController animated:YES];
 }
 
 - (void)loginButtonAnimation {

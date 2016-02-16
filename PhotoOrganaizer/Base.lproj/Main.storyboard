@@ -3,43 +3,24 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--MainVC Web View-->
-        <scene sceneID="VSy-ue-qmh">
+        <!--Gallery Roll Navigation-->
+        <scene sceneID="lSX-lE-zFn">
             <objects>
-                <viewController storyboardIdentifier="MSMainVCWebView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zck-Sv-T4J" customClass="MSMainVCWebView" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pUa-9U-1bb"/>
-                        <viewControllerLayoutGuide type="bottom" id="TM1-v2-Igh"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="I13-5i-dyv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HfN-X4-a1R">
-                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="HfN-X4-a1R" firstAttribute="bottom" secondItem="TM1-v2-Igh" secondAttribute="top" id="7Lc-Q1-fZt"/>
-                            <constraint firstAttribute="trailing" secondItem="HfN-X4-a1R" secondAttribute="trailing" id="EMt-0n-5ah"/>
-                            <constraint firstItem="HfN-X4-a1R" firstAttribute="top" secondItem="pUa-9U-1bb" secondAttribute="bottom" id="dWV-6p-nia"/>
-                            <constraint firstItem="HfN-X4-a1R" firstAttribute="leading" secondItem="I13-5i-dyv" secondAttribute="leading" id="ef4-xU-wgd"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="f0t-Tf-nEI"/>
+                <navigationController storyboardIdentifier="MSGalleryRollNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vVe-Ha-bAP" customClass="MSGalleryRollNavigation" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nX6-fI-lKf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
                     <connections>
-                        <outlet property="webView" destination="HfN-X4-a1R" id="BcW-Ni-OMc"/>
+                        <segue destination="JLU-aw-Kiv" kind="relationship" relationship="rootViewController" id="ltW-YJ-C2M"/>
                     </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bFf-By-JFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fi9-zz-ebD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="54" y="1072"/>
+            <point key="canvasLocation" x="-80" y="1713"/>
         </scene>
         <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
@@ -53,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lW3-zh-xvq">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lW3-zh-xvq">
                                 <rect key="frame" x="102" y="258" width="116" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="51" id="aft-RE-mmI"/>
@@ -129,99 +110,13 @@
                             <outlet property="delegate" destination="JLU-aw-Kiv" id="ZUc-CY-2o3"/>
                         </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" id="QMt-DF-CXU"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySW-bk-kz3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="938" y="439"/>
-        </scene>
-        <!--Default FolderVC-->
-        <scene sceneID="2xK-37-n5b">
-            <objects>
-                <viewController storyboardIdentifier="MSDefaultFolderVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BaF-eo-J9z" customClass="MSDefaultFolderVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="OnO-hw-nOa"/>
-                        <viewControllerLayoutGuide type="bottom" id="ubi-ar-Bd4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="eaO-zS-fLd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zA4-2E-60G">
-                                <rect key="frame" x="123" y="440" width="74" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="74" id="7RC-ub-Vvs"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="Create">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="createFolderAction:" destination="BaF-eo-J9z" eventType="touchUpInside" id="TNA-4V-HI9"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Photo Organaizer folder" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ngs-f6-WQj">
-                                <rect key="frame" x="40" y="261" width="240" height="36"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="egV-CI-nBe"/>
-                                </constraints>
-                                <color key="textColor" red="0.5907695422" green="0.82240042899999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BaF-eo-J9z" id="5Yt-kS-Vhe"/>
-                                </connections>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLn-KZ-ldb">
-                                <rect key="frame" x="51" y="320" width="219" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="CWF-IT-tLN"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="tap for choose">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="chooseDefaultFolder:" destination="BaF-eo-J9z" eventType="touchUpInside" id="hYh-yE-Cz1"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, choose folder name and location in your DropBox" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nHK-TF-1W6">
-                                <rect key="frame" x="48" y="80" width="224" height="92"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="92" id="fxi-vS-7uf"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" red="0.5907695422" green="0.82240042899999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="qLn-KZ-ldb" firstAttribute="top" secondItem="Ngs-f6-WQj" secondAttribute="bottom" constant="23" id="03E-7j-Tjr"/>
-                            <constraint firstItem="ubi-ar-Bd4" firstAttribute="top" secondItem="zA4-2E-60G" secondAttribute="bottom" constant="93" id="2CH-Id-4Cr"/>
-                            <constraint firstItem="Ngs-f6-WQj" firstAttribute="centerX" secondItem="nHK-TF-1W6" secondAttribute="centerX" id="EKE-nI-SLw"/>
-                            <constraint firstItem="qLn-KZ-ldb" firstAttribute="centerX" secondItem="Ngs-f6-WQj" secondAttribute="centerX" id="Gfl-qY-dmC"/>
-                            <constraint firstItem="Ngs-f6-WQj" firstAttribute="leading" secondItem="eaO-zS-fLd" secondAttribute="leadingMargin" constant="24" id="Gl1-RI-gIc"/>
-                            <constraint firstItem="nHK-TF-1W6" firstAttribute="leading" secondItem="eaO-zS-fLd" secondAttribute="leadingMargin" constant="32" id="MXE-gV-3oQ"/>
-                            <constraint firstItem="Ngs-f6-WQj" firstAttribute="top" relation="lessThanOrEqual" secondItem="nHK-TF-1W6" secondAttribute="bottom" constant="94" id="QmG-2h-L1i"/>
-                            <constraint firstItem="qLn-KZ-ldb" firstAttribute="leading" secondItem="eaO-zS-fLd" secondAttribute="leadingMargin" constant="35" id="VWf-yp-YFg"/>
-                            <constraint firstItem="nHK-TF-1W6" firstAttribute="top" secondItem="OnO-hw-nOa" secondAttribute="bottom" constant="60" id="mor-H1-lFB"/>
-                            <constraint firstItem="zA4-2E-60G" firstAttribute="top" secondItem="qLn-KZ-ldb" secondAttribute="bottom" constant="90" id="one-HY-STu"/>
-                            <constraint firstItem="zA4-2E-60G" firstAttribute="centerX" secondItem="qLn-KZ-ldb" secondAttribute="centerX" id="wtH-FB-wMT"/>
-                            <constraint firstItem="zA4-2E-60G" firstAttribute="centerX" secondItem="eaO-zS-fLd" secondAttribute="centerX" id="xsz-3L-9wH"/>
-                        </constraints>
-                    </view>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="folderNameTextView" destination="Ngs-f6-WQj" id="NEy-bF-YuD"/>
-                        <outlet property="textViewHeightCosntraint" destination="egV-CI-nBe" id="fOS-Qv-mP9"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ts2-qp-M4i" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="508" y="1072"/>
+            <point key="canvasLocation" x="350" y="1713"/>
         </scene>
         <!--Folder Viewer-->
         <scene sceneID="nhF-kL-lZi">
@@ -304,7 +199,8 @@
         <!--MainNC-->
         <scene sceneID="bQp-K2-bve">
             <objects>
-                <navigationController storyboardIdentifier="MSMainNC" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="nzW-Mw-vng" customClass="MSMainNC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MSMainNC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nzW-Mw-vng" customClass="MSMainNC" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="2EJ-Lm-UPI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
