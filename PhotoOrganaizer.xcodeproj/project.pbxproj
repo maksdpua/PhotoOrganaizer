@@ -22,7 +22,7 @@
 		2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D42EF801C5121F200DCDBD2 /* MSFolderViewerCell.m */; };
 		2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D42EF841C5124F000DCDBD2 /* MSFolderViewer.m */; };
 		2D4570741C40186400934FF5 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4570731C40186400934FF5 /* LoginService.m */; };
-		2D4C1E1D1C732F670077843B /* MSNewFolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1C1C732F670077843B /* MSNewFolderView.xib */; };
+		2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */; };
 		2D4C1E201C7331040077843B /* MSCreateNewFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */; };
 		2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */; };
 		2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FAE1C3EFD5400DF01A4 /* main.m */; };
@@ -40,6 +40,7 @@
 		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
 		2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */; };
 		2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B121C501CB100330CEA /* MSAnimation.m */; };
+		2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */; };
 		B2B89E49FB466602F6785C61 /* libPods-PhotoOrganaizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */; };
 		FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBA44B01C53932C00471F0B /* MSFolder+CoreDataProperties.m */; };
 		FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBA44B21C53932C00471F0B /* MSFolder.m */; };
@@ -94,7 +95,7 @@
 		2D42EF841C5124F000DCDBD2 /* MSFolderViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSFolderViewer.m; path = Model/ViewController/MSFolderViewer/MSFolderViewer.m; sourceTree = "<group>"; };
 		2D4570721C40186400934FF5 /* LoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Classes/LoginService/LoginService.h; sourceTree = "<group>"; };
 		2D4570731C40186400934FF5 /* LoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Classes/LoginService/LoginService.m; sourceTree = "<group>"; };
-		2D4C1E1C1C732F670077843B /* MSNewFolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSNewFolderView.xib; path = Model/View/MSNewFolderView.xib; sourceTree = "<group>"; };
+		2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSCreateNewFolderView.xib; path = Model/View/MSCreateNewFolderView.xib; sourceTree = "<group>"; };
 		2D4C1E1E1C7331040077843B /* MSCreateNewFolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSCreateNewFolderView.h; path = Model/View/MSNewFolderView/MSCreateNewFolderView.h; sourceTree = "<group>"; };
 		2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSCreateNewFolderView.m; path = Model/View/MSNewFolderView/MSCreateNewFolderView.m; sourceTree = "<group>"; };
 		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
@@ -127,6 +128,8 @@
 		2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIMethodsManager.m; path = Classes/MSAPIMethodsManager/MSAPIMethodsManager.m; sourceTree = "<group>"; };
 		2DDF2B111C501CB100330CEA /* MSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAnimation.h; path = Classes/MSAnimation/MSAnimation.h; sourceTree = "<group>"; };
 		2DDF2B121C501CB100330CEA /* MSAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAnimation.m; path = Classes/MSAnimation/MSAnimation.m; sourceTree = "<group>"; };
+		2DE89C2B1C737C9900EE82D3 /* MSOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSOptionsView.h; path = Model/View/MSOptionsView/MSOptionsView.h; sourceTree = "<group>"; };
+		2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSOptionsView.m; path = Model/View/MSOptionsView/MSOptionsView.m; sourceTree = "<group>"; };
 		929ADEFCCC27CDCD3BB38851 /* Pods-PhotoOrganaizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.debug.xcconfig"; sourceTree = "<group>"; };
 		A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoOrganaizer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81833BD983100BAAE17E6DF /* Pods-PhotoOrganaizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.release.xcconfig"; sourceTree = "<group>"; };
@@ -354,7 +357,7 @@
 		2D4C1E1A1C732F360077843B /* MSNewFolderView */ = {
 			isa = PBXGroup;
 			children = (
-				2D4C1E1C1C732F670077843B /* MSNewFolderView.xib */,
+				2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */,
 				2D4C1E1E1C7331040077843B /* MSCreateNewFolderView.h */,
 				2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */,
 			);
@@ -364,6 +367,7 @@
 		2D4C1E1B1C732F450077843B /* VIew */ = {
 			isa = PBXGroup;
 			children = (
+				2DE89C2A1C737C5D00EE82D3 /* MSOptionsView */,
 				2D4C1E1A1C732F360077843B /* MSNewFolderView */,
 			);
 			name = VIew;
@@ -526,6 +530,15 @@
 			name = MSAnimation;
 			sourceTree = "<group>";
 		};
+		2DE89C2A1C737C5D00EE82D3 /* MSOptionsView */ = {
+			isa = PBXGroup;
+			children = (
+				2DE89C2B1C737C9900EE82D3 /* MSOptionsView.h */,
+				2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */,
+			);
+			name = MSOptionsView;
+			sourceTree = "<group>";
+		};
 		3CC96BF3FFF0F9A4A8BC495E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,7 +662,7 @@
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
 				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
 				2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */,
-				2D4C1E1D1C732F670077843B /* MSNewFolderView.xib in Resources */,
+				2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */,
 				2D2AE90D1C57CFD100A726AD /* blackfolder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -748,6 +761,7 @@
 				2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */,
 				2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,
+				2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,22 +6,22 @@
 //  Copyright © 2016 Maks. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "MSOptionsView.h"
 
 @protocol MSCreateNewFolderDelegate;
 
 @interface MSCreateNewFolderView : UIView
 
-@property (nonatomic, weak)id<MSCreateNewFolderDelegate>delegate;
+@property (nonatomic, weak)id <MSCreateNewFolderDelegate>delegate;
 
-- (instancetype)initOnView:(UIView *)view;
+- (instancetype)initOnView:(UIView *)view andPath:(NSString *)path;
 
 @end
 
 @protocol MSCreateNewFolderDelegate <NSObject>
 
-@required
-
-- (void)createFolderWithName:(NSString *)name;
+- (void)reloadDataAfterDismissCreateFolderView;
 
 @end
+
+

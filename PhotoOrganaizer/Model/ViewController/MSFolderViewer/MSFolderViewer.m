@@ -10,12 +10,14 @@
 #import "MSFolderViewerCell.h"
 #import "MSRequestManager.h"
 #import "MSDefaultFolderVC.h"
+#import "MSCreateNewFolderView.h"
 
-@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate>
+@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *path;
+@property (nonatomic, strong) MSCreateNewFolderView *createFolderItem;
 
 @end
 
@@ -26,8 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self requestForData];
- 
 }
 
 - (void)requestForData {
@@ -49,6 +49,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self requestForData];
     [self addOKbuttonOnNavBar];
     [self.navigationController setNavigationBarHidden:NO];
     if ([self.path isEqualToString:@""]) {
@@ -58,18 +59,36 @@
     }
 }
 
+- (void)reloadDataAfterDismissCreateFolderView {
+    [self.navigationController setNavigationBarHidden:NO];
+    [self requestForData];
+}
+
 - (void)addOKbuttonOnNavBar {
     UIBarButtonItem *btnSave = [[UIBarButtonItem alloc]
                                 initWithTitle:@"OK"
                                 style:UIBarButtonItemStyleDone
                                 target:self
                                 action:@selector(doneAction)];
+    UIButton *createFolderButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    createFolderButton.frame = CGRectMake(0, 0, 100, 25);
+    createFolderButton.backgroundColor = [UIColor clearColor];
+    [createFolderButton setTitle:@"Create folder" forState:UIControlStateNormal];
+    [createFolderButton addTarget:self action:@selector(createFolder) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.titleView = createFolderButton;
     self.navigationItem.rightBarButtonItem = btnSave;
 }
 
 - (void)doneAction {
    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)createFolder {
+    [self.navigationController setNavigationBarHidden:YES];
+    self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:self.path];
+    self.createFolderItem.delegate = self;
 }
 
 #pragma mark - UITableViewDelegate methdods
@@ -80,15 +99,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolderViewerCell *cell = [tableView dequeueReusableCellWithIdentifier:kMSFolderViewerCell];
-    
     [cell setupWithModel:[_contentArray objectAtIndex:indexPath.row]];
-    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
-    
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = folderInfo.path;
     [self.navigationController pushViewController:toNextFolder animated:YES];
