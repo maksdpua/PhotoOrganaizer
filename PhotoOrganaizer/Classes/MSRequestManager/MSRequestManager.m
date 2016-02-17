@@ -59,7 +59,12 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
     if ([_jsonDictionary valueForKey:@"format"]) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
+                                                           options:0
+                                                             error:&error];
         NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        jsonString = [jsonString stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+        jsonString = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         [_request setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
     } else {
         [_request setHTTPBody:jsonData];
