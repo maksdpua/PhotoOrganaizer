@@ -18,6 +18,7 @@ static NSString *const kReloadNC = @"reloadNC";
 static NSString *const KMainURL = @"https://api.dropboxapi.com/2/";
 static NSString *const kListFolder = @"files/list_folder";
 static NSString *const kCreateFolder = @"files/create_folder";
+static NSString *const kGetThumbnail = @"files/get_thumbnail";
 
 
 static NSString *const kFolderPic = @"blackfolder";
@@ -36,5 +37,6 @@ static NSString *const kTag = @"tag";
 
 static NSString *const kStringRecevied = @"stringRecevied";
 static NSString *const kDefaultFolderPath = @"defaultFolderPath";
+
 
 #endif /* SharedConstants_h */

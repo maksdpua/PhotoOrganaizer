@@ -24,15 +24,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self createRequestToFolderContent];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self createRequestToFolderContent];
 }
 
 - (void)createRequestToFolderContent {
-    NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
+    NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[MSAuth defaulFolderPath]];
         self.contentArray = mainFolder.photos.allObjects;

@@ -50,13 +50,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [self requestForData];
-    [self addOKbuttonOnNavBar];
-    [self.navigationController setNavigationBarHidden:NO];
-    if ([self.path isEqualToString:@""]) {
-        self.navigationItem.hidesBackButton = YES;
-    } else {
-        self.navigationItem.hidesBackButton = NO;
-    }
 }
 
 - (void)reloadDataAfterDismissCreateFolderView {
@@ -64,31 +57,17 @@
     [self requestForData];
 }
 
-- (void)addOKbuttonOnNavBar {
-    UIBarButtonItem *btnSave = [[UIBarButtonItem alloc]
-                                initWithTitle:@"OK"
-                                style:UIBarButtonItemStyleDone
-                                target:self
-                                action:@selector(doneAction)];
-    UIButton *createFolderButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    createFolderButton.frame = CGRectMake(0, 0, 100, 25);
-    createFolderButton.backgroundColor = [UIColor clearColor];
-    [createFolderButton setTitle:@"Create folder" forState:UIControlStateNormal];
-    [createFolderButton addTarget:self action:@selector(createFolder) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.navigationItem.titleView = createFolderButton;
-    self.navigationItem.rightBarButtonItem = btnSave;
-}
-
-- (void)doneAction {
-   [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (void)createFolder {
+- (IBAction)createFolderAction:(id)sender {
     [self.navigationController setNavigationBarHidden:YES];
     self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:self.path];
     self.createFolderItem.delegate = self;
+}
+
+- (IBAction)doneAction:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
+    [self dismissViewControllerAnimated:NO completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDefaultFolderPath object:nil];
+    }];
 }
 
 #pragma mark - UITableViewDelegate methdods

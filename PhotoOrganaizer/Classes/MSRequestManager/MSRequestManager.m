@@ -13,6 +13,7 @@
 static NSString *const kBearer = @"Bearer";
 static NSString *const kAuthorization = @"Authorization";
 static NSString *const kContentType = @"Content-Type";
+static NSString *const kDropboxAPIarg = @"Dropbox-API-Arg";
 
 @interface MSRequestManager()
 
@@ -57,15 +58,26 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
-    [_request setHTTPBody:jsonData];
+    if ([_jsonDictionary valueForKey:@"format"]) {
+        NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        [_request setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
+    } else {
+        [_request setHTTPBody:jsonData];
+    }
+    
 }
 
 - (void)setHTTPHeaderFieldForAuth {
+    
     [_request setValue: [NSString stringWithFormat:@"%@ %@" ,kBearer,[MSAuth token]] forHTTPHeaderField:kAuthorization];
 }
 
 - (void)setHTTPHeaderFieldForJSONandApp {
     [_request setValue:@"application/json" forHTTPHeaderField:kContentType];
+}
+
+- (void)setHTTPHeaderFieldForDropboxAPIarg {
+    
 }
 
 - (void)fillManagerWithURLstring:(NSString *)urlString setParamterDictionary:(NSDictionary *)paramtersDictionary setClass:(Class)class {
@@ -102,8 +114,11 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     _request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:urlString parameters:nil error:&error];
 
     [self setHTTPHeaderFieldForAuth];
-    [self setHTTPHeaderFieldForJSONandApp];
+    if (![dictionary valueForKey:@"format"]) {
+        [self setHTTPHeaderFieldForJSONandApp];
+    }
     [self setHTTPbodyWithDictionary];
+    
     dispatch_async(dispatch_get_main_queue(), ^(void){
         [self createTaskWithSuccess:receiver failure:blockForError];
     });

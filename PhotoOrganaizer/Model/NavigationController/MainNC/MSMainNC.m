@@ -14,10 +14,9 @@
 #import "AuthConstants.h"
 #import "MSGalleryRoll.h"
 #import "MSGalleryRollNavigation.h"
+#import "MSFolderViewNavigation.h"
 
 @interface MSMainNC ()
-
-
 
 @end
 
@@ -26,37 +25,28 @@
     MSFolderViewer *folderViewer;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushViewFolder) name:kTokenWasAccepted object:nil];
-    MSMainVC *mainVC = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
-    arrayVC = [NSMutableArray new];
-    [arrayVC addObject:mainVC];
-    folderViewer = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
-    if ([MSAuth token]) {
-        [arrayVC addObject:folderViewer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentFolderViewerNavigation) name:kTokenWasAccepted object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentMSGalleryRollNavigation) name:kDefaultFolderPath object:nil];
     }
+
+- (void)viewDidAppear:(BOOL)animated {
     if ([MSAuth defaulFolderPath]) {
-        MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
-        [arrayVC addObject:galleryRoll];
+        [self presentMSGalleryRollNavigation];
+    } else if ([MSAuth token]) {
+        [self presentFolderViewerNavigation];
     }
-    [self setViewControllers:arrayVC animated:NO];
-    [self presentViewController:self.navigationController animated:YES completion:^{
-        
-    }];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
+- (void)presentMSGalleryRollNavigation {
+    MSGalleryRollNavigation *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
+    [self presentViewController:galleryRoll animated:YES completion:nil];
 }
 
-- (void)pushViewFolder {
-    [arrayVC addObject:folderViewer];
-    [self setViewControllers:arrayVC animated:YES];
+- (void)presentFolderViewerNavigation {
+    MSFolderViewNavigation *folderNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewNavigation class])];
+    [self presentViewController:folderNavigation animated:YES completion:nil];
 }
 
 - (void)dealloc {
