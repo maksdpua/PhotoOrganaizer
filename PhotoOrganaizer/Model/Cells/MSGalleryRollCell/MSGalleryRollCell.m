@@ -11,6 +11,7 @@
 #import "UIKit+AFNetworking.h"
 #import "MSRequestManager.h"
 
+
 @interface MSGalleryRollCell()<MSRequestManagerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *photo;
@@ -21,27 +22,31 @@
 @implementation MSGalleryRollCell
 
 - (void)setupWithModel:(MSPhoto *)model {
-    self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    NSDictionary *paramerts = @{@"path" : model.path, @"format" : @"jpeg", @"size" : @"w128h128"};
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"https://content.dropboxapi.com/2/files/get_thumbnail"] dictionaryParametrsToJSON:paramerts classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
-            NSData *data = responseObject;
-//            if (!data){
-//                data = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringURL]];
-//                [data writeToFile:path atomically:YES];
-//            } else {
-                UIImage *img = [UIImage imageWithData:data];
-            
+    
+    if (model.dataImage) {
+        self.photo.image = [UIImage imageWithData:model.dataImage];
+    } else {
+        [MBProgressHUD showHUDAddedTo:self animated:YES];
+        self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+        
+        NSDictionary *paramerts = @{@"path" : model.path, @"format" : @"jpeg", @"size" : @"w640h480"};
+        [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"https://content.dropboxapi.com/2/files/get_thumbnail"] dictionaryParametrsToJSON:paramerts classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+                
                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                    self.photo.image = img;
+                    self.photo.image = [UIImage imageWithData:responseObject];;
+                    model.dataImage = responseObject;
+                    [MBProgressHUD hideAllHUDsForView:self animated:YES];
+                    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                 });
-//            }
-        });
-
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"ERROR %@" , error);
-    }];
+            });
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"ERROR %@" , error);
+        }];
+    }
+    
 }
+
 
 
 

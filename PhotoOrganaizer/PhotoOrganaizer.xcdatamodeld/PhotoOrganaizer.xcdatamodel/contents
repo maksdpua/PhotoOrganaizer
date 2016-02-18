@@ -10,6 +10,7 @@
     </entity>
     <entity name="MSPhoto" representedClassName="MSPhoto" syncable="YES">
         <attribute name="clientModified" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dataImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="idPhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="namePhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
@@ -21,6 +22,6 @@
     </entity>
     <elements>
         <element name="MSFolder" positionX="142" positionY="81" width="128" height="133"/>
-        <element name="MSPhoto" positionX="-83" positionY="233" width="128" height="178"/>
+        <element name="MSPhoto" positionX="-83" positionY="233" width="128" height="193"/>
     </elements>
 </model>

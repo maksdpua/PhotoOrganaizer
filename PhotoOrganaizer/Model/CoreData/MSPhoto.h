@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 
 @class MSFolder;
+@class MSDataPhoto;
 
 NS_ASSUME_NONNULL_BEGIN
 
