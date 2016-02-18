@@ -22,13 +22,25 @@
 
 - (void)setupWithModel:(MSPhoto *)model {
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    NSDictionary *paramerts = @{@"path" : model.path, @"format" : @"jpeg", @"size" : @"w64h64"};
+    NSDictionary *paramerts = @{@"path" : model.path, @"format" : @"jpeg", @"size" : @"w128h128"};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"https://content.dropboxapi.com/2/files/get_thumbnail"] dictionaryParametrsToJSON:paramerts classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"REPONSE %@", responseObject);
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+            NSData *data = responseObject;
+//            if (!data){
+//                data = [NSData dataWithContentsOfURL:[NSURL URLWithString:stringURL]];
+//                [data writeToFile:path atomically:YES];
+//            } else {
+                UIImage *img = [UIImage imageWithData:data];
+            
+                dispatch_async(dispatch_get_main_queue(), ^(void){
+                    self.photo.image = img;
+                });
+//            }
+        });
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"ERROR %@" , error);
     }];
-    [self.photo setImageWithURL:[NSURL URLWithString:model.path]];
 }
 
 

@@ -18,6 +18,7 @@ static NSString *const kDropboxAPIarg = @"Dropbox-API-Arg";
 @interface MSRequestManager()
 
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
+@property (nonatomic, strong) NSMutableURLRequest *urlRequest;
 
 typedef void (^recieveBlock)(NSURLSessionDataTask *task, id responseObject);
 typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
@@ -26,7 +27,6 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
 
 @implementation MSRequestManager {
     NSString *_urlString;
-    NSMutableURLRequest *_request;
     NSDictionary *_jsonDictionary;
     Class _class;
 }
@@ -37,6 +37,7 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     if (self) {
         self.delegate = delegate;
         self.sessionManager = [AFHTTPSessionManager manager];
+        self.urlRequest = [[NSMutableURLRequest alloc]init];
     }
     return self;
 }
@@ -63,26 +64,26 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
                                                            options:0
                                                              error:&error];
         NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        jsonString = [jsonString stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-        jsonString = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        [_request setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
+        [self.urlRequest setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
+        self.sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     } else {
-        [_request setHTTPBody:jsonData];
+        [self.urlRequest setHTTPBody:jsonData];
     }
     
 }
 
 - (void)setHTTPHeaderFieldForAuth {
     
-    [_request setValue: [NSString stringWithFormat:@"%@ %@" ,kBearer,[MSAuth token]] forHTTPHeaderField:kAuthorization];
+    [self.urlRequest setValue: [NSString stringWithFormat:@"%@ %@" ,kBearer,[MSAuth token]] forHTTPHeaderField:kAuthorization];
 }
 
 - (void)setHTTPHeaderFieldForJSONandApp {
-    [_request setValue:@"application/json" forHTTPHeaderField:kContentType];
+    [self.urlRequest setValue:@"application/json" forHTTPHeaderField:kContentType];
 }
 
-- (void)setHTTPHeaderFieldForDropboxAPIarg {
-    
+- (void)fillMutableURLrequestWithMethod:(NSString *)method {
+    [self.urlRequest setHTTPMethod:method];
+    [self.urlRequest setURL:[NSURL URLWithString:_urlString]];
 }
 
 - (void)fillManagerWithURLstring:(NSString *)urlString setParamterDictionary:(NSDictionary *)paramtersDictionary setClass:(Class)class {
@@ -100,7 +101,7 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
 }
 
 - (void)createTaskWithSuccess:(void(^)(NSURLSessionDataTask *task, id responseObject))successBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))failureBlock{
-    NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:_request completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
+    NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:self.urlRequest completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
         if (error) {
             failureBlock(task, error);
         } else {
@@ -115,8 +116,8 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     failBlock blockForError = errorBlock;
     
     [self fillManagerWithURLstring:urlString setParamterDictionary:dictionary setClass:class];
-    NSError *error;
-    _request = [self.sessionManager.requestSerializer requestWithMethod:@"POST" URLString:urlString parameters:nil error:&error];
+
+    [self fillMutableURLrequestWithMethod:@"POST"];
 
     [self setHTTPHeaderFieldForAuth];
     if (![dictionary valueForKey:@"format"]) {
