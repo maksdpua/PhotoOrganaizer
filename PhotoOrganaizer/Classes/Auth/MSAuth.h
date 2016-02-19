@@ -14,6 +14,7 @@
 + (NSString *)token;
 + (NSString *)uid;
 + (NSString *)defaulFolderPath;
++ (void)logout;
 
 
 

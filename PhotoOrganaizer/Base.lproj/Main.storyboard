@@ -111,7 +111,14 @@
                             <outlet property="delegate" destination="JLU-aw-Kiv" id="ZUc-CY-2o3"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="QMt-DF-CXU"/>
+                    <navigationItem key="navigationItem" id="QMt-DF-CXU">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="STC-RV-BrZ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="logout:" destination="JLU-aw-Kiv" id="dd0-9g-WZ2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ySW-bk-kz3" userLabel="First Responder" sceneMemberID="firstResponder"/>

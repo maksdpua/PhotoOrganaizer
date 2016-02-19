@@ -42,6 +42,12 @@
     }];
 }
 
+
+- (IBAction)logout:(id)sender {
+    [MSAuth logout];
+    [MSFolder MR_truncateAll];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.contentArray.count;
 }

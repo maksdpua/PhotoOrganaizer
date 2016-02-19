@@ -38,6 +38,12 @@
     return [[NSUserDefaults standardUserDefaults] valueForKey:kDefaultFolderPath];
 }
 
++ (void)logout {
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUID];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kToken];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kDefaultFolderPath];
+}
+
 
 
 
