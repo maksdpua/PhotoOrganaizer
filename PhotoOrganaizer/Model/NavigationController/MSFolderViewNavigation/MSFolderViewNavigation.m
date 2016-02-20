@@ -7,6 +7,7 @@
 //
 
 #import "MSFolderViewNavigation.h"
+#import "MSGalleryRoll.h"
 
 @interface MSFolderViewNavigation ()
 
@@ -16,22 +17,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    UITapGestureRecognizer *leftSw[[UITapGestureRecognizer alloc] addTarget:self action:@selector(didSwipeLeft:)];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+- (void)didSwipeLeft:(UITapGestureRecognizer *)swipe {
+    [UIView animateWithDuration:0 animations:^{
+        MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
+                                      [self.view addSubview:galleryRoll];
+        
+                                      } completion:^(BOOL finished) {
+                                          
+                                      }];
+    }
 
 @end

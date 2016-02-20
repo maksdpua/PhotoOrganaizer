@@ -16,6 +16,7 @@ static NSString *const kAuthURLwasAccepted = @"authURLWasAccepted";
 static NSString *const kReloadNC = @"reloadNC";
 
 static NSString *const KMainURL = @"https://api.dropboxapi.com/2/";
+static NSString *const kContentURL = @"https://content.dropboxapi.com/2/";
 static NSString *const kListFolder = @"files/list_folder";
 static NSString *const kCreateFolder = @"files/create_folder";
 static NSString *const kGetThumbnail = @"files/get_thumbnail";
@@ -37,6 +38,9 @@ static NSString *const kTag = @"tag";
 
 static NSString *const kStringRecevied = @"stringRecevied";
 static NSString *const kDefaultFolderPath = @"defaultFolderPath";
+
+#define urlPath(mainURL, secondURL) [NSString stringWithFormat: @"%@%@", mainURL, secondURL]
+
 
 
 #endif /* SharedConstants_h */

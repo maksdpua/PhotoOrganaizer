@@ -30,7 +30,7 @@
         self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
         
         NSDictionary *paramerts = @{@"path" : model.path, @"format" : @"jpeg", @"size" : @"w640h480"};
-        [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"https://content.dropboxapi.com/2/files/get_thumbnail"] dictionaryParametrsToJSON:paramerts classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", kContentURL, kGetThumbnail] dictionaryParametrsToJSON:paramerts classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^(void){
