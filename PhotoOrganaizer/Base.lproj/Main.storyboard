@@ -8,7 +8,7 @@
         <!--Gallery Roll Navigation-->
         <scene sceneID="lSX-lE-zFn">
             <objects>
-                <navigationController storyboardIdentifier="MSGalleryRollNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vVe-Ha-bAP" customClass="MSGalleryRollNavigation" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MSGalleryRollNavigation" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vVe-Ha-bAP" customClass="MSGalleryRollNavigation" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="nX6-fI-lKf">
@@ -222,11 +222,6 @@
                                 <action selector="createFolderAction:" destination="leL-vS-maa" eventType="touchUpInside" id="9fB-nV-dCX"/>
                             </connections>
                         </button>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Jd7-oI-dRV">
-                            <connections>
-                                <action selector="doneAction:" destination="leL-vS-maa" id="H9M-GO-B2P"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>

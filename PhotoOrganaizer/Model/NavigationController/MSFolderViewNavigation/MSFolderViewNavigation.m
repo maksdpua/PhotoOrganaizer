@@ -10,8 +10,9 @@
 #import "MSGalleryRoll.h"
 #import "MSGalleryRollNavigation.h"
 
-@interface MSFolderViewNavigation ()
-@property (nonatomic ,strong) UIGestureRecognizer *pan;
+@interface MSFolderViewNavigation ()<UIGestureRecognizerDelegate>
+
+@property (nonatomic) CGFloat firstX;
 
 @end
 
@@ -19,29 +20,82 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft)];
-    gestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:gestureRecognizer];
-    self.pan = [[UIGestureRecognizer alloc]init];
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [self.view addGestureRecognizer:panRecognizer];
+
 }
 
-- (void)didSwipeLeft {
+- (void)didSwipeLeft:(UIPanGestureRecognizer *)sender {
+    CGPoint translatedPoint = [sender translationInView:self.view];
     MSGalleryRollNavigation *galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
     
-    galleryRollNavigation.view.frame = CGRectMake (self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"swipeDidBegin" object:nil];
-    
-    [UIView animateWithDuration:0.7 animations:^{
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        
+        
+        galleryRollNavigation.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), CGRectGetMinY(self.view.frame), CGRectGetWidth(galleryRollNavigation.view.frame), CGRectGetHeight(galleryRollNavigation.view.frame));
+        
         [self.view addSubview:galleryRollNavigation.view];
-        self.view.frame = CGRectMake (self.view.frame.origin.x - self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-        NSLog(@"SWIPE %@", NSStringFromCGPoint([self.pan locationInView:self.view]));
+        
+        self.firstX = [[sender view] center].x;
+    }
+    
+    translatedPoint = CGPointMake(self.firstX + translatedPoint.x, 0);
+    
+    if (sender.state == UIGestureRecognizerStateChanged) {
+        
+        self.view.center = CGPointMake(translatedPoint.x, self.view.center.y);
+        NSLog(@"location %@", NSStringFromCGPoint(self.view.frame.origin));
+        
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.view].x);
+        //        CGFloat finalX = translatedPoint.x + velocityX;
+        
+        CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
+        
+        NSLog(@"the duration is: %f", animationDuration);
+        
+        if (self.view.frame.origin.x > -70) {
+            [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+            } completion:nil];
+        } else {
+            [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                self.view.frame = CGRectMake(-CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
             } completion:^(BOOL finished) {
-        [galleryRollNavigation.view removeFromSuperview];
-        [self presentViewController:galleryRollNavigation animated:NO completion:^{
-            
-        }];
-    }];
+                [self presentViewController:galleryRollNavigation animated:NO completion:nil];
+            }];
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    CGPoint touchPoint = [sender locationInView:self.view];
+//    NSLog(@"TOUCH %@", NSStringFromCGPoint(touchPoint));
+//    MSGalleryRollNavigation *galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
+//    
+//    galleryRollNavigation.view.frame = CGRectMake (self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+//    
+//    
+//    [UIView animateWithDuration:0.7 animations:^{
+//        [self.view addSubview:galleryRollNavigation.view];
+//        self.view.frame = CGRectMake (self.view.frame.origin.x - self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+//        
+//            } completion:^(BOOL finished) {
+//        [galleryRollNavigation.view removeFromSuperview];
+//
+//        [self presentViewController:galleryRollNavigation animated:NO completion:^{
+//            
+//        }];
+//    }];
 
     
 }

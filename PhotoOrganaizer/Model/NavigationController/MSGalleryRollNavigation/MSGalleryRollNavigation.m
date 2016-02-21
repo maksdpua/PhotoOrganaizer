@@ -11,45 +11,58 @@
 
 @interface MSGalleryRollNavigation()
 
-@property (nonatomic ,strong) UIGestureRecognizer *pan;
+@property (nonatomic) CGFloat firstX;
 
 @end
-
 
 @implementation MSGalleryRollNavigation
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeRight)];
-    gestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:gestureRecognizer];
-    self.pan = [[UIGestureRecognizer alloc]init];
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft:)];
+    [panRecognizer setMinimumNumberOfTouches:1];
+    [panRecognizer setMaximumNumberOfTouches:1];
+    [self.view addGestureRecognizer:panRecognizer];
+    
 }
 
-- (void)didSwipeRight {
-    NSLog(@"SWIPE %@", NSStringFromCGPoint([self.pan locationInView:self.view]));
-
+- (void)didSwipeLeft:(UIPanGestureRecognizer *)sender {
+    CGPoint translatedPoint = [sender translationInView:self.view];
     MSFolderViewNavigation *folderViewNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewNavigation class])];
     
-    folderViewNavigation.view.frame = CGRectMake (folderViewNavigation.view.frame.origin.x - self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"swipeDidBegin" object:nil];
-    
-    [UIView animateWithDuration:0.7 animations:^{
-        [self.view addSubview:folderViewNavigation.view];
-        self.view.frame = CGRectMake (self.view.frame.origin.x + self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-        NSLog(@"SWIPE %@", NSStringFromCGPoint([self.pan locationInView:self.view]));
-    } completion:^(BOOL finished) {
+    if (sender.state == UIGestureRecognizerStateBegan) {
         
-        [self dismissViewControllerAnimated:NO completion:^{
-            [folderViewNavigation.view removeFromSuperview];
+        
+        folderViewNavigation.view.frame = CGRectMake(CGRectGetMinX(self.view.frame) - CGRectGetWidth(self.view.frame), CGRectGetMinY(self.view.frame), CGRectGetWidth(folderViewNavigation.view.frame), CGRectGetHeight(folderViewNavigation.view.frame));
+        
+        [self.view addSubview:folderViewNavigation.view];
+        
+        self.firstX = [[sender view] center].x;
+    }
+    
+    translatedPoint = CGPointMake(self.firstX + translatedPoint.x, 0);
+    
+    if (sender.state == UIGestureRecognizerStateChanged) {
+        self.view.center = CGPointMake(translatedPoint.x, self.view.center.y);
+    } else if (sender.state == UIGestureRecognizerStateEnded) {
+        CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.view].x);
+        //        CGFloat finalX = translatedPoint.x + velocityX;
+        
+        CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
+        
+        NSLog(@"the duration is: %f", animationDuration);
+        [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+        } completion:^(BOOL finished) {
+            NSLog(@"%@", self.view.subviews); // <- тут еще есть vc2.view
+            [self dismissViewControllerAnimated:NO completion:^{
+                
+            }];
+            
+            
         }];
-    }];
-    
-    
+    }
 }
-
-
 
 
 

@@ -13,7 +13,7 @@
 #import "MSCreateNewFolderView.h"
 #import "MSGalleryRoll.h"
 
-@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate, UINavigationControllerDelegate>
+@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
@@ -31,11 +31,8 @@
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
 }
 
-
 - (void)requestForData {
-    if (!self.path) {
-        self.path = @"";
-    }
+    [self checkForEmptyPath];
     NSDictionary *parameters = @{@"path" : self.path, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
@@ -50,10 +47,22 @@
     }];
 }
 
-
+- (void)loadData {
+    [self checkForEmptyPath];
+    MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
+    _contentArray = folderContent.folders.allObjects;
+}
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self loadData];
     [self requestForData];
+}
+
+- (void)checkForEmptyPath {
+    if (!self.path) {
+        self.path = [NSString new];
+        [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
+    };
 }
 
 - (void)reloadDataAfterDismissCreateFolderView {
@@ -65,13 +74,6 @@
     [self.navigationController setNavigationBarHidden:YES];
     self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:self.path];
     self.createFolderItem.delegate = self;
-}
-
-- (IBAction)doneAction:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
-    [self dismissViewControllerAnimated:NO completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kDefaultFolderPath object:nil];
-    }];
 }
 
 #pragma mark - UITableViewDelegate methdods
@@ -90,6 +92,7 @@
     MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = folderInfo.path;
+    [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
     [self.navigationController pushViewController:toNextFolder animated:YES];
     
 }

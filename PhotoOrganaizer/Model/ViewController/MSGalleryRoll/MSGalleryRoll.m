@@ -23,14 +23,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createRequestToFolderContent) name:@"swipeDidBegin" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self loadPhotosFromData];
     [self createRequestToFolderContent];
+    
 }
-
 - (void)createRequestToFolderContent {
     NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -40,6 +41,14 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Error %@", error);
     }];
+}
+
+- (void)loadPhotosFromData {
+    MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[MSAuth defaulFolderPath]];
+    self.contentArray = mainFolder.photos.allObjects;
+    if (!self.contentArray) {
+        [self createRequestToFolderContent];
+    }
 }
 
 
@@ -56,10 +65,6 @@
     MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
     return cell;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
