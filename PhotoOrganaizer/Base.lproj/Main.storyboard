@@ -128,7 +128,7 @@
         <!--Folder View Navigation-->
         <scene sceneID="0E6-iI-MwC">
             <objects>
-                <navigationController storyboardIdentifier="MSFolderViewNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nmr-MY-iBg" customClass="MSFolderViewNavigation" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MSFolderViewNavigation" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nmr-MY-iBg" customClass="MSFolderViewNavigation" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pcF-mt-QRV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

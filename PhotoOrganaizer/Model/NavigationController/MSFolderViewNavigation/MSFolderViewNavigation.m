@@ -8,8 +8,10 @@
 
 #import "MSFolderViewNavigation.h"
 #import "MSGalleryRoll.h"
+#import "MSGalleryRollNavigation.h"
 
 @interface MSFolderViewNavigation ()
+@property (nonatomic ,strong) UIGestureRecognizer *pan;
 
 @end
 
@@ -17,17 +19,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UITapGestureRecognizer *leftSw[[UITapGestureRecognizer alloc] addTarget:self action:@selector(didSwipeLeft:)];
+    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft)];
+    gestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:gestureRecognizer];
+    self.pan = [[UIGestureRecognizer alloc]init];
 }
 
-- (void)didSwipeLeft:(UITapGestureRecognizer *)swipe {
-    [UIView animateWithDuration:0 animations:^{
-        MSGalleryRoll *galleryRoll = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRoll class])];
-                                      [self.view addSubview:galleryRoll];
-        
-                                      } completion:^(BOOL finished) {
-                                          
-                                      }];
-    }
+- (void)didSwipeLeft {
+    MSGalleryRollNavigation *galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
+    
+    galleryRollNavigation.view.frame = CGRectMake (self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"swipeDidBegin" object:nil];
+    
+    [UIView animateWithDuration:0.7 animations:^{
+        [self.view addSubview:galleryRollNavigation.view];
+        self.view.frame = CGRectMake (self.view.frame.origin.x - self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
+        NSLog(@"SWIPE %@", NSStringFromCGPoint([self.pan locationInView:self.view]));
+            } completion:^(BOOL finished) {
+        [galleryRollNavigation.view removeFromSuperview];
+        [self presentViewController:galleryRollNavigation animated:NO completion:^{
+            
+        }];
+    }];
+
+    
+}
+
+
 
 @end

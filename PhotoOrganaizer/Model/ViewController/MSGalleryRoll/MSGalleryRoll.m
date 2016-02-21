@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(createRequestToFolderContent) name:@"swipeDidBegin" object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,6 +56,10 @@
     MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
     return cell;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

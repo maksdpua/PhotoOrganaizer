@@ -11,6 +11,7 @@
 #import "MSRequestManager.h"
 #import "MSDefaultFolderVC.h"
 #import "MSCreateNewFolderView.h"
+#import "MSGalleryRoll.h"
 
 @interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate, UINavigationControllerDelegate>
 
@@ -29,6 +30,7 @@
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
 }
+
 
 - (void)requestForData {
     if (!self.path) {

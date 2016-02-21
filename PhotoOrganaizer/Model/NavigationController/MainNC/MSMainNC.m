@@ -28,12 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentFolderViewerNavigation) name:kTokenWasAccepted object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentMSGalleryRollNavigation) name:kDefaultFolderPath object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentFolderViewerNavigation) name:kDefaultFolderPath object:nil];
     }
 
 - (void)viewDidAppear:(BOOL)animated {
     if ([MSAuth defaulFolderPath]) {
-        [self presentMSGalleryRollNavigation];
+//        [self presentMSGalleryRollNavigation];
+        [self presentFolderViewerNavigation];
     } else if ([MSAuth token]) {
         [self presentFolderViewerNavigation];
     }
