@@ -13,6 +13,8 @@
 #import "MSCreateNewFolderView.h"
 #import "MSGalleryRoll.h"
 
+static NSString *const kPreviousPath = @"previousPath";
+
 @interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
@@ -93,8 +95,16 @@
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = folderInfo.path;
     [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
-    [self.navigationController pushViewController:toNextFolder animated:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
+//    [self.navigationController pushViewController:toNextFolder animated:YES];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if (self.isMovingFromParentViewController) {
+        [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
+    }
 }
 
 

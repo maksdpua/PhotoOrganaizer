@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D03385F1C7BAE1300CFF7A4 /* UIButton+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D03385E1C7BAE1300CFF7A4 /* UIButton+Path.m */; };
 		2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCBF1C3F0B1200F923DF /* NSObject+Extension.m */; };
 		2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC41C3F0CC200F923DF /* MSValidator.m */; };
 		2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */; };
@@ -65,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D03385D1C7BAE1300CFF7A4 /* UIButton+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+Path.h"; path = "Category/UIButton+Path/UIButton+Path.h"; sourceTree = "<group>"; };
+		2D03385E1C7BAE1300CFF7A4 /* UIButton+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Path.m"; path = "Category/UIButton+Path/UIButton+Path.m"; sourceTree = "<group>"; };
 		2D18BCBE1C3F0B1200F923DF /* NSObject+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+Extension.h"; path = "Category/NSObject+Extension.h"; sourceTree = "<group>"; };
 		2D18BCBF1C3F0B1200F923DF /* NSObject+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+Extension.m"; path = "Category/NSObject+Extension.m"; sourceTree = "<group>"; };
 		2D18BCC31C3F0CC200F923DF /* MSValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSValidator.h; path = Classes/Validator/MSValidator.h; sourceTree = "<group>"; };
@@ -176,6 +179,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2D03385C1C7BADB500CFF7A4 /* UIButton+Path */ = {
+			isa = PBXGroup;
+			children = (
+				2D03385D1C7BAE1300CFF7A4 /* UIButton+Path.h */,
+				2D03385E1C7BAE1300CFF7A4 /* UIButton+Path.m */,
+			);
+			name = "UIButton+Path";
+			sourceTree = "<group>";
+		};
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +214,7 @@
 		2D18BCBC1C3F0ABD00F923DF /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				2D03385C1C7BADB500CFF7A4 /* UIButton+Path */,
 				2D74A6DD1C763217006A207F /* NSData+MD5 */,
 				2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
@@ -763,6 +776,7 @@
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				2D305AD51C726FAE00B4F018 /* MSGalleryRollNavigation.m in Sources */,
 				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
+				2D03385F1C7BAE1300CFF7A4 /* UIButton+Path.m in Sources */,
 				FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
 				2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */,
