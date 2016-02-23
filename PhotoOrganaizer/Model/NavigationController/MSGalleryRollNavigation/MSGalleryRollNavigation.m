@@ -8,6 +8,7 @@
 
 #import "MSGalleryRollNavigation.h"
 #import "MSFolderViewNavigation.h"
+#import "MSGalleryRoll.h"
 
 @interface MSGalleryRollNavigation()
 
@@ -51,16 +52,20 @@
         CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
         
         NSLog(@"the duration is: %f", animationDuration);
-        [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
-        } completion:^(BOOL finished) {
-            NSLog(@"%@", self.view.subviews); // <- тут еще есть vc2.view
-            [self dismissViewControllerAnimated:NO completion:^{
-                
+        if (self.view.frame.origin.x < 70) {
+            [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+            } completion:nil];
+        } else {
+            [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                self.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
+            } completion:^(BOOL finished) {
+                NSLog(@"%@", self.view.subviews); // <- тут еще есть vc2.view
+                [self dismissViewControllerAnimated:NO completion:nil];
             }];
-            
-            
-        }];
+        }
+        
+        
     }
 }
 

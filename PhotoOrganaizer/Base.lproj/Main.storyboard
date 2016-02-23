@@ -115,7 +115,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="action" id="STC-RV-BrZ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="logout:" destination="JLU-aw-Kiv" id="dd0-9g-WZ2"/>
+                                <action selector="actionSheet:" destination="JLU-aw-Kiv" id="FRU-jc-0kA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

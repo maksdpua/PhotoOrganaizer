@@ -35,9 +35,10 @@
         
         
         galleryRollNavigation.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), CGRectGetMinY(self.view.frame), CGRectGetWidth(galleryRollNavigation.view.frame), CGRectGetHeight(galleryRollNavigation.view.frame));
-        
+        [[galleryRollNavigation viewControllers] objectAtIndex:0];
         [self.view addSubview:galleryRollNavigation.view];
-        
+        MSGalleryRoll *galleryRoll = [[galleryRollNavigation viewControllers] objectAtIndex:0];
+        [galleryRoll loadPhotosFromData];
         self.firstX = [[sender view] center].x;
     }
     
@@ -69,34 +70,6 @@
         }
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    CGPoint touchPoint = [sender locationInView:self.view];
-//    NSLog(@"TOUCH %@", NSStringFromCGPoint(touchPoint));
-//    MSGalleryRollNavigation *galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
-//    
-//    galleryRollNavigation.view.frame = CGRectMake (self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-//    
-//    
-//    [UIView animateWithDuration:0.7 animations:^{
-//        [self.view addSubview:galleryRollNavigation.view];
-//        self.view.frame = CGRectMake (self.view.frame.origin.x - self.view.frame.size.width, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-//        
-//            } completion:^(BOOL finished) {
-//        [galleryRollNavigation.view removeFromSuperview];
-//
-//        [self presentViewController:galleryRollNavigation animated:NO completion:^{
-//            
-//        }];
-//    }];
-
     
 }
 

@@ -23,14 +23,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    [self loadPhotosFromData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self loadPhotosFromData];
+    [super viewWillAppear:YES];
     [self createRequestToFolderContent];
-    
 }
 - (void)createRequestToFolderContent {
     NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
@@ -52,10 +51,41 @@
 }
 
 
-- (IBAction)logout:(id)sender {
-    [MSAuth logout];
-    [MSFolder MR_truncateAll];
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)actionSheet:(id)sender {
+    UIAlertController * actSheet=   [UIAlertController
+                                     alertControllerWithTitle:nil
+                                     message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    
+    UIAlertAction* choosePhoto = [UIAlertAction
+                                  actionWithTitle:@"Load new photos..."
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action) {
+                                 
+                                  }];
+    UIAlertAction* logout = [UIAlertAction
+                             actionWithTitle:@"Logout"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action) {
+                                 [MSAuth logout];
+                                 [MSFolder MR_truncateAll];
+                                 [self dismissViewControllerAnimated:YES completion:nil];
+                             }];
+    UIAlertAction *cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action) {
+                                 [actSheet removeFromParentViewController];
+                             }];
+    
+    [actSheet addAction:choosePhoto];
+    [actSheet addAction:logout];
+    [actSheet addAction:cancel];
+    
+    [self presentViewController:actSheet animated:YES completion:nil];
+    
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.contentArray.count;
@@ -66,6 +96,8 @@
     [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
     return cell;
 }
+
+
 
 
 @end

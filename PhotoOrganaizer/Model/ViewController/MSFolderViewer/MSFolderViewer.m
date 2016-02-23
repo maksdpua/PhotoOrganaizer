@@ -56,6 +56,7 @@ static NSString *const kPreviousPath = @"previousPath";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self loadData];
     [self requestForData];
 }
