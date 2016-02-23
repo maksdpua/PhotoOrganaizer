@@ -29,7 +29,7 @@
         [MBProgressHUD showHUDAddedTo:self animated:YES];
         self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
         
-        NSDictionary *paramerts = @{@"path" : model.path, @"format" : @"jpeg", @"size" : @"w640h480"};
+        NSDictionary *paramerts = @{@"path" : model.idPhoto, @"format" : @"jpeg", @"size" : @"w640h480"};
         [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", kContentURL, kGetThumbnail] dictionaryParametrsToJSON:paramerts classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
                 
@@ -46,6 +46,8 @@
     }
     
 }
+
+
 
 
 
