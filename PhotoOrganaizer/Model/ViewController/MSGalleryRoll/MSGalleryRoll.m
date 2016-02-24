@@ -11,6 +11,7 @@
 #import "MSAuth.h"
 #import "MSFolder.h"
 #import "MSGalleryRollCell.h"
+#import "MSPhotoImagePickerNavigation.h"
 
 @interface MSGalleryRoll()<MSRequestManagerDelegate>
 
@@ -63,6 +64,8 @@
                                   actionWithTitle:@"Load new photos..."
                                   style:UIAlertActionStyleDefault
                                   handler:^(UIAlertAction * action) {
+                                      MSPhotoImagePickerNavigation *photoImagePickerNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSPhotoImagePickerNavigation class])];
+                                      [self presentViewController:photoImagePickerNavigation animated:YES completion:nil];
                                  
                                   }];
     UIAlertAction* logout = [UIAlertAction

@@ -36,6 +36,9 @@
 		2D906FD61C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FD51C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m */; };
 		2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */; };
 		2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */; };
+		2D988E621C7D9E0600BEDAF1 /* MSPhotoAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */; };
+		2D988E661C7DA56500BEDAF1 /* MSPhotoAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E651C7DA56500BEDAF1 /* MSPhotoAlbumCell.m */; };
+		2D988E6A1C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */; };
 		2DD1082C1C6CC18B00EB1757 /* MSGalleryRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */; };
 		2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DDF2B061C4FEEF100330CEA /* folder-generic.png */; };
 		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
@@ -123,6 +126,12 @@
 		2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVC.m; path = Model/ViewController/MainVC/MSMainVC.m; sourceTree = "<group>"; };
 		2D906FEC1C3F03AA00DF01A4 /* MSMainNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainNC.h; path = Model/NavigationController/MainNC/MSMainNC.h; sourceTree = "<group>"; };
 		2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainNC.m; path = Model/NavigationController/MainNC/MSMainNC.m; sourceTree = "<group>"; };
+		2D988E601C7D9E0600BEDAF1 /* MSPhotoAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoAlbums.h; path = Model/ViewController/MSImagePicker/MSPhotoAlbums.h; sourceTree = "<group>"; };
+		2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoAlbums.m; path = Model/ViewController/MSImagePicker/MSPhotoAlbums.m; sourceTree = "<group>"; };
+		2D988E641C7DA56500BEDAF1 /* MSPhotoAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoAlbumCell.h; path = Model/Cells/MSPhotoAlbumCell/MSPhotoAlbumCell.h; sourceTree = "<group>"; };
+		2D988E651C7DA56500BEDAF1 /* MSPhotoAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoAlbumCell.m; path = Model/Cells/MSPhotoAlbumCell/MSPhotoAlbumCell.m; sourceTree = "<group>"; };
+		2D988E681C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoImagePickerNavigation.h; path = Model/NavigationController/MSPhotoImagePickerNavigation/MSPhotoImagePickerNavigation.h; sourceTree = "<group>"; };
+		2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoImagePickerNavigation.m; path = Model/NavigationController/MSPhotoImagePickerNavigation/MSPhotoImagePickerNavigation.m; sourceTree = "<group>"; };
 		2DD1082A1C6CC18B00EB1757 /* MSGalleryRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGalleryRoll.h; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.h; sourceTree = "<group>"; };
 		2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGalleryRoll.m; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.m; sourceTree = "<group>"; };
 		2DDF2B061C4FEEF100330CEA /* folder-generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder-generic.png"; sourceTree = "<group>"; };
@@ -328,6 +337,7 @@
 		2D42EF7D1C51218300DCDBD2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2D988E631C7DA52200BEDAF1 /* MSPhotoAlbumCell */,
 				2D40AEEF1C6DE7F100024FB3 /* MSGalleryRollCell */,
 				2D42EF7E1C51218A00DCDBD2 /* MSFolderViewerCell */,
 			);
@@ -484,6 +494,7 @@
 		2D906FE41C3EFD8900DF01A4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2D988E5F1C7D9DC100BEDAF1 /* MSImagePicker */,
 				2DD108291C6CC15A00EB1757 /* MSGalleryRoll */,
 				2D42EF821C5124C800DCDBD2 /* MSFolderViewer */,
 				2D330DF61C43064F008897C7 /* DefaultFolderVC */,
@@ -504,11 +515,39 @@
 		2D906FEA1C3F023700DF01A4 /* NavigationController */ = {
 			isa = PBXGroup;
 			children = (
+				2D988E671C7DD49E00BEDAF1 /* MSPhotoImagePickerNavigation */,
 				2DFAB3EE1C74922C004FA81E /* MSFolderViewNavigation */,
 				2D305AD61C7271E700B4F018 /* MSMainNC */,
 				2D305AD21C726F6D00B4F018 /* MSGalleryRollNavigation */,
 			);
 			name = NavigationController;
+			sourceTree = "<group>";
+		};
+		2D988E5F1C7D9DC100BEDAF1 /* MSImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				2D988E601C7D9E0600BEDAF1 /* MSPhotoAlbums.h */,
+				2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */,
+			);
+			name = MSImagePicker;
+			sourceTree = "<group>";
+		};
+		2D988E631C7DA52200BEDAF1 /* MSPhotoAlbumCell */ = {
+			isa = PBXGroup;
+			children = (
+				2D988E641C7DA56500BEDAF1 /* MSPhotoAlbumCell.h */,
+				2D988E651C7DA56500BEDAF1 /* MSPhotoAlbumCell.m */,
+			);
+			name = MSPhotoAlbumCell;
+			sourceTree = "<group>";
+		};
+		2D988E671C7DD49E00BEDAF1 /* MSPhotoImagePickerNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				2D988E681C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.h */,
+				2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */,
+			);
+			name = MSPhotoImagePickerNavigation;
 			sourceTree = "<group>";
 		};
 		2DD108291C6CC15A00EB1757 /* MSGalleryRoll */ = {
@@ -782,7 +821,9 @@
 				2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */,
 				2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */,
 				2D38C77D1C4925C70081028D /* MSPhoto.m in Sources */,
+				2D988E6A1C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m in Sources */,
 				2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */,
+				2D988E661C7DA56500BEDAF1 /* MSPhotoAlbumCell.m in Sources */,
 				2DD1082C1C6CC18B00EB1757 /* MSGalleryRoll.m in Sources */,
 				2D4C1E201C7331040077843B /* MSCreateNewFolderView.m in Sources */,
 				2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */,
@@ -791,6 +832,7 @@
 				2D74A6E01C763266006A207F /* NSData+MD5.m in Sources */,
 				2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
+				2D988E621C7D9E0600BEDAF1 /* MSPhotoAlbums.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
