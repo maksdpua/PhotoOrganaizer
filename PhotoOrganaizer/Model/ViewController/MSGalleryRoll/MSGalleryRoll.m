@@ -25,12 +25,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self loadPhotosFromData];
+    [self createRequestToFolderContent];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    [self createRequestToFolderContent];
+    [self loadPhotosFromData];
 }
 - (void)createRequestToFolderContent {
     NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
@@ -91,6 +92,7 @@
     
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    NSLog(@"%tu", self.contentArray.count);
     return self.contentArray.count;
 }
 

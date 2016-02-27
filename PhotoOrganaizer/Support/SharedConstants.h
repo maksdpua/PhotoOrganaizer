@@ -14,6 +14,8 @@ static NSString *const kUID = @"uid";
 
 static NSString *const kAuthURLwasAccepted = @"authURLWasAccepted";
 static NSString *const kReloadNC = @"reloadNC";
+static NSString *const kTokenWasAccepted = @"tokenWasAccepted";
+static NSString *const kUIDwasAccepted = @"uidWasAccepted";
 
 static NSString *const KMainURL = @"https://api.dropboxapi.com/2/";
 static NSString *const kContentURL = @"https://content.dropboxapi.com/2/";

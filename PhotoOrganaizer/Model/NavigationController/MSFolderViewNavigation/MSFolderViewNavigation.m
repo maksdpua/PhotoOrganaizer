@@ -9,6 +9,8 @@
 #import "MSFolderViewNavigation.h"
 #import "MSGalleryRoll.h"
 #import "MSGalleryRollNavigation.h"
+#import "MSAuth.h"
+#import "MSMainVC.h"
 
 @interface MSFolderViewNavigation ()<UIGestureRecognizerDelegate>
 
@@ -16,29 +18,48 @@
 
 @end
 
-@implementation MSFolderViewNavigation
+@implementation MSFolderViewNavigation {
+    MSGalleryRollNavigation *galleryRollNavigation;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backToFolderViewer) name:kTokenWasAccepted object:nil];
+    if ([MSAuth token]) {
+        [self addPanRecognizer];
+    } else {
+        [self.navigationBar setHidden:YES];
+        MSMainVC *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
+        [self pushViewController:loginViewController animated:NO];
+    }
+    
+
+}
+
+- (void)backToFolderViewer {
+    [self addPanRecognizer];
+    [self.navigationBar setHidden:NO];
+    [self popToRootViewControllerAnimated:YES];
+}
+
+- (void)addPanRecognizer {
     UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didSwipeLeft:)];
     [panRecognizer setMinimumNumberOfTouches:1];
     [panRecognizer setMaximumNumberOfTouches:1];
     [self.view addGestureRecognizer:panRecognizer];
-
 }
 
 - (void)didSwipeLeft:(UIPanGestureRecognizer *)sender {
     CGPoint translatedPoint = [sender translationInView:self.view];
-    MSGalleryRollNavigation *galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
     
     if (sender.state == UIGestureRecognizerStateBegan) {
-        
-        
+        galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
+
         galleryRollNavigation.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), CGRectGetMinY(self.view.frame), CGRectGetWidth(galleryRollNavigation.view.frame), CGRectGetHeight(galleryRollNavigation.view.frame));
         [[galleryRollNavigation viewControllers] objectAtIndex:0];
+        
         [self.view addSubview:galleryRollNavigation.view];
-        MSGalleryRoll *galleryRoll = [[galleryRollNavigation viewControllers] objectAtIndex:0];
-        [galleryRoll loadPhotosFromData];
+        
         self.firstX = [[sender view] center].x;
     }
     
@@ -47,7 +68,7 @@
     if (sender.state == UIGestureRecognizerStateChanged) {
         
         self.view.center = CGPointMake(translatedPoint.x, self.view.center.y);
-        NSLog(@"location %@", NSStringFromCGPoint(self.view.frame.origin));
+//        NSLog(@"location %@", NSStringFromCGPoint(self.view.frame.origin));
         
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.view].x);
@@ -55,7 +76,7 @@
         
         CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
         
-        NSLog(@"the duration is: %f", animationDuration);
+//        NSLog(@"the duration is: %f", animationDuration);
         
         if (self.view.frame.origin.x > -70) {
             [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -65,12 +86,19 @@
             [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 self.view.frame = CGRectMake(-CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
             } completion:^(BOOL finished) {
-                [self presentViewController:galleryRollNavigation animated:NO completion:nil];
+//                [galleryRollNavigation re];
+                [self presentViewController:galleryRollNavigation animated:NO completion:^{
+                    NSLog(@"%@", galleryRollNavigation);
+                }];
             }];
         }
         
     }
     
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

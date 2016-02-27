@@ -9,7 +9,6 @@
 #ifndef AuthConstants_h
 #define AuthConstants_h
 
-static NSString *const kTokenWasAccepted = @"tokenWasAccepted";
-static NSString *const kUIDwasAccepted = @"uidWasAccepted";
+
 
 #endif /* AuthConstants_h */
