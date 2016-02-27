@@ -56,7 +56,6 @@
         galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
 
         galleryRollNavigation.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), CGRectGetMinY(self.view.frame), CGRectGetWidth(galleryRollNavigation.view.frame), CGRectGetHeight(galleryRollNavigation.view.frame));
-        [[galleryRollNavigation viewControllers] objectAtIndex:0];
         
         [self.view addSubview:galleryRollNavigation.view];
         

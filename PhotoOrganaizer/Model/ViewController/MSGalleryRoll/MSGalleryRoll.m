@@ -30,7 +30,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
+    [super viewWillAppear:animated];
+    [self createRequestToFolderContent];
     [self loadPhotosFromData];
 }
 - (void)createRequestToFolderContent {

@@ -16,7 +16,9 @@
 
 @end
 
-@implementation MSGalleryRollNavigation
+@implementation MSGalleryRollNavigation {
+    MSFolderViewNavigation *folderViewNavigation;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,12 +26,13 @@
     [panRecognizer setMinimumNumberOfTouches:1];
     [panRecognizer setMaximumNumberOfTouches:1];
     [self.view addGestureRecognizer:panRecognizer];
+    folderViewNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewNavigation class])];
     
 }
 
 - (void)didSwipeLeft:(UIPanGestureRecognizer *)sender {
     CGPoint translatedPoint = [sender translationInView:self.view];
-    MSFolderViewNavigation *folderViewNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewNavigation class])];
+    
     
     if (sender.state == UIGestureRecognizerStateBegan) {
         

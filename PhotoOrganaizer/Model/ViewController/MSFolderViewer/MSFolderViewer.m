@@ -21,16 +21,16 @@ static NSString *const kPreviousPath = @"previousPath";
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) MSCreateNewFolderView *createFolderItem;
+@property (nonatomic, strong) NSArray *contentArray;
 
 @end
 
-@implementation MSFolderViewer {
-    NSArray *_contentArray;
-}
+@implementation MSFolderViewer
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    [self requestForData];
 }
 
 - (void)requestForData {
@@ -42,7 +42,7 @@ static NSString *const kPreviousPath = @"previousPath";
         for (MSFolder *f in all) {
             NSLog(@"Folder %@", f.nameOfFolder);
         }
-        _contentArray = folderContent.folders.allObjects;
+        self.contentArray = folderContent.folders.allObjects;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
@@ -52,13 +52,17 @@ static NSString *const kPreviousPath = @"previousPath";
 - (void)loadData {
     [self checkForEmptyPath];
     MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
-    _contentArray = folderContent.folders.allObjects;
+    self.contentArray = folderContent.folders.allObjects;
+    if (!self.contentArray) {
+        [self requestForData];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+//    [self requestForData];
     [self loadData];
-    [self requestForData];
 }
 
 - (void)checkForEmptyPath {
@@ -82,12 +86,12 @@ static NSString *const kPreviousPath = @"previousPath";
 #pragma mark - UITableViewDelegate methdods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _contentArray.count;
+    return self.contentArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolderViewerCell *cell = [tableView dequeueReusableCellWithIdentifier:kMSFolderViewerCell];
-    [cell setupWithModel:[_contentArray objectAtIndex:indexPath.row]];
+    [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
