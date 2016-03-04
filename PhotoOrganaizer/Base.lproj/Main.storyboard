@@ -21,7 +21,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fi9-zz-ebD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-708" y="1743"/>
+            <point key="canvasLocation" x="-664" y="1743"/>
         </scene>
         <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
@@ -66,7 +66,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-249" y="469"/>
+            <point key="canvasLocation" x="99" y="1111"/>
         </scene>
         <!--Gallery Roll-->
         <scene sceneID="QMN-46-rEv">
@@ -252,123 +252,99 @@
         <scene sceneID="0E6-iI-MwC">
             <objects>
                 <navigationController storyboardIdentifier="MSFolderViewNavigation" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nmr-MY-iBg" customClass="MSFolderViewNavigation" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pcF-mt-QRV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="pcF-mt-QRV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="leL-vS-maa" kind="relationship" relationship="rootViewController" id="3Xh-dL-iJS"/>
+                        <segue destination="VV0-h3-dze" kind="relationship" relationship="rootViewController" id="Jjc-Of-Mgy"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="okz-nn-oCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-708" y="1111"/>
+            <point key="canvasLocation" x="-664" y="1111"/>
         </scene>
         <!--Folder Viewer-->
-        <scene sceneID="nhF-kL-lZi">
+        <scene sceneID="5BM-mk-XOO">
             <objects>
-                <viewController storyboardIdentifier="MSFolderViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="leL-vS-maa" customClass="MSFolderViewer" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MSFolderViewer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VV0-h3-dze" customClass="MSFolderViewer" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="WqJ-uq-L94"/>
-                        <viewControllerLayoutGuide type="bottom" id="bM4-Zp-4ga"/>
+                        <viewControllerLayoutGuide type="top" id="kb4-by-p12"/>
+                        <viewControllerLayoutGuide type="bottom" id="PF1-Ta-iks"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pmF-kx-5D2">
+                    <view key="view" contentMode="scaleToFill" id="GWw-DM-m2F">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="D8s-bh-R2P">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LCm-JP-rDp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.1260839332" green="0.1260839332" blue="0.1260839332" alpha="0.59998337769999999" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" editingAccessoryType="checkmark" id="nCo-Bi-VZg" customClass="MSFolderViewerCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" id="TLQ-tE-mnk" customClass="MSFolderViewerCell">
                                         <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nCo-Bi-VZg" id="TWR-Xr-SWY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TLQ-tE-mnk" id="Pac-gT-LP7">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LBf-Zt-eXB">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V1l-tz-Tfa">
                                                     <rect key="frame" x="8" y="0.0" width="43" height="43"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="84s-36-nuZ"/>
-                                                        <constraint firstAttribute="height" constant="43" id="wto-mI-oqF"/>
+                                                        <constraint firstAttribute="width" constant="43" id="39u-x9-FQy"/>
+                                                        <constraint firstAttribute="height" constant="43" id="UUT-6a-PVl"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCp-6N-rdq">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boT-7p-TvI">
                                                     <rect key="frame" x="59" y="4" width="253" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="NQN-Ec-dtm"/>
+                                                        <constraint firstAttribute="height" constant="35" id="h8w-Bz-X1w"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.80122451241134751" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" constant="4" id="3fr-n4-zGr"/>
-                                                <constraint firstItem="GCp-6N-rdq" firstAttribute="leading" secondItem="LBf-Zt-eXB" secondAttribute="trailing" constant="8" id="8Sg-TE-bYu"/>
-                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="top" secondItem="TWR-Xr-SWY" secondAttribute="top" id="8hr-uN-b9s"/>
-                                                <constraint firstAttribute="trailing" secondItem="GCp-6N-rdq" secondAttribute="trailing" constant="8" id="Chg-7O-O4q"/>
-                                                <constraint firstItem="LBf-Zt-eXB" firstAttribute="leading" secondItem="TWR-Xr-SWY" secondAttribute="leading" constant="8" id="mTv-iJ-5ZO"/>
+                                                <constraint firstAttribute="trailing" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="5jf-12-keO"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="8aQ-Fe-w6M"/>
+                                                <constraint firstAttribute="bottom" secondItem="V1l-tz-Tfa" secondAttribute="bottom" id="VjN-oX-mlP"/>
+                                                <constraint firstItem="V1l-tz-Tfa" firstAttribute="leading" secondItem="Pac-gT-LP7" secondAttribute="leading" constant="8" id="o69-gz-AZn"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="xwG-Fw-SFJ"/>
+                                                <constraint firstItem="V1l-tz-Tfa" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" id="zA6-rl-ZQS"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <outlet property="folderPicImageView" destination="LBf-Zt-eXB" id="fsw-LO-agr"/>
-                                            <outlet property="nameFolderLabel" destination="GCp-6N-rdq" id="xpX-8E-eeV"/>
+                                            <outlet property="folderPicImageView" destination="V1l-tz-Tfa" id="ntR-tp-pjF"/>
+                                            <outlet property="nameFolderLabel" destination="boT-7p-TvI" id="yz3-u7-dQm"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="leL-vS-maa" id="M5A-Pq-SPC"/>
-                                    <outlet property="delegate" destination="leL-vS-maa" id="tbt-AC-03B"/>
+                                    <outlet property="dataSource" destination="VV0-h3-dze" id="nlm-dm-cyh"/>
+                                    <outlet property="delegate" destination="VV0-h3-dze" id="v7i-qo-Qv2"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="D8s-bh-R2P" secondAttribute="trailing" id="7Jq-nW-Mqe"/>
-                            <constraint firstItem="bM4-Zp-4ga" firstAttribute="top" secondItem="D8s-bh-R2P" secondAttribute="bottom" id="9uT-Jr-NWX"/>
-                            <constraint firstItem="D8s-bh-R2P" firstAttribute="top" secondItem="pmF-kx-5D2" secondAttribute="top" id="Nd6-Eu-G71"/>
-                            <constraint firstItem="D8s-bh-R2P" firstAttribute="leading" secondItem="pmF-kx-5D2" secondAttribute="leading" id="tOo-Gk-kwf"/>
+                            <constraint firstItem="LCm-JP-rDp" firstAttribute="top" secondItem="GWw-DM-m2F" secondAttribute="top" id="8ra-eR-DAX"/>
+                            <constraint firstAttribute="trailing" secondItem="LCm-JP-rDp" secondAttribute="trailing" id="Oyb-Qk-67W"/>
+                            <constraint firstItem="LCm-JP-rDp" firstAttribute="leading" secondItem="GWw-DM-m2F" secondAttribute="leading" id="d9h-MH-4eW"/>
+                            <constraint firstItem="PF1-Ta-iks" firstAttribute="top" secondItem="LCm-JP-rDp" secondAttribute="bottom" id="vCq-dW-b7T"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="tDm-IE-IDn">
-                        <nil key="title"/>
-                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Px7-Ci-092">
-                            <rect key="frame" x="96" y="7" width="128" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                            <state key="normal" title="Create folder +"/>
-                            <connections>
-                                <action selector="createFolderAction:" destination="leL-vS-maa" eventType="touchUpInside" id="9fB-nV-dCX"/>
-                            </connections>
-                        </button>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Nk2-P1-ctO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="tableView" destination="D8s-bh-R2P" id="eyK-Ir-lZs"/>
+                        <outlet property="tableView" destination="LCm-JP-rDp" id="NSn-IG-cCh"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GCo-tZ-yNM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AfZ-8Z-dJB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-249" y="1111"/>
-        </scene>
-        <!--MainNC-->
-        <scene sceneID="bQp-K2-bve">
-            <objects>
-                <navigationController storyboardIdentifier="MSMainNC" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="nzW-Mw-vng" customClass="MSMainNC" sceneMemberID="viewController">
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2EJ-Lm-UPI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hOw-NV-7i7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-708" y="469"/>
         </scene>
     </scenes>
 </document>

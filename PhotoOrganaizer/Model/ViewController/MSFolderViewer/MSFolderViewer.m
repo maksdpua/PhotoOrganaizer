@@ -12,12 +12,14 @@
 #import "MSDefaultFolderVC.h"
 #import "MSCreateNewFolderView.h"
 #import "MSGalleryRoll.h"
+#import "MSPhoto.h"
 
 static NSString *const kPreviousPath = @"previousPath";
 
 @interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) IBOutlet UIView *backgroundView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) MSCreateNewFolderView *createFolderItem;
@@ -30,7 +32,37 @@ static NSString *const kPreviousPath = @"previousPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self requestForData];
+    [self tableViewBackgroundBlur];
+    
+}
+
+- (void)tableViewBackgroundBlur {
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.tableView.frame;
+    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.tableView.backgroundView = blurEffectView;
+    
+    
+}
+
+- (void)setBackgroundPhotoInTableView {
+    NSData *data = [self getRandomPhotoFromSelectedFolder];
+    if (data) {
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithData:data]]];
+    }
+    
+}
+
+- (NSData *)getRandomPhotoFromSelectedFolder {
+    if (self.contentArray) {
+        MSFolder *folder = [self.contentArray lastObject];
+        MSPhoto *photoObject = [folder.photos.allObjects lastObject];
+        if (photoObject.dataImage) {
+            return photoObject.dataImage;
+        }
+    }
+    return nil;
 }
 
 - (void)requestForData {
@@ -61,8 +93,9 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [self requestForData];
     [self loadData];
+    [self requestForData];
+    [self setBackgroundPhotoInTableView];
 }
 
 - (void)checkForEmptyPath {
