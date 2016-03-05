@@ -10,6 +10,7 @@
 //
 
 #import "MSPhoto.h"
+#import "MSThumbnail.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,8 +24,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *revPhoto;
 @property (nullable, nonatomic, retain) NSString *clientModified;
 @property (nullable, nonatomic, retain) NSString *tag;
-@property (nullable, nonatomic, retain) NSData *dataImage;
 @property (nullable, nonatomic, retain) MSFolder *toFolder;
+@property (nullable, nonatomic, retain) MSThumbnail *imageThumbnail;
+
+
+@end
+
+@interface MSPhoto (CoreDataGeneratedAccessors)
+
+- (void)addImageThumbnailObject:(MSThumbnail *)value;
+- (void)removeImageThumbnailObject:(MSThumbnail *)value;
+
 
 
 @end

@@ -13,6 +13,7 @@
 #import "MSCreateNewFolderView.h"
 #import "MSGalleryRoll.h"
 #import "MSPhoto.h"
+#import "MSThumbnail.h"
 
 static NSString *const kPreviousPath = @"previousPath";
 
@@ -55,14 +56,9 @@ static NSString *const kPreviousPath = @"previousPath";
 }
 
 - (NSData *)getRandomPhotoFromSelectedFolder {
-    if (self.contentArray) {
-        MSFolder *folder = [self.contentArray lastObject];
-        MSPhoto *photoObject = [folder.photos.allObjects lastObject];
-        if (photoObject.dataImage) {
-            return photoObject.dataImage;
-        }
-    }
-    return nil;
+    MSThumbnail *thumbnail = [[MSThumbnail MR_findAll] lastObject];
+    return thumbnail.data;
+    
 }
 
 - (void)requestForData {

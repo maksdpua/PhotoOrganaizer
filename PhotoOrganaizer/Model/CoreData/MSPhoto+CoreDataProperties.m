@@ -22,7 +22,7 @@
 @dynamic clientModified;
 @dynamic tag;
 @dynamic toFolder;
-@dynamic dataImage;
+@dynamic imageThumbnail;
 
 
 @end

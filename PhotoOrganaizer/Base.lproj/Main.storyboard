@@ -278,28 +278,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LCm-JP-rDp">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LCm-JP-rDp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.1260839332" green="0.1260839332" blue="0.1260839332" alpha="0.59998337769999999" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MSFolderViewerCell" id="TLQ-tE-mnk" customClass="MSFolderViewerCell">
                                         <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TLQ-tE-mnk" id="Pac-gT-LP7">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="V1l-tz-Tfa">
                                                     <rect key="frame" x="8" y="0.0" width="43" height="43"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="43" id="39u-x9-FQy"/>
-                                                        <constraint firstAttribute="height" constant="43" id="UUT-6a-PVl"/>
+                                                        <constraint firstAttribute="width" constant="43" id="DaN-oB-nrw"/>
+                                                        <constraint firstAttribute="height" constant="43" id="s57-m6-Zit"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boT-7p-TvI">
                                                     <rect key="frame" x="59" y="4" width="253" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="h8w-Bz-X1w"/>
+                                                        <constraint firstAttribute="height" constant="35" id="Zwv-6J-ZI8"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -307,12 +307,12 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="5jf-12-keO"/>
-                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="8aQ-Fe-w6M"/>
-                                                <constraint firstAttribute="bottom" secondItem="V1l-tz-Tfa" secondAttribute="bottom" id="VjN-oX-mlP"/>
-                                                <constraint firstItem="V1l-tz-Tfa" firstAttribute="leading" secondItem="Pac-gT-LP7" secondAttribute="leading" constant="8" id="o69-gz-AZn"/>
-                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="xwG-Fw-SFJ"/>
-                                                <constraint firstItem="V1l-tz-Tfa" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" id="zA6-rl-ZQS"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="4Mp-dT-fX3"/>
+                                                <constraint firstItem="V1l-tz-Tfa" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" id="Eu8-W9-sZh"/>
+                                                <constraint firstAttribute="bottom" secondItem="V1l-tz-Tfa" secondAttribute="bottom" constant="1" id="GJr-1g-D48"/>
+                                                <constraint firstAttribute="trailing" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="Vui-NX-Yu7"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="aEx-fP-uSp"/>
+                                                <constraint firstItem="V1l-tz-Tfa" firstAttribute="leading" secondItem="Pac-gT-LP7" secondAttribute="leading" constant="8" id="mD4-Ky-xLZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

@@ -23,8 +23,10 @@
 
 - (void)setupWithModel:(MSPhoto *)model {
     
-    if (model.dataImage) {
-        self.photo.image = [UIImage imageWithData:model.dataImage];
+    if (model.imageThumbnail.data) {
+        self.photo.image = [UIImage imageWithData:model.imageThumbnail.data];
+        
+        
     } else {
         [MBProgressHUD showHUDAddedTo:self animated:YES];
         self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
@@ -34,8 +36,11 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^(void){
-                    self.photo.image = [UIImage imageWithData:responseObject];;
-                    model.dataImage = responseObject;
+                    self.photo.image = [UIImage imageWithData:responseObject];
+                    MSThumbnail *thumbnail = [MSThumbnail MR_createEntity];
+                    thumbnail.data = responseObject;
+//                    model.imageThumbnail.data = responseObject;
+                    model.imageThumbnail = thumbnail;
                     [MBProgressHUD hideAllHUDsForView:self animated:YES];
                     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
                 });

@@ -1,19 +1,17 @@
 //
-//  MSPhoto.h
+//  MSThumbnail.h
 //  PhotoOrganaizer
 //
-//  Created by Maks on 1/15/16.
+//  Created by Maks on 3/5/16.
 //  Copyright © 2016 Maks. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class MSFolder;
-
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MSPhoto : NSManagedObject
+@interface MSThumbnail : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -21,4 +19,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "MSPhoto+CoreDataProperties.h"
+#import "MSThumbnail+CoreDataProperties.h"
