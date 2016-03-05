@@ -25,20 +25,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self createRequestToFolderContent];
+//    [self createRequestToFolderContent];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self createRequestToFolderContent];
-    [self loadPhotosFromData];
 }
 - (void)createRequestToFolderContent {
     NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[MSAuth defaulFolderPath]];
         self.contentArray = mainFolder.photos.allObjects;
+        
         [self.collectionView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Error %@", error);
@@ -70,6 +70,13 @@
                                       [self presentViewController:photoImagePickerNavigation animated:YES completion:nil];
                                  
                                   }];
+    UIAlertAction* clearCache = [UIAlertAction
+                             actionWithTitle:@"Clear cache"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action) {
+                                 [MSThumbnail MR_truncateAll];
+                                 [actSheet removeFromParentViewController];
+                             }];
     UIAlertAction* logout = [UIAlertAction
                              actionWithTitle:@"Logout"
                              style:UIAlertActionStyleDestructive
@@ -86,6 +93,7 @@
                              }];
     
     [actSheet addAction:choosePhoto];
+    [actSheet addAction:clearCache];
     [actSheet addAction:logout];
     [actSheet addAction:cancel];
     
@@ -98,7 +106,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
+    MSGalleryRollCell *cell = nil;
+    cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
     return cell;
 }

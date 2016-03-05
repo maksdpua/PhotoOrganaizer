@@ -37,7 +37,6 @@
 		2D906FCB1C3EFD5400DF01A4 /* PhotoOrganaizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FCA1C3EFD5400DF01A4 /* PhotoOrganaizerTests.m */; };
 		2D906FD61C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FD51C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m */; };
 		2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */; };
-		2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */; };
 		2D988E621C7D9E0600BEDAF1 /* MSPhotoAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */; };
 		2D988E661C7DA56500BEDAF1 /* MSPhotoAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E651C7DA56500BEDAF1 /* MSPhotoAlbumCell.m */; };
 		2D988E6A1C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */; };
@@ -49,6 +48,7 @@
 		2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */; };
 		2DFAB3F11C74925E004FA81E /* MSFolderViewNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFAB3F01C74925E004FA81E /* MSFolderViewNavigation.m */; };
 		B2B89E49FB466602F6785C61 /* libPods-PhotoOrganaizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */; };
+		FC28B94B1C8B739900AD8FBF /* MSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FC28B94A1C8B739900AD8FBF /* MSCache.m */; };
 		FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBA44B01C53932C00471F0B /* MSFolder+CoreDataProperties.m */; };
 		FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */ = {isa = PBXBuildFile; fileRef = FCBA44B21C53932C00471F0B /* MSFolder.m */; };
 /* End PBXBuildFile section */
@@ -130,8 +130,6 @@
 		2D906FD71C3EFD5400DF01A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D906FE71C3EFE4700DF01A4 /* MSMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainVC.h; path = Model/ViewController/MainVC/MSMainVC.h; sourceTree = "<group>"; };
 		2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVC.m; path = Model/ViewController/MainVC/MSMainVC.m; sourceTree = "<group>"; };
-		2D906FEC1C3F03AA00DF01A4 /* MSMainNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainNC.h; path = Model/NavigationController/MainNC/MSMainNC.h; sourceTree = "<group>"; };
-		2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainNC.m; path = Model/NavigationController/MainNC/MSMainNC.m; sourceTree = "<group>"; };
 		2D988E601C7D9E0600BEDAF1 /* MSPhotoAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoAlbums.h; path = Model/ViewController/MSImagePicker/MSPhotoAlbums.h; sourceTree = "<group>"; };
 		2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoAlbums.m; path = Model/ViewController/MSImagePicker/MSPhotoAlbums.m; sourceTree = "<group>"; };
 		2D988E641C7DA56500BEDAF1 /* MSPhotoAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoAlbumCell.h; path = Model/Cells/MSPhotoAlbumCell/MSPhotoAlbumCell.h; sourceTree = "<group>"; };
@@ -154,6 +152,8 @@
 		929ADEFCCC27CDCD3BB38851 /* Pods-PhotoOrganaizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.debug.xcconfig"; sourceTree = "<group>"; };
 		A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoOrganaizer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E81833BD983100BAAE17E6DF /* Pods-PhotoOrganaizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.release.xcconfig"; sourceTree = "<group>"; };
+		FC28B9491C8B739900AD8FBF /* MSCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSCache.h; path = Classes/MSCache/MSCache.h; sourceTree = "<group>"; };
+		FC28B94A1C8B739900AD8FBF /* MSCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSCache.m; path = Classes/MSCache/MSCache.m; sourceTree = "<group>"; };
 		FCBA44AF1C53932C00471F0B /* MSFolder+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MSFolder+CoreDataProperties.h"; path = "Model/CoreData/MSFolder+CoreDataProperties.h"; sourceTree = "<group>"; };
 		FCBA44B01C53932C00471F0B /* MSFolder+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MSFolder+CoreDataProperties.m"; path = "Model/CoreData/MSFolder+CoreDataProperties.m"; sourceTree = "<group>"; };
 		FCBA44B11C53932C00471F0B /* MSFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSFolder.h; path = Model/CoreData/MSFolder.h; sourceTree = "<group>"; };
@@ -206,6 +206,7 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				FC28B9481C8B72C500AD8FBF /* MSCache */,
 				2DDF2B101C501C8500330CEA /* MSAnimation */,
 				2DDF2B0C1C5008AF00330CEA /* MSAPIMethodsManager */,
 				2D1DAB951C47FA1900C7AA19 /* MSRequestManager */,
@@ -271,15 +272,6 @@
 				2D305AD41C726FAE00B4F018 /* MSGalleryRollNavigation.m */,
 			);
 			name = MSGalleryRollNavigation;
-			sourceTree = "<group>";
-		};
-		2D305AD61C7271E700B4F018 /* MSMainNC */ = {
-			isa = PBXGroup;
-			children = (
-				2D906FEC1C3F03AA00DF01A4 /* MSMainNC.h */,
-				2D906FED1C3F03AA00DF01A4 /* MSMainNC.m */,
-			);
-			name = MSMainNC;
 			sourceTree = "<group>";
 		};
 		2D330DF11C42E268008897C7 /* Auth */ = {
@@ -535,7 +527,6 @@
 			children = (
 				2D988E671C7DD49E00BEDAF1 /* MSPhotoImagePickerNavigation */,
 				2DFAB3EE1C74922C004FA81E /* MSFolderViewNavigation */,
-				2D305AD61C7271E700B4F018 /* MSMainNC */,
 				2D305AD21C726F6D00B4F018 /* MSGalleryRollNavigation */,
 			);
 			name = NavigationController;
@@ -629,6 +620,15 @@
 				E81833BD983100BAAE17E6DF /* Pods-PhotoOrganaizer.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		FC28B9481C8B72C500AD8FBF /* MSCache */ = {
+			isa = PBXGroup;
+			children = (
+				FC28B9491C8B739900AD8FBF /* MSCache.h */,
+				FC28B94A1C8B739900AD8FBF /* MSCache.m */,
+			);
+			name = MSCache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -821,10 +821,10 @@
 			files = (
 				2D40AEF21C6DE82600024FB3 /* MSGalleryRollCell.m in Sources */,
 				2D330DFC1C4306C2008897C7 /* MSDefaultFolderVC.m in Sources */,
+				FC28B94B1C8B739900AD8FBF /* MSCache.m in Sources */,
 				2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */,
 				2D906FBB1C3EFD5400DF01A4 /* PhotoOrganaizer.xcdatamodeld in Sources */,
 				2D8EED961C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.m in Sources */,
-				2D906FEE1C3F03AA00DF01A4 /* MSMainNC.m in Sources */,
 				2D1DAB981C47FA5500C7AA19 /* MSRequestManager.m in Sources */,
 				2DFAB3F11C74925E004FA81E /* MSFolderViewNavigation.m in Sources */,
 				2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */,

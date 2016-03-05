@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MSMainNC.h"
 
 @interface AppDelegate ()
 

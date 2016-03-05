@@ -11,7 +11,11 @@
 @implementation UIImage (SharedPics)
 
 + (UIImage *)folderPic {
-    return [UIImage imageNamed:kFolderPic];
+    return [UIImage imageNamed:@"folder-generic"];
 }
++ (UIImage *)smilePic {
+    return [UIImage imageNamed:@"glossy_emoticon_button"];
+}
+
 
 @end

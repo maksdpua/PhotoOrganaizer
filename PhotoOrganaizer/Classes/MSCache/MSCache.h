@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MSPhoto.h"
 
 @interface MSCache : NSObject
+
+- (void)cacheForImageWithKey:(MSPhoto *)photo completeBlock:(void(^)(NSData *responseData))complete errorBlock:(void(^)(NSError *error))fail;
 
 @end

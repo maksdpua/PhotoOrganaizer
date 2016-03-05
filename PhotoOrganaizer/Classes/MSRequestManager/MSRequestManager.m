@@ -125,9 +125,9 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     }
     [self setHTTPbodyWithDictionary];
     
-    dispatch_async(dispatch_get_main_queue(), ^(void){
+//    dispatch_async(dispatch_get_main_queue(), ^(void){
         [self createTaskWithSuccess:receiver failure:blockForError];
-    });
+//    });
     
 }
 

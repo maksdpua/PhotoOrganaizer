@@ -12,4 +12,6 @@
 
 + (UIImage *)folderPic;
 
++ (UIImage *)smilePic;
+
 @end
