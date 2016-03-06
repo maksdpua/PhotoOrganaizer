@@ -9,7 +9,6 @@
 #import "MSFolderViewer.h"
 #import "MSFolderViewerCell.h"
 #import "MSRequestManager.h"
-#import "MSDefaultFolderVC.h"
 #import "MSCreateNewFolderView.h"
 #import "MSGalleryRoll.h"
 #import "MSPhoto.h"
@@ -33,8 +32,16 @@ static NSString *const kPreviousPath = @"previousPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToTheNextFolder:) name:kEnterButtonWasPressed object:nil];
     [self tableViewBackgroundBlur];
+    [self loadData];
+    [self requestForData];
+    [self setBackgroundPhotoInTableView];
     
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)tableViewBackgroundBlur {
@@ -55,10 +62,15 @@ static NSString *const kPreviousPath = @"previousPath";
     
 }
 
+- (void)pushToTheNextFolder:(NSNotification *)notification {
+    MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
+    toNextFolder.path = notification.object;
+    [self.navigationController pushViewController:toNextFolder animated:YES];
+}
+
 - (NSData *)getRandomPhotoFromSelectedFolder {
     MSThumbnail *thumbnail = [[MSThumbnail MR_findAll] lastObject];
     return thumbnail.data;
-    
 }
 
 - (void)requestForData {
@@ -89,9 +101,7 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self loadData];
-    [self requestForData];
-    [self setBackgroundPhotoInTableView];
+    
 }
 
 - (void)checkForEmptyPath {
@@ -126,19 +136,22 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
-    MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
-    toNextFolder.path = folderInfo.path;
     [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
     [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
-//    [self.navigationController pushViewController:toNextFolder animated:YES];
+    
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    if (self.isMovingFromParentViewController) {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        // back button was pressed.  We know this is true because self is no longer
+        // in the navigation stack.
         [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
     }
+    [super viewWillDisappear:animated];
+//    if (self.isMovingFromParentViewController) {
+//        [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
+//    }
 }
 
 

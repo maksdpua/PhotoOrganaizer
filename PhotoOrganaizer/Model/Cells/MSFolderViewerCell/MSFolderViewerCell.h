@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "MSFolder.h"
 
+static NSString *const kEnterButtonWasPressed = @"enterButtonWasPressed";
+
 @interface MSFolderViewerCell : UITableViewCell
 
 - (void)setupWithModel: (MSFolder*)model;

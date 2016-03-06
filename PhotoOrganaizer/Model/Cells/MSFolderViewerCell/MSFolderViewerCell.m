@@ -12,6 +12,7 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *folderPicImageView;
 @property (nonatomic, weak) IBOutlet UILabel *nameFolderLabel;
+@property (nonatomic, strong) NSString *pathToTheNextFolder;
 
 
 @end
@@ -19,8 +20,14 @@
 @implementation MSFolderViewerCell
 
 - (void)setupWithModel:(MSFolder*)model {
+    self.pathToTheNextFolder = model.path;
     self.nameFolderLabel.text = model.nameOfFolder;
     self.folderPicImageView.image = [UIImage folderPic];
+}
+
+- (IBAction)enterToTheNextFolder:(id)sender {
+    NSLog(@"folder path %@", self.pathToTheNextFolder);
+    [[NSNotificationCenter defaultCenter] postNotificationName:kEnterButtonWasPressed object:self.pathToTheNextFolder];
 }
 
 

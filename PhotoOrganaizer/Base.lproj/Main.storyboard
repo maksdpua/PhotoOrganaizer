@@ -297,22 +297,35 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boT-7p-TvI">
-                                                    <rect key="frame" x="59" y="4" width="253" height="35"/>
+                                                    <rect key="frame" x="59" y="4" width="206" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="Zwv-6J-ZI8"/>
+                                                        <constraint firstAttribute="height" constant="35" id="X9V-kN-jsM"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pRs-Yr-n8P">
+                                                    <rect key="frame" x="273" y="11" width="39" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="39" id="huc-gy-2ET"/>
+                                                        <constraint firstAttribute="height" constant="22" id="iKP-Yu-48c"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Enter"/>
+                                                    <connections>
+                                                        <action selector="enterToTheNextFolder:" destination="TLQ-tE-mnk" eventType="touchUpInside" id="wxF-Am-GyP"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="4Mp-dT-fX3"/>
                                                 <constraint firstItem="V1l-tz-Tfa" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" id="Eu8-W9-sZh"/>
                                                 <constraint firstAttribute="bottom" secondItem="V1l-tz-Tfa" secondAttribute="bottom" constant="1" id="GJr-1g-D48"/>
-                                                <constraint firstAttribute="trailing" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="Vui-NX-Yu7"/>
-                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="aEx-fP-uSp"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="XxG-Bh-EHB"/>
+                                                <constraint firstAttribute="trailing" secondItem="pRs-Yr-n8P" secondAttribute="trailing" constant="8" id="cBD-6y-0RL"/>
+                                                <constraint firstItem="pRs-Yr-n8P" firstAttribute="leading" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="fdR-Ip-tmA"/>
                                                 <constraint firstItem="V1l-tz-Tfa" firstAttribute="leading" secondItem="Pac-gT-LP7" secondAttribute="leading" constant="8" id="mD4-Ky-xLZ"/>
+                                                <constraint firstItem="pRs-Yr-n8P" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="11" id="qdR-Vf-vhs"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="ysU-fI-mSn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

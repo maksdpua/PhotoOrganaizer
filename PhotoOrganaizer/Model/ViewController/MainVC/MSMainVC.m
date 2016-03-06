@@ -9,7 +9,6 @@
 #import "MSMainVC.h"
 #import "LoginService.h"
 #import "MSAuth.h"
-#import "MSDefaultFolderVC.h"
 
 @interface MSMainVC ()<POPAnimationDelegate>
 
