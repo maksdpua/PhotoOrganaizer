@@ -25,13 +25,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-//    [self createRequestToFolderContent];
+    [self loadPhotosFromData];
+    [self createRequestToFolderContent];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self createRequestToFolderContent];
+//    [self createRequestToFolderContent];
 }
 - (void)createRequestToFolderContent {
     NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};

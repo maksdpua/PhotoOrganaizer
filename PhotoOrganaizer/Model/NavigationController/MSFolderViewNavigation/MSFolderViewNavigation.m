@@ -54,7 +54,7 @@
     
     if (sender.state == UIGestureRecognizerStateBegan) {
         galleryRollNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSGalleryRollNavigation class])];
-
+        
         galleryRollNavigation.view.frame = CGRectMake(CGRectGetWidth(self.view.frame), CGRectGetMinY(self.view.frame), CGRectGetWidth(galleryRollNavigation.view.frame), CGRectGetHeight(galleryRollNavigation.view.frame));
         
         [self.view addSubview:galleryRollNavigation.view];
@@ -67,15 +67,12 @@
     if (sender.state == UIGestureRecognizerStateChanged) {
         
         self.view.center = CGPointMake(translatedPoint.x, self.view.center.y);
-//        NSLog(@"location %@", NSStringFromCGPoint(self.view.frame.origin));
         
     } else if (sender.state == UIGestureRecognizerStateEnded) {
         CGFloat velocityX = (0.2*[(UIPanGestureRecognizer*)sender velocityInView:self.view].x);
         //        CGFloat finalX = translatedPoint.x + velocityX;
         
         CGFloat animationDuration = (ABS(velocityX)*.0002)+.2;
-        
-//        NSLog(@"the duration is: %f", animationDuration);
         
         if (self.view.frame.origin.x > -70) {
             [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -85,15 +82,12 @@
             [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 self.view.frame = CGRectMake(-CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
             } completion:^(BOOL finished) {
-//                [galleryRollNavigation re];
                 [self presentViewController:galleryRollNavigation animated:NO completion:^{
-                    NSLog(@"%@", galleryRollNavigation);
+                    
                 }];
             }];
         }
-        
     }
-    
 }
 
 - (void)dealloc {
