@@ -66,6 +66,7 @@ static NSString *const kPreviousPath = @"previousPath";
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = notification.object;
     [self.navigationController pushViewController:toNextFolder animated:YES];
+    [[NSUserDefaults standardUserDefaults] setObject:toNextFolder.path forKey:kDefaultFolderPath];
 }
 
 - (NSData *)getRandomPhotoFromSelectedFolder {
