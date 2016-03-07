@@ -32,12 +32,17 @@ static NSString *const kPreviousPath = @"previousPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToTheNextFolder:) name:kEnterButtonWasPressed object:nil];
+    
     [self tableViewBackgroundBlur];
     [self loadData];
     [self requestForData];
     [self setBackgroundPhotoInTableView];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToTheNextFolder:) name:kEnterButtonWasPressed object:nil];
 }
 
 - (void)dealloc {
@@ -67,6 +72,8 @@ static NSString *const kPreviousPath = @"previousPath";
     toNextFolder.path = notification.object;
     [self.navigationController pushViewController:toNextFolder animated:YES];
     [[NSUserDefaults standardUserDefaults] setObject:toNextFolder.path forKey:kDefaultFolderPath];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"PUSH");
 }
 
 - (NSData *)getRandomPhotoFromSelectedFolder {
@@ -97,11 +104,6 @@ static NSString *const kPreviousPath = @"previousPath";
     if (!self.contentArray) {
         [self requestForData];
     }
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
 }
 
@@ -141,6 +143,9 @@ static NSString *const kPreviousPath = @"previousPath";
     [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
     
     
+}
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"DESELECT");
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
