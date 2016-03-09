@@ -148,13 +148,10 @@ static NSString *const kPreviousPath = @"previousPath";
 //    [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
 //    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
     
-    
-}
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"DESELECT");
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         // back button was pressed.  We know this is true because self is no longer
         // in the navigation stack.
@@ -162,9 +159,7 @@ static NSString *const kPreviousPath = @"previousPath";
         [[MSFolderPathManager sharedManager] removeLastPathInArray];
     }
     [super viewWillDisappear:animated];
-//    if (self.isMovingFromParentViewController) {
-//        [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
-//    }
+
 }
 
 
