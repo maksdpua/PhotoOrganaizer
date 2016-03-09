@@ -12,6 +12,7 @@
 #import "MSFolder.h"
 #import "MSGalleryRollCell.h"
 #import "MSPhotoImagePickerNavigation.h"
+#import "MSFolderPathManager.h"
 
 @interface MSGalleryRoll()<MSRequestManagerDelegate>
 
@@ -32,9 +33,9 @@
 
 
 - (void)createRequestToFolderContent {
-    NSDictionary *parametrs = @{@"path" : [MSAuth defaulFolderPath], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
+    NSDictionary *parametrs = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
-        MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[MSAuth defaulFolderPath]];
+        MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
         self.contentArray = mainFolder.photos.allObjects;
         
         [self.collectionView reloadData];
@@ -44,7 +45,7 @@
 }
 
 - (void)loadPhotosFromData {
-    MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[MSAuth defaulFolderPath]];
+    MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.contentArray = mainFolder.photos.allObjects;
     if (!self.contentArray) {
         [self createRequestToFolderContent];

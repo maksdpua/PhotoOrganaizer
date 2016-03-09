@@ -13,6 +13,7 @@
 #import "MSGalleryRoll.h"
 #import "MSPhoto.h"
 #import "MSThumbnail.h"
+#import "MSFolderPathManager.h"
 
 static NSString *const kPreviousPath = @"previousPath";
 
@@ -71,9 +72,10 @@ static NSString *const kPreviousPath = @"previousPath";
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = notification.object;
     [self.navigationController pushViewController:toNextFolder animated:YES];
-    [[NSUserDefaults standardUserDefaults] setObject:toNextFolder.path forKey:kDefaultFolderPath];
+//    [[NSUserDefaults standardUserDefaults] setObject:toNextFolder.path forKey:kDefaultFolderPath];
+    [[MSFolderPathManager sharedManager] addEnteredFolderPath:toNextFolder.path];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    NSLog(@"PUSH");
+    
 }
 
 - (NSData *)getRandomPhotoFromSelectedFolder {
@@ -83,13 +85,13 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)requestForData {
     [self checkForEmptyPath];
-    NSDictionary *parameters = @{@"path" : self.path, @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
+    NSDictionary *parameters = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
-        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
-        NSArray *all = [MSFolder MR_findAll];
-        for (MSFolder *f in all) {
-            NSLog(@"Folder %@", f.nameOfFolder);
-        }
+        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
+//        NSArray *all = [MSFolder MR_findAll];
+//        for (MSFolder *f in all) {
+//            NSLog(@"Folder %@", f.nameOfFolder);
+//        }
         self.contentArray = folderContent.folders.allObjects;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -99,7 +101,7 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)loadData {
     [self checkForEmptyPath];
-    MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:self.path];
+    MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.contentArray = folderContent.folders.allObjects;
     if (!self.contentArray) {
         [self requestForData];
@@ -139,8 +141,12 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
-    [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
-    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
+    if (![[[MSFolderPathManager sharedManager] getLastPathInArray] isEqualToString:folderInfo.path]) {
+        [[MSFolderPathManager sharedManager] addEnteredFolderPath:folderInfo.path];
+    }
+    
+//    [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
+//    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
     
     
 }
@@ -152,7 +158,8 @@ static NSString *const kPreviousPath = @"previousPath";
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         // back button was pressed.  We know this is true because self is no longer
         // in the navigation stack.
-        [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
+//        [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
+        [[MSFolderPathManager sharedManager] removeLastPathInArray];
     }
     [super viewWillDisappear:animated];
 //    if (self.isMovingFromParentViewController) {
