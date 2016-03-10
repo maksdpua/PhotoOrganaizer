@@ -100,7 +100,6 @@
     
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSLog(@"%tu", self.contentArray.count);
     return self.contentArray.count;
 }
 

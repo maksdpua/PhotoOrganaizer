@@ -73,6 +73,7 @@ static NSString *const kPreviousPath = @"previousPath";
 }
 
 - (void)pushToTheNextFolder:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (self.tableView.indexPathForSelectedRow) {
         [[MSFolderPathManager sharedManager] removeLastPathInArray];
     }
@@ -80,8 +81,9 @@ static NSString *const kPreviousPath = @"previousPath";
     toNextFolder.path = notification.object;
     [self.navigationController pushViewController:toNextFolder animated:YES];
 //    [[NSUserDefaults standardUserDefaults] setObject:toNextFolder.path forKey:kDefaultFolderPath];
-    [[MSFolderPathManager sharedManager] addEnteredFolderPath:toNextFolder.path];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    if (![toNextFolder.path isEqualToString:[[MSFolderPathManager sharedManager] getLastPathInArray]]) {
+        [[MSFolderPathManager sharedManager] addEnteredFolderPath:toNextFolder.path];
+    }
     
 }
 
@@ -164,9 +166,6 @@ static NSString *const kPreviousPath = @"previousPath";
 - (void)viewWillDisappear:(BOOL)animated {
     
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
-        // back button was pressed.  We know this is true because self is no longer
-        // in the navigation stack.
-//        [[NSUserDefaults standardUserDefaults] setObject:[[NSUserDefaults standardUserDefaults] valueForKey:kPreviousPath] forKey:kDefaultFolderPath];
         [[MSFolderPathManager sharedManager] removeLastPathInArray];
     }
     [super viewWillDisappear:animated];

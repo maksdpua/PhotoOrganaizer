@@ -26,7 +26,6 @@
 }
 
 - (IBAction)enterToTheNextFolder:(id)sender {
-    NSLog(@"folder path %@", self.pathToTheNextFolder);
     [[NSNotificationCenter defaultCenter] postNotificationName:kEnterButtonWasPressed object:self.pathToTheNextFolder];
 }
 

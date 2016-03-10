@@ -40,11 +40,16 @@
     [self.pathArray addObject:folderPath];
 }
 
-- (NSString *)getLastPathInArray {
+- (NSString *)getLastPathInArray {;
+    NSLog(@"LAST PATH %@", [self.pathArray lastObject]);
     return [self.pathArray lastObject];
 }
 
 - (void)removeLastPathInArray {
+    if ([[self.pathArray lastObject] isEqualToString:@""]) {
+        NSLog(@"TRYING TO REMOVE FIRST OBJECT IN PATH ARRAY");
+        return;
+    }
     [self.pathArray removeLastObject];
 }
 
