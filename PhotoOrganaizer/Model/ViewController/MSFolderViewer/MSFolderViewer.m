@@ -38,11 +38,11 @@ static NSString *const kPreviousPath = @"previousPath";
     [self loadData];
     [self requestForData];
     [self setBackgroundPhotoInTableView];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     if (self.tableView.indexPathForSelectedRow) {
         [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
         [[MSFolderPathManager sharedManager] removeLastPathInArray];
@@ -93,14 +93,14 @@ static NSString *const kPreviousPath = @"previousPath";
 }
 
 - (void)requestForData {
-    [self checkForEmptyPath];
+//    [self checkForEmptyPath];
     NSDictionary *parameters = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-//        NSArray *all = [MSFolder MR_findAll];
-//        for (MSFolder *f in all) {
-//            NSLog(@"Folder %@", f.nameOfFolder);
-//        }
+        NSArray *all = [MSFolder MR_findAll];
+        for (MSFolder *f in all) {
+            NSLog(@"Folder %@", f.nameOfFolder);
+        }
         self.contentArray = folderContent.folders.allObjects;
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -109,7 +109,7 @@ static NSString *const kPreviousPath = @"previousPath";
 }
 
 - (void)loadData {
-    [self checkForEmptyPath];
+//    [self checkForEmptyPath];
     MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.contentArray = folderContent.folders.allObjects;
     if (!self.contentArray) {
@@ -159,9 +159,9 @@ static NSString *const kPreviousPath = @"previousPath";
     
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[MSFolderPathManager sharedManager] removeLastPathInArray];
-}
+//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [[MSFolderPathManager sharedManager] removeLastPathInArray];
+//}
 
 - (void)viewWillDisappear:(BOOL)animated {
     

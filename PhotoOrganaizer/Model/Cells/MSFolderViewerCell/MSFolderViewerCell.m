@@ -27,6 +27,7 @@
 
 - (IBAction)enterToTheNextFolder:(id)sender {
     [[NSNotificationCenter defaultCenter] postNotificationName:kEnterButtonWasPressed object:self.pathToTheNextFolder];
+    
 }
 
 
