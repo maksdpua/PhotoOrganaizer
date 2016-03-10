@@ -73,6 +73,9 @@ static NSString *const kPreviousPath = @"previousPath";
 }
 
 - (void)pushToTheNextFolder:(NSNotification *)notification {
+    if (self.tableView.indexPathForSelectedRow) {
+        [[MSFolderPathManager sharedManager] removeLastPathInArray];
+    }
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     toNextFolder.path = notification.object;
     [self.navigationController pushViewController:toNextFolder animated:YES];
@@ -154,9 +157,8 @@ static NSString *const kPreviousPath = @"previousPath";
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    
-    
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [[MSFolderPathManager sharedManager] removeLastPathInArray];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
