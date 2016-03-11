@@ -52,7 +52,7 @@
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"Success %@", responseObject);
         [self.delegate reloadDataAfterDismissCreateFolderView];
-        [self removeFromSuperview];
+        [self cancelButton:nil];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"ERROR %@", error);
         [self removeFromSuperview];
