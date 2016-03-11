@@ -128,11 +128,13 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)reloadDataAfterDismissCreateFolderView {
     [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setToolbarHidden:NO];
     [self requestForData];
 }
 
 - (IBAction)createFolderAction:(id)sender {
     [self.navigationController setNavigationBarHidden:YES];
+    [self.navigationController setToolbarHidden:YES];
     self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.createFolderItem.delegate = self;
 }
