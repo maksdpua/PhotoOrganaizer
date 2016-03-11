@@ -16,6 +16,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *createButton;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *folderPath;
+@property (nonatomic, weak) IBOutlet UIVisualEffectView *blurView;
 
 @end
 
@@ -54,6 +55,8 @@
 - (IBAction)creafolder:(id)sender {
     [self createFolderWithName];
 }
+
+
 
 
 

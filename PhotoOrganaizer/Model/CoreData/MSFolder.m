@@ -57,7 +57,6 @@ static NSString *const kRoot = @"root";
         [backFolderPathArray addObjectsFromArray:pathArray];
         [backFolderPathArray removeLastObject];
         NSString *backFolderPath = [backFolderPathArray componentsJoinedByString:@"/"];
-//        NSString *backFolderPath = [path stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/%@",[pathArray lastObject]] withString:@""];
         if (object) {
             [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addPhotosObject:object];
         } else {

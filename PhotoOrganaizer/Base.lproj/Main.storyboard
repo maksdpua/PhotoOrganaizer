@@ -251,15 +251,20 @@
         <!--Folder View Navigation-->
         <scene sceneID="0E6-iI-MwC">
             <objects>
-                <navigationController storyboardIdentifier="MSFolderViewNavigation" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Nmr-MY-iBg" customClass="MSFolderViewNavigation" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MSFolderViewNavigation" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="Nmr-MY-iBg" customClass="MSFolderViewNavigation" sceneMemberID="viewController">
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="pcF-mt-QRV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" id="HLc-Fs-5by">
+                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
-                        <segue destination="VV0-h3-dze" kind="relationship" relationship="rootViewController" id="Jjc-Of-Mgy"/>
+                        <segue destination="VV0-h3-dze" kind="relationship" relationship="rootViewController" id="Hsl-Dd-GW9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="okz-nn-oCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -278,7 +283,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LCm-JP-rDp">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LCm-JP-rDp">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -349,6 +354,13 @@
                             <constraint firstItem="PF1-Ta-iks" firstAttribute="top" secondItem="LCm-JP-rDp" secondAttribute="bottom" id="vCq-dW-b7T"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem systemItem="add" id="iiI-Sk-ZQN">
+                            <connections>
+                                <action selector="createFolderAction:" destination="VV0-h3-dze" id="ib8-ru-M12"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="Nk2-P1-ctO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>

@@ -33,7 +33,8 @@ static NSString *const kPreviousPath = @"previousPath";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    
+    self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
+//    self.navigationController.navigationBar.titleTextAttributes = [[MSFolderPathManager sharedManager] getLastPathInArray];
     [self tableViewBackgroundBlur];
     [self loadData];
     [self requestForData];
@@ -132,7 +133,7 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (IBAction)createFolderAction:(id)sender {
     [self.navigationController setNavigationBarHidden:YES];
-    self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:self.path];
+    self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.createFolderItem.delegate = self;
 }
 
