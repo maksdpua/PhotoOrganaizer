@@ -28,6 +28,8 @@
         self.frame = view.frame;
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
         self.folderPath = path;
+        self.blurView.effect = nil; // "nil" means no blur/tint/vibrancy (plain, fully-transparent view)
+        
         [view addSubview:self];
         [self showWithDuration:0.25 withAlpha:1];
     }
@@ -36,6 +38,7 @@
 
 - (void)showWithDuration:(CGFloat)duration withAlpha:(CGFloat)alpha {
     [UIView animateWithDuration:duration animations:^{
+        self.blurView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         self.alpha = alpha;
     }];
 }
