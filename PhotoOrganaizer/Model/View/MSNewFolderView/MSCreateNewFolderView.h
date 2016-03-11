@@ -21,6 +21,7 @@
 @protocol MSCreateNewFolderDelegate <NSObject>
 
 - (void)reloadDataAfterDismissCreateFolderView;
+- (void)returnNavigationItems;
 
 @end
 

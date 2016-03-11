@@ -126,15 +126,22 @@ static NSString *const kPreviousPath = @"previousPath";
     };
 }
 
+- (void)setNavigationBarAndToolBarHidden:(BOOL)isDisplay {
+    [self.navigationController setNavigationBarHidden:isDisplay animated:YES];
+    [self.navigationController setToolbarHidden:isDisplay animated:YES];
+}
+
 - (void)reloadDataAfterDismissCreateFolderView {
-    [self.navigationController setNavigationBarHidden:NO];
-    [self.navigationController setToolbarHidden:NO];
+    [self setNavigationBarAndToolBarHidden:NO];
     [self requestForData];
 }
 
+- (void)returnNavigationItems {
+    [self setNavigationBarAndToolBarHidden:NO];
+}
+
 - (IBAction)createFolderAction:(id)sender {
-    [self.navigationController setNavigationBarHidden:YES];
-    [self.navigationController setToolbarHidden:YES];
+    [self setNavigationBarAndToolBarHidden:YES];
     self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.createFolderItem.delegate = self;
 }

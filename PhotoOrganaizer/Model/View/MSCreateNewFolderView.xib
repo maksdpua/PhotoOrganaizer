@@ -38,12 +38,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H2g-ka-ppR">
-                                        <rect key="frame" x="97" y="87" width="46" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="46" id="GTL-wv-Cxp"/>
-                                            <constraint firstAttribute="height" constant="30" id="KWi-S9-YJl"/>
-                                        </constraints>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H2g-ka-ppR">
+                                        <rect key="frame" x="45" y="87" width="46" height="30"/>
                                         <state key="normal" title="Create">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -51,18 +47,23 @@
                                             <action selector="creafolder:" destination="iN0-l3-epB" eventType="touchUpInside" id="fKm-7r-HJ4"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYW-kk-fmh">
+                                        <rect key="frame" x="143" y="87" width="52" height="30"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="4uO-Fl-4ms"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="0.79817708333333337" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="MEa-UU-Iyg" firstAttribute="top" secondItem="Aaf-CY-aYb" secondAttribute="top" constant="8" id="0HX-Nm-WfV"/>
-                                    <constraint firstItem="H2g-ka-ppR" firstAttribute="leading" secondItem="Aaf-CY-aYb" secondAttribute="leading" constant="97" id="0yu-Uz-GAb"/>
                                     <constraint firstAttribute="height" constant="128" id="4wg-b5-cFy"/>
                                     <constraint firstItem="MEa-UU-Iyg" firstAttribute="leading" secondItem="Aaf-CY-aYb" secondAttribute="leading" constant="45" id="L1g-5R-4rt"/>
                                     <constraint firstItem="UAK-LS-pNY" firstAttribute="leading" secondItem="Aaf-CY-aYb" secondAttribute="leading" constant="8" id="L9E-VI-lOO"/>
                                     <constraint firstAttribute="trailing" secondItem="MEa-UU-Iyg" secondAttribute="trailing" constant="45" id="RxC-Ot-0Nx"/>
-                                    <constraint firstAttribute="bottom" secondItem="H2g-ka-ppR" secondAttribute="bottom" constant="11" id="Syf-kZ-d4J"/>
-                                    <constraint firstAttribute="trailing" secondItem="H2g-ka-ppR" secondAttribute="trailing" constant="97" id="UMP-7K-ZJh"/>
-                                    <constraint firstItem="H2g-ka-ppR" firstAttribute="top" secondItem="UAK-LS-pNY" secondAttribute="bottom" constant="8" id="VCr-tU-FcC"/>
                                     <constraint firstItem="UAK-LS-pNY" firstAttribute="top" secondItem="MEa-UU-Iyg" secondAttribute="bottom" constant="20" id="Xhq-xd-a5y"/>
                                     <constraint firstAttribute="width" constant="240" id="e8L-jR-rbP"/>
                                     <constraint firstAttribute="trailing" secondItem="UAK-LS-pNY" secondAttribute="trailing" constant="8" id="zkL-tr-Aew"/>

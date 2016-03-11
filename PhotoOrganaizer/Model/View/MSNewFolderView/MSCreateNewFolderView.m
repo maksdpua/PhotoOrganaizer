@@ -8,6 +8,7 @@
 
 #import "MSCreateNewFolderView.h"
 #import "MSRequestManager.h"
+#import "MSValidator.h"
 
 @interface MSCreateNewFolderView()<MSRequestManagerDelegate>
 
@@ -29,7 +30,7 @@
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
         self.folderPath = path;
         self.blurView.effect = nil; // "nil" means no blur/tint/vibrancy (plain, fully-transparent view)
-        
+        self.alpha = 0;
         [view addSubview:self];
         [self showWithDuration:0.25 withAlpha:1];
     }
@@ -44,6 +45,9 @@
 }
 
 - (void)createFolderWithName {
+    if (![MSValidator checkForSymbolsInString:self.folderName.text] ) {
+        return;
+    }
     NSDictionary *parametrs = @{@"path" : [NSString stringWithFormat:@"%@/%@", self.folderPath, self.folderName.text]};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"Success %@", responseObject);
@@ -59,6 +63,16 @@
     [self createFolderWithName];
 }
 
+- (IBAction)cancelButton:(id)sender {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 0;
+        self.blurView.effect = nil;
+        [self.delegate returnNavigationItems];
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+        
+    }];
+}
 
 
 
