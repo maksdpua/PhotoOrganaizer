@@ -26,7 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-//    [self loadPhotosFromData];
     [self createRequestToFolderContent];
     
 }
@@ -35,13 +34,21 @@
 - (void)createRequestToFolderContent {
     NSDictionary *parametrs = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
-        MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-        self.contentArray = mainFolder.photos.allObjects;
+        [self  sortPhotosByDate];
         
         [self.collectionView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"Error %@", error);
     }];
+}
+
+- (void)sortPhotosByDate {
+    MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientModified"
+                                                 ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    self.contentArray = [mainFolder.photos.allObjects sortedArrayUsingDescriptors:sortDescriptors];
+    
 }
 
 - (void)loadPhotosFromData {

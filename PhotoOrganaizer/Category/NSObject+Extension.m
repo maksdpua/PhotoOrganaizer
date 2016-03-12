@@ -17,6 +17,8 @@
         if (propertyName && ![[obj class] isSubclassOfClass:[NSNull class]]) {
             if ([[obj class] isSubclassOfClass:[NSNumber class]]) {
                 [self setValue:[NSString stringWithFormat:@"%@", obj] forKey:propertyName];
+            } else if ([propertyName isEqualToString:@"serverModified"] || [propertyName isEqualToString:@"clientModified"]) {
+                [self setValue:[self convertStringDateToUnixTime:obj] forKey:propertyName];
             } else {
                 [self setValue:obj forKey:propertyName];
             }
@@ -39,6 +41,14 @@
     }
     free(properties);
     NSLog(@"%@", [NSString stringWithFormat:@"\n%@:\n%@", self.class, propertyValues]);
+}
+
+- (NSDate *)convertStringDateToUnixTime:(NSString *)stringDate {
+
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"];
+    return [dateFormatter dateFromString:stringDate];
+   
 }
 
 

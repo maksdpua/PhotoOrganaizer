@@ -20,9 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *path;
 @property (nullable, nonatomic, retain) NSString *idPhoto;
 @property (nullable, nonatomic, retain) NSString *sizePhoto;
-@property (nullable, nonatomic, retain) NSString *serverModified;
+@property (nullable, nonatomic, retain) NSDate *serverModified;
 @property (nullable, nonatomic, retain) NSString *revPhoto;
-@property (nullable, nonatomic, retain) NSString *clientModified;
+@property (nullable, nonatomic, retain) NSDate *clientModified;
 @property (nullable, nonatomic, retain) NSString *tag;
 @property (nullable, nonatomic, retain) MSFolder *toFolder;
 @property (nullable, nonatomic, retain) MSThumbnail *imageThumbnail;

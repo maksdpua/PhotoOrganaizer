@@ -9,12 +9,12 @@
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MSPhoto" inverseName="toFolder" inverseEntity="MSPhoto" syncable="YES"/>
     </entity>
     <entity name="MSPhoto" representedClassName="MSPhoto" syncable="YES">
-        <attribute name="clientModified" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="clientModified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="idPhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="namePhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="path" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="revPhoto" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="serverModified" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serverModified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="sizePhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imageThumbnail" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MSThumbnail" inverseName="toPhoto" inverseEntity="MSThumbnail" syncable="YES"/>
