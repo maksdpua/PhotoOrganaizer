@@ -13,6 +13,10 @@
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 
+typedef void (^recieveBlock)(NSData *data);
+
+@property (copy) recieveBlock answerBlock;
+
 @end
 
 @implementation MSCache
@@ -26,6 +30,7 @@
 }
 
 - (void)cacheForImageWithKey:(MSPhoto *)photo completeBlock:(void (^)(NSData *responseData))complete errorBlock:(void (^)(NSError *error))fail {
+    self.answerBlock = complete;
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     NSDictionary *parametrs = @{@"path" : photo.idPhoto, @"format" : @"jpeg", @"size" : @"w640h480"};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", kContentURL, kGetThumbnail] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -35,7 +40,8 @@
             thumbnail.data = responseObject;
             photo.imageThumbnail = thumbnail;
             [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-            complete((NSData *)responseObject);
+//            complete((NSData *)responseObject);
+        self.answerBlock((NSData *)responseObject);
 //        });
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

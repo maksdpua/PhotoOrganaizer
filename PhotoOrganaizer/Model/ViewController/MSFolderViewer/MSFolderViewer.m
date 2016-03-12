@@ -34,9 +34,9 @@ static NSString *const kPreviousPath = @"previousPath";
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
-//    self.navigationController.navigationBar.titleTextAttributes = [[MSFolderPathManager sharedManager] getLastPathInArray];
+
     [self tableViewBackgroundBlur];
-    [self loadData];
+//    [self loadData];
     [self requestForData];
     [self setBackgroundPhotoInTableView];
 }

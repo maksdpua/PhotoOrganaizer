@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [self loadPhotosFromData];
+//    [self loadPhotosFromData];
     [self createRequestToFolderContent];
     
 }
@@ -47,9 +47,9 @@
 - (void)loadPhotosFromData {
     MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.contentArray = mainFolder.photos.allObjects;
-    if (!self.contentArray) {
-        [self createRequestToFolderContent];
-    }
+//    if (!self.contentArray) {
+//        [self createRequestToFolderContent];
+//    }
 }
 
 

@@ -25,23 +25,14 @@
         self.photo.image = [UIImage imageWithData:model.imageThumbnail.data];
     } else {
         [MBProgressHUD showHUDAddedTo:self animated:YES];
-        MSCache *cache = [[MSCache alloc]init];
+        MSCache *cache = [[MSCache alloc] init];
         [cache cacheForImageWithKey:model completeBlock:^(NSData *responseData) {
-            if (!self.photo.image) {
-                self.photo.image = [UIImage imageWithData:responseData];
-            }
+            self.photo.image = [UIImage imageWithData:responseData];
             [MBProgressHUD hideAllHUDsForView:self animated:YES];
         } errorBlock:^(NSError *error){
             NSLog(@"ERROR IN CELL /n %@", error);
         }];
     }
 }
-
-
-
-
-
-
-
 
 @end
