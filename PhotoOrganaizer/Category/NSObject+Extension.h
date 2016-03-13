@@ -23,5 +23,7 @@
 
 - (void)printDescription;
 
+- (NSArray *)sortPhotosInArray:(NSArray *)array andKey:(NSString *)key;
+
 @end
 

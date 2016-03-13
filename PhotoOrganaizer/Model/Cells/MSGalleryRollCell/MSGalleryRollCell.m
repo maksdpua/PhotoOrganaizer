@@ -27,7 +27,9 @@
         [MBProgressHUD showHUDAddedTo:self animated:YES];
         MSCache *cache = [[MSCache alloc] init];
         [cache cacheForImageWithKey:model completeBlock:^(NSData *responseData) {
-            self.photo.image = [UIImage imageWithData:responseData];
+//            if (!self.photo.image) {
+                self.photo.image = [UIImage imageWithData:responseData];
+//            }
             [MBProgressHUD hideAllHUDsForView:self animated:YES];
         } errorBlock:^(NSError *error){
             NSLog(@"ERROR IN CELL /n %@", error);

@@ -51,6 +51,13 @@
    
 }
 
+- (NSArray *)sortPhotosInArray:(NSArray *)array andKey:(NSString *)key {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key
+                                                                   ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    return [array sortedArrayUsingDescriptors:sortDescriptors];
+}
+
 
 
 

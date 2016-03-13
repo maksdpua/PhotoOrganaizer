@@ -34,16 +34,13 @@ static NSString *const kPreviousPath = @"previousPath";
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
-
     [self tableViewBackgroundBlur];
-//    [self loadData];
-    [self requestForData];
     [self setBackgroundPhotoInTableView];
+    [self requestForData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     if (self.tableView.indexPathForSelectedRow) {
         [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
         [[MSFolderPathManager sharedManager] removeLastPathInArray];
@@ -61,8 +58,6 @@ static NSString *const kPreviousPath = @"previousPath";
     blurEffectView.frame = self.tableView.frame;
     blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.backgroundView = blurEffectView;
-    
-    
 }
 
 - (void)setBackgroundPhotoInTableView {
@@ -98,11 +93,11 @@ static NSString *const kPreviousPath = @"previousPath";
     NSDictionary *parameters = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-        NSArray *all = [MSFolder MR_findAll];
-        for (MSFolder *f in all) {
-            NSLog(@"Folder %@", f.nameOfFolder);
-        }
-        self.contentArray = folderContent.folders.allObjects;
+        self.contentArray = [self sortPhotosInArray:folderContent.folders.allObjects andKey:@"nameOfFolder"];
+//        NSArray *all = [MSFolder MR_findAll];
+//        for (MSFolder *f in all) {
+//            NSLog(@"Folder %@", f.nameOfFolder);
+//        }
         [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
