@@ -28,17 +28,20 @@
     if ([MSAuth token]) {
         [self addPanRecognizer];
     } else {
-        [self.navigationBar setHidden:YES];
+        [self hideNavBarAndToolBar:YES];
         MSMainVC *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
         [self pushViewController:loginViewController animated:NO];
     }
-    
+}
 
+- (void)hideNavBarAndToolBar:(BOOL)yesOrNo {
+    [self.navigationBar setHidden:yesOrNo];
+    [self.toolbar setHidden:yesOrNo];
 }
 
 - (void)backToFolderViewer {
     [self addPanRecognizer];
-    [self.navigationBar setHidden:NO];
+    [self hideNavBarAndToolBar:NO];
     [self popToRootViewControllerAnimated:YES];
 }
 

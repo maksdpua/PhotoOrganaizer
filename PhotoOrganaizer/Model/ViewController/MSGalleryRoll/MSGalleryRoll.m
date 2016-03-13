@@ -13,6 +13,7 @@
 #import "MSGalleryRollCell.h"
 #import "MSPhotoImagePickerNavigation.h"
 #import "MSFolderPathManager.h"
+#import "MSCache.h"
 
 @interface MSGalleryRoll()<MSRequestManagerDelegate>
 
@@ -26,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self createRequestToFolderContent];
     
 }
@@ -40,9 +42,10 @@
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
         self.contentArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
-        
         [self.collectionView reloadData];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         NSLog(@"Error %@", error);
     }];
 }
@@ -109,7 +112,36 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSGalleryRollCell *cell = nil;
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
-    [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
+    [cell setupWithImage:nil];
+    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+    MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
+    if (photo.imageThumbnail.data) {
+        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+        if (image) {
+            [cell setupWithImage:image];
+        }
+    } else {
+        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            MSCache *cache = [MSCache new];
+            [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                if (responseData) {
+                    UIImage *image = [UIImage imageWithData:responseData];
+                    if (image) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+                            if (updateCell) {
+                                [updateCell setupWithImage:image];
+                            }
+                            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                        });
+                    }
+                }
+            } errorBlock:^(NSError *error) {
+                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+            }];
+        });
+    }
     return cell;
 }
 

@@ -11,6 +11,6 @@
 
 @interface MSGalleryRollCell : UICollectionViewCell
 
-- (void)setupWithModel:(MSPhoto *)model;
+- (void)setupWithImage:(UIImage *)image;
 
 @end

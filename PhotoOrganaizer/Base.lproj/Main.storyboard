@@ -38,8 +38,8 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lW3-zh-xvq">
                                 <rect key="frame" x="102" y="258" width="116" height="51"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="51" id="aft-RE-mmI"/>
-                                    <constraint firstAttribute="width" constant="116" id="cDZ-mH-SGO"/>
+                                    <constraint firstAttribute="width" constant="116" id="7lN-ir-ylM"/>
+                                    <constraint firstAttribute="height" constant="51" id="cIc-si-RQS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Login">
@@ -52,10 +52,8 @@
                         </subviews>
                         <color key="backgroundColor" red="0.59076954219083677" green="0.82240042896360532" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="lW3-zh-xvq" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="238" id="6Io-3G-58z"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lW3-zh-xvq" secondAttribute="bottom" constant="259" id="O39-hW-AxH"/>
-                            <constraint firstItem="lW3-zh-xvq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="102" id="OQ0-kU-s1q"/>
-                            <constraint firstAttribute="trailing" secondItem="lW3-zh-xvq" secondAttribute="trailing" constant="102" id="jlg-8J-SsZ"/>
+                            <constraint firstItem="lW3-zh-xvq" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="cKI-uT-OYZ"/>
+                            <constraint firstItem="lW3-zh-xvq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xGE-fl-0s0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WaR-03-oWG"/>
@@ -302,35 +300,22 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameFolder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boT-7p-TvI">
-                                                    <rect key="frame" x="59" y="4" width="206" height="35"/>
+                                                    <rect key="frame" x="59" y="4" width="253" height="35"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="35" id="X9V-kN-jsM"/>
+                                                        <constraint firstAttribute="height" constant="35" id="eIV-rK-CLf"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pRs-Yr-n8P">
-                                                    <rect key="frame" x="273" y="11" width="39" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="39" id="huc-gy-2ET"/>
-                                                        <constraint firstAttribute="height" constant="22" id="iKP-Yu-48c"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Enter"/>
-                                                    <connections>
-                                                        <action selector="enterToTheNextFolder:" destination="TLQ-tE-mnk" eventType="touchUpInside" id="wxF-Am-GyP"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="V1l-tz-Tfa" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" id="Eu8-W9-sZh"/>
                                                 <constraint firstAttribute="bottom" secondItem="V1l-tz-Tfa" secondAttribute="bottom" constant="1" id="GJr-1g-D48"/>
-                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="XxG-Bh-EHB"/>
-                                                <constraint firstAttribute="trailing" secondItem="pRs-Yr-n8P" secondAttribute="trailing" constant="8" id="cBD-6y-0RL"/>
-                                                <constraint firstItem="pRs-Yr-n8P" firstAttribute="leading" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="fdR-Ip-tmA"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="leading" secondItem="V1l-tz-Tfa" secondAttribute="trailing" constant="8" id="Sk3-n7-UZe"/>
+                                                <constraint firstAttribute="trailing" secondItem="boT-7p-TvI" secondAttribute="trailing" constant="8" id="Ts9-vf-WsN"/>
+                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="dWh-4c-POd"/>
                                                 <constraint firstItem="V1l-tz-Tfa" firstAttribute="leading" secondItem="Pac-gT-LP7" secondAttribute="leading" constant="8" id="mD4-Ky-xLZ"/>
-                                                <constraint firstItem="pRs-Yr-n8P" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="11" id="qdR-Vf-vhs"/>
-                                                <constraint firstItem="boT-7p-TvI" firstAttribute="top" secondItem="Pac-gT-LP7" secondAttribute="top" constant="4" id="ysU-fI-mSn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

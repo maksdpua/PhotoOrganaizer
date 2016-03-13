@@ -15,12 +15,9 @@
 #import "MSThumbnail.h"
 #import "MSFolderPathManager.h"
 
-static NSString *const kPreviousPath = @"previousPath";
-
 @interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) IBOutlet UIView *backgroundView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) MSCreateNewFolderView *createFolderItem;
@@ -32,6 +29,7 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
     [self tableViewBackgroundBlur];
@@ -41,15 +39,9 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.tableView.indexPathForSelectedRow) {
-        [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:NO];
-        [[MSFolderPathManager sharedManager] removeLastPathInArray];
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushToTheNextFolder:) name:kEnterButtonWasPressed object:nil];
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)tableViewBackgroundBlur {
@@ -64,21 +56,6 @@ static NSString *const kPreviousPath = @"previousPath";
     NSData *data = [self getRandomPhotoFromSelectedFolder];
     if (data) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithData:data]]];
-    }
-    
-}
-
-- (void)pushToTheNextFolder:(NSNotification *)notification {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (self.tableView.indexPathForSelectedRow) {
-        [[MSFolderPathManager sharedManager] removeLastPathInArray];
-    }
-    MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
-    toNextFolder.path = notification.object;
-    [self.navigationController pushViewController:toNextFolder animated:YES];
-//    [[NSUserDefaults standardUserDefaults] setObject:toNextFolder.path forKey:kDefaultFolderPath];
-    if (![toNextFolder.path isEqualToString:[[MSFolderPathManager sharedManager] getLastPathInArray]]) {
-        [[MSFolderPathManager sharedManager] addEnteredFolderPath:toNextFolder.path];
     }
     
 }
@@ -99,7 +76,9 @@ static NSString *const kPreviousPath = @"previousPath";
 //            NSLog(@"Folder %@", f.nameOfFolder);
 //        }
         [self.tableView reloadData];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         NSLog(@"%@", error);
     }];
 }
@@ -155,21 +134,17 @@ static NSString *const kPreviousPath = @"previousPath";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
-    if (![[[MSFolderPathManager sharedManager] getLastPathInArray] isEqualToString:folderInfo.path]) {
-        [[MSFolderPathManager sharedManager] addEnteredFolderPath:folderInfo.path];
-    }
+    [[MSFolderPathManager sharedManager] addEnteredFolderPath:folderInfo.path];
+    MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
+    [self.navigationController pushViewController:toNextFolder animated:YES];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
 //    [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
 //    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
     
 }
 
-//- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    [[MSFolderPathManager sharedManager] removeLastPathInArray];
-//}
-
 - (void)viewWillDisappear:(BOOL)animated {
-    
     if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
         [[MSFolderPathManager sharedManager] removeLastPathInArray];
     }
