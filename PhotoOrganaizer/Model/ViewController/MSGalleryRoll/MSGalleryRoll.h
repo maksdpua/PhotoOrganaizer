@@ -10,6 +10,4 @@
 
 @interface MSGalleryRoll : UICollectionViewController
 
-- (void)loadPhotosFromData;
-
 @end

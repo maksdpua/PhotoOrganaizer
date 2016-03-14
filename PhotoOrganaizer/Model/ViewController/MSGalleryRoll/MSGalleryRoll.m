@@ -27,9 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    
     [self createRequestToFolderContent];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,24 +54,15 @@
     }];
 }
 
-- (void)loadPhotosFromData {
-    MSFolder *mainFolder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-    self.contentArray = mainFolder.photos.allObjects;
-//    if (!self.contentArray) {
-//        [self createRequestToFolderContent];
-//    }
-}
-
-
 - (IBAction)actionSheet:(id)sender {
-    UIAlertController * actSheet=   [UIAlertController
+    UIAlertController *actSheet = [UIAlertController
                                      alertControllerWithTitle:nil
                                      message:nil
                                      preferredStyle:UIAlertControllerStyleActionSheet];
     
     
     
-    UIAlertAction* choosePhoto = [UIAlertAction
+    UIAlertAction *choosePhoto = [UIAlertAction
                                   actionWithTitle:@"Load new photos..."
                                   style:UIAlertActionStyleDefault
                                   handler:^(UIAlertAction * action) {
@@ -81,7 +70,7 @@
                                       [self presentViewController:photoImagePickerNavigation animated:YES completion:nil];
                                  
                                   }];
-    UIAlertAction* clearCache = [UIAlertAction
+    UIAlertAction *clearCache = [UIAlertAction
                              actionWithTitle:@"Clear cache"
                              style:UIAlertActionStyleDestructive
                              handler:^(UIAlertAction * action) {

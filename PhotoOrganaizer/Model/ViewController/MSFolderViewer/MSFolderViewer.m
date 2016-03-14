@@ -30,24 +30,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
-    
-
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self requestForData];
     [self tableViewBackgroundBlur];
     [self setBackgroundPhotoInTableView];
     
-}
-
-- (void)dealloc {
-
 }
 
 - (void)tableViewBackgroundBlur {
@@ -63,7 +55,6 @@
     if (data) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithData:data]]];
     }
-    
 }
 
 - (NSData *)getRandomPhotoFromSelectedFolder {
@@ -87,18 +78,8 @@
         [self.tableView reloadData];
 
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-
         NSLog(@"%@", error);
     }];
-}
-
-- (void)loadData {
-    MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-    self.contentArray = folderContent.folders.allObjects;
-    if (!self.contentArray) {
-        [self requestForData];
-    }
-    
 }
 
 - (void)setNavigationBarAndToolBarHidden:(BOOL)isDisplay {
@@ -114,6 +95,8 @@
 - (void)returnNavigationItems {
     [self setNavigationBarAndToolBarHidden:NO];
 }
+
+#pragma mark - Actions
 
 - (IBAction)createFolderAction:(id)sender {
     [self setNavigationBarAndToolBarHidden:YES];
@@ -175,9 +158,6 @@
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     [self.navigationController pushViewController:toNextFolder animated:YES];
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-//    [[NSUserDefaults standardUserDefaults] setObject:folderInfo.path forKey:kDefaultFolderPath];
-//    [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kPreviousPath];
     
 }
 
