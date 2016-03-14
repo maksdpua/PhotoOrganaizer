@@ -14,6 +14,7 @@
 #import "MSPhoto.h"
 #import "MSThumbnail.h"
 #import "MSFolderPathManager.h"
+#import "MSAuth.h"
 
 @interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate>
 
@@ -29,19 +30,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
-    [self tableViewBackgroundBlur];
-    [self setBackgroundPhotoInTableView];
-    [self requestForData];
+    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self requestForData];
+    [self tableViewBackgroundBlur];
+    [self setBackgroundPhotoInTableView];
+    
 }
 
 - (void)dealloc {
+
 }
 
 - (void)tableViewBackgroundBlur {
@@ -66,38 +72,33 @@
 }
 
 - (void)requestForData {
-//    [self checkForEmptyPath];
     NSDictionary *parameters = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON: parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parameters classForFill:[MSFolder class] upload:^(NSProgress *uploadProgress) {
+        
+    } download:^(NSProgress *downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
         self.contentArray = [self sortPhotosInArray:folderContent.folders.allObjects andKey:@"nameOfFolder"];
-//        NSArray *all = [MSFolder MR_findAll];
-//        for (MSFolder *f in all) {
-//            NSLog(@"Folder %@", f.nameOfFolder);
-//        }
+                NSArray *all = [MSFolder MR_findAll];
+                for (MSFolder *f in all) {
+                    NSLog(@"Folder %@", f.nameOfFolder);
+                }
         [self.tableView reloadData];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+
         NSLog(@"%@", error);
     }];
 }
 
 - (void)loadData {
-//    [self checkForEmptyPath];
     MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
     self.contentArray = folderContent.folders.allObjects;
     if (!self.contentArray) {
         [self requestForData];
     }
     
-}
-
-- (void)checkForEmptyPath {
-    if (!self.path) {
-        self.path = [NSString new];
-        [[NSUserDefaults standardUserDefaults] setObject:self.path forKey:kDefaultFolderPath];
-    };
 }
 
 - (void)setNavigationBarAndToolBarHidden:(BOOL)isDisplay {
@@ -120,6 +121,42 @@
     self.createFolderItem.delegate = self;
 }
 
+- (IBAction)actionSheet:(id)sender {
+    UIAlertController * actSheet=   [UIAlertController
+                                     alertControllerWithTitle:nil
+                                     message:nil
+                                     preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* clearCache = [UIAlertAction
+                                 actionWithTitle:@"Clear cache"
+                                 style:UIAlertActionStyleDestructive
+                                 handler:^(UIAlertAction * action) {
+                                     [MSThumbnail MR_truncateAll];
+                                     [actSheet removeFromParentViewController];
+                                 }];
+    UIAlertAction* logout = [UIAlertAction
+                             actionWithTitle:@"Logout"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action) {
+                                 
+                                 [MSAuth logout];
+                             }];
+    UIAlertAction *cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action) {
+                                 [actSheet removeFromParentViewController];
+                             }];
+
+    
+
+    [actSheet addAction:clearCache];
+    [actSheet addAction:logout];
+    [actSheet addAction:cancel];
+
+    
+    [self presentViewController:actSheet animated:YES completion:nil];
+}
 #pragma mark - UITableViewDelegate methdods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

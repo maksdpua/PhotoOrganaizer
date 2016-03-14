@@ -11,6 +11,7 @@
 #import "MSGalleryRollNavigation.h"
 #import "MSAuth.h"
 #import "MSMainVC.h"
+#import "MSFolder.h"
 
 @interface MSFolderViewNavigation ()<UIGestureRecognizerDelegate>
 
@@ -20,17 +21,23 @@
 
 @implementation MSFolderViewNavigation {
     MSGalleryRollNavigation *galleryRollNavigation;
+    MSMainVC *loginViewController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backToFolderViewer) name:kTokenWasAccepted object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(logout) name:@"logout" object:nil];
+    loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
     if ([MSAuth token]) {
         [self addPanRecognizer];
     } else {
-        [self hideNavBarAndToolBar:YES];
-        MSMainVC *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSMainVC class])];
-        [self pushViewController:loginViewController animated:NO];
+        [[MSFolder MR_findFirstByAttribute:@"nameOfFolder" withValue:@"root"] MR_deleteEntity];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+            [self hideNavBarAndToolBar:YES];
+            [self pushViewController:loginViewController animated:NO];
+        }];
+        
     }
 }
 
@@ -42,7 +49,9 @@
 - (void)backToFolderViewer {
     [self addPanRecognizer];
     [self hideNavBarAndToolBar:NO];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadFolderViewer" object:nil];
     [self popToRootViewControllerAnimated:YES];
+    
 }
 
 - (void)addPanRecognizer {
@@ -91,6 +100,16 @@
             }];
         }
     }
+}
+
+- (void)logout {
+    
+    [[MSFolder MR_findFirstByAttribute:@"nameOfFolder" withValue:@"root"] MR_deleteEntity];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError *error) {
+        [self hideNavBarAndToolBar:YES];
+        [self pushViewController:loginViewController animated:YES];
+    }];
+    
 }
 
 - (void)dealloc {

@@ -27,17 +27,18 @@ typedef void (^recieveBlock)(NSData *data);
     self.answerBlock = complete;
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     NSDictionary *parametrs = @{@"path" : photo.idPhoto, @"format" : @"jpeg", @"size" : @"w128h128"};
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", kContentURL, kGetThumbnail] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", kContentURL, kGetThumbnail] dictionaryParametrsToJSON:parametrs classForFill:nil upload:^(NSProgress *uploadProgress) {
         
-
-            MSThumbnail *thumbnail = [MSThumbnail MR_createEntity];
-            thumbnail.data = responseObject;
-            photo.imageThumbnail = thumbnail;
-            [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-
+    } download:^(NSProgress *downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+        MSThumbnail *thumbnail = [MSThumbnail MR_createEntity];
+        thumbnail.data = responseObject;
+        photo.imageThumbnail = thumbnail;
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        
         self.answerBlock((NSData *)responseObject);
-//        });
-        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         fail(error);
     }];

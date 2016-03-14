@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [self createRequestToFolderContent];
     
 }
@@ -38,8 +38,14 @@
 
 
 - (void)createRequestToFolderContent {
-    NSDictionary *parametrs = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    NSDictionary *parametrs = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};    
+    
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] upload:^(NSProgress *uploadProgress) {
+        
+    } download:^(NSProgress *downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
         self.contentArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
         [self.collectionView reloadData];
@@ -82,14 +88,6 @@
                                  [MSThumbnail MR_truncateAll];
                                  [actSheet removeFromParentViewController];
                              }];
-    UIAlertAction* logout = [UIAlertAction
-                             actionWithTitle:@"Logout"
-                             style:UIAlertActionStyleDestructive
-                             handler:^(UIAlertAction * action) {
-                                 [MSAuth logout];
-                                 [MSFolder MR_truncateAll];
-                                 [self dismissViewControllerAnimated:YES completion:nil];
-                             }];
     UIAlertAction *cancel = [UIAlertAction
                              actionWithTitle:@"Cancel"
                              style:UIAlertActionStyleCancel
@@ -106,7 +104,6 @@
     
     [actSheet addAction:choosePhoto];
     [actSheet addAction:clearCache];
-    [actSheet addAction:logout];
     [actSheet addAction:cancel];
     [actSheet addAction:test];
     
@@ -114,8 +111,12 @@
 }
 
 - (void)test {
-    NSDictionary *param = @{@"path" : @"/smile.jpeg", @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-    [self.requestManager createRequestWithPOSTmethodWithFileUpload: UIImagePNGRepresentation([UIImage smilePic]) stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil success:^(NSURLSessionDataTask * task, id responseObject) {
+    NSDictionary *param = @{@"path" : @"/folder", @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+    [self.requestManager createRequestWithPOSTmethodWithFileUpload:UIImagePNGRepresentation([UIImage folderPic]) stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+        NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+    } download:^(NSProgress *downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@", responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);

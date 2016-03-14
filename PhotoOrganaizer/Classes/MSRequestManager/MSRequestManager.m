@@ -22,6 +22,8 @@ static NSString *const kDropboxAPIarg = @"Dropbox-API-Arg";
 
 typedef void (^recieveBlock)(NSURLSessionDataTask *task, id responseObject);
 typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
+typedef void (^uploadProgressBlock)(NSProgress*  uploadProgress);
+typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
 
 @end
 
@@ -100,20 +102,41 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     return obj;
 }
 
-- (void)createTaskWithSuccess:(void(^)(NSURLSessionDataTask *task, id responseObject))successBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))failureBlock{
-    NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:self.urlRequest completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
+- (void)createTaskWithSuccess:(void(^)(NSURLSessionDataTask *task, id responseObject))successBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))failureBlock upload:(void(^)(NSProgress *uploadProgress))uploadBlock download:(void(^)(NSProgress *downloadProgress))downloadBlock {
+    
+//    [self.sessionManager setTaskDidSendBodyDataBlock:^(NSURLSession *session, NSURLSessionTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
+        //during the progress
+//    }];
+    NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:self.urlRequest uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+        uploadBlock(uploadProgress);
+    } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+        downloadBlock(downloadProgress);
+    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             failureBlock(task, error);
         } else {
             successBlock(task, _class ? [self fillObjectResponseWithDictionary:responseObject] : responseObject);
         }
     }];
+    
+    
+//    NSURLSessionDataTask *task = [self.sessionManager dataTaskWithRequest:self.urlRequest completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *error) {
+//        if (error) {
+//            failureBlock(task, error);
+//        } else {
+//            successBlock(task, _class ? [self fillObjectResponseWithDictionary:responseObject] : responseObject);
+//        }
+//        
+//    }];
+    
     [task resume];
 }
 
-- (void)createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class success: (void(^)(NSURLSessionDataTask *task, id responseObject))responseBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))errorBlock {
+- (void)createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class upload:(void (^)(NSProgress * uploadProgress))uploadBlock download:(void (^)(NSProgress *downloadProgress))downloadBlock  success: (void(^)(NSURLSessionDataTask *task, id responseObject))responseBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))errorBlock {
     recieveBlock receiver = responseBlock;
     failBlock blockForError = errorBlock;
+    uploadProgressBlock upload = uploadBlock;
+    downloadProgressBlock donwload = downloadBlock;
     
     [self fillManagerWithURLstring:urlString setParamterDictionary:dictionary setClass:class];
 
@@ -124,37 +147,35 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
         [self setHTTPHeaderFieldForJSONandApp];
     }
     [self setHTTPbodyWithDictionary];
-    
-//    dispatch_async(dispatch_get_main_queue(), ^(void){
-        [self createTaskWithSuccess:receiver failure:blockForError];
-//    });
+
+    [self createTaskWithSuccess:receiver failure:blockForError upload:upload download:donwload];
+
     
 }
 
-- (void)createRequestWithPOSTmethodWithFileUpload:(NSData *)data stringURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class success:(void (^)(NSURLSessionDataTask *task, id responseObject))successBlock failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failureBlock {
-    
+- (void)createRequestWithPOSTmethodWithFileUpload:(NSData *)data stringURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class upload:(void (^)(NSProgress * uploadProgress))uploadBlock download:(void (^)(NSProgress *downloadProgress))downloadBlock success:(void (^)(NSURLSessionDataTask *task, id responseObject))successBlock failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failureBlock {
     recieveBlock receiver = successBlock;
     failBlock blockForError = failureBlock;
+    uploadProgressBlock upload = uploadBlock;
+    downloadProgressBlock donwload = downloadBlock;
     
     [self fillManagerWithURLstring:urlString setParamterDictionary:dictionary setClass:class];
-    
     [self fillMutableURLrequestWithMethod:@"POST"];
-    
     [self setHTTPHeaderFieldForAuth];
-    
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
                                                        options:0
                                                          error:&error];
     NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     [self.urlRequest setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
-//    self.sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
     
     [self.urlRequest setValue:@"application/octet-stream" forHTTPHeaderField:kContentType];
     
+    
     [self.urlRequest setHTTPBody:data];
     
-    [self createTaskWithSuccess:receiver failure:blockForError];
+    [self createTaskWithSuccess:receiver failure:blockForError upload:upload download:donwload];
     
 }
 

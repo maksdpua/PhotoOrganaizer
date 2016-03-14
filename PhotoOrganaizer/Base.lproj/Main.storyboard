@@ -340,13 +340,19 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem systemItem="add" id="iiI-Sk-ZQN">
+                        <barButtonItem systemItem="organize" id="iiI-Sk-ZQN">
                             <connections>
                                 <action selector="createFolderAction:" destination="VV0-h3-dze" id="ib8-ru-M12"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" id="Nk2-P1-ctO"/>
+                    <navigationItem key="navigationItem" id="Nk2-P1-ctO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="NSd-s2-Ypp">
+                            <connections>
+                                <action selector="actionSheet:" destination="VV0-h3-dze" id="E20-Bu-xZy"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="LCm-JP-rDp" id="NSn-IG-cCh"/>

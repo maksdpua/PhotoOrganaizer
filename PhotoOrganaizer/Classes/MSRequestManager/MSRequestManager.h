@@ -16,9 +16,9 @@
 
 - (instancetype)initWithDelegate:(id<MSRequestManagerDelegate>)delegate;
 
-- (void)createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class success: (void(^)(NSURLSessionDataTask *task, id responseObject))successBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))failureBlock;
+- (void)createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class upload:(void (^)(NSProgress * uploadProgress))uploadBlock download:(void (^)(NSProgress *downloadProgress))downloadBlock success: (void(^)(NSURLSessionDataTask *task, id responseObject))successBlock failure: (void(^)(NSURLSessionDataTask *task, NSError *error))failureBlock;
 
-- (void)createRequestWithPOSTmethodWithFileUpload:(NSData *)data stringURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class success:(void (^)(NSURLSessionDataTask *task, id responseObject))successBlock failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failureBlock;
+- (void)createRequestWithPOSTmethodWithFileUpload:(NSData *)data stringURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class upload:(void(^)(NSProgress * uploadProgress))uploadBlock download:(void(^)(NSProgress * downloadProgress))downloadBlock success:(void (^)(NSURLSessionDataTask *task, id responseObject))successBlock failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failureBlock;
 
 @end
 

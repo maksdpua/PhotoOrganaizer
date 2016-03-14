@@ -22,20 +22,6 @@
 - (void)setupWithImage:(UIImage *)image {
     self.photo.image = nil;
     self.photo.image = image;
-//    if (model.imageThumbnail.data) {
-//        self.photo.image = [UIImage imageWithData:model.imageThumbnail.data];
-//    } else if (!self.photo.image){
-//        [MBProgressHUD showHUDAddedTo:self animated:YES];
-//        MSCache *cache = [MSCache new];
-//        [cache cacheForImageWithKey:model completeBlock:^(NSData *responseData) {
-//            if (!self.photo) {
-//                self.photo.image = [UIImage imageWithData:responseData];
-//            }
-//            [MBProgressHUD hideAllHUDsForView:self animated:YES];
-//        } errorBlock:^(NSError *error){
-//            NSLog(@"ERROR IN CELL /n %@", error);
-//        }];
-//    }
 }
 
 @end

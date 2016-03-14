@@ -8,6 +8,7 @@
 
 #import "MSAuth.h"
 #import "AuthConstants.h"
+#import "MSFolder.h"
 
 @implementation MSAuth
 
@@ -41,7 +42,7 @@
 + (void)logout {
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUID];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kToken];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kDefaultFolderPath];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"logout" object:nil];
 }
 
 

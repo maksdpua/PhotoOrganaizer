@@ -49,7 +49,8 @@
         return;
     }
     NSDictionary *parametrs = @{@"path" : [NSString stringWithFormat:@"%@/%@", self.folderPath, self.folderName.text]};
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:nil upload:nil download:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"Success %@", responseObject);
         [self.delegate reloadDataAfterDismissCreateFolderView];
         [self cancelButton:nil];

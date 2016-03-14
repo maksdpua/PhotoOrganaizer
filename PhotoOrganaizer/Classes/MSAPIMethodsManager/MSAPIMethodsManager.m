@@ -32,23 +32,18 @@
 }
 
 - (void)createFolderWithPath:(NSString *)path complite:(void(^)())complite{
-    NSDictionary *parametrs = @{@"path" : path};
+//    NSDictionary *parametrs = @{@"path" : path};
     
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@", responseObject);
-        complite();
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+
 }
 
 - (void)getFolderContentWithPath:(NSString *)path {
-    [self setParametersForFolderWithPath:path];
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:_parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@", responseObject);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+//    [self setParametersForFolderWithPath:path];
+//    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:_parameters classForFill:[MSFolder class] success:^(NSURLSessionDataTask *task, id responseObject) {
+//        NSLog(@"%@", responseObject);
+//    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//        NSLog(@"%@", error);
+//    }];
 }
 
 
