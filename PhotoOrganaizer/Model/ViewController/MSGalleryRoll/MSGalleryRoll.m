@@ -96,15 +96,33 @@
                              handler:^(UIAlertAction * action) {
                                  [actSheet removeFromParentViewController];
                              }];
+    UIAlertAction *test = [UIAlertAction
+                             actionWithTitle:@"test"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action) {
+                                 [self test];
+                                 [actSheet removeFromParentViewController];
+                             }];
     
     [actSheet addAction:choosePhoto];
     [actSheet addAction:clearCache];
     [actSheet addAction:logout];
     [actSheet addAction:cancel];
+    [actSheet addAction:test];
     
     [self presentViewController:actSheet animated:YES completion:nil];
-    
 }
+
+- (void)test {
+    NSDictionary *param = @{@"path" : @"/smile.jpeg", @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+    [self.requestManager createRequestWithPOSTmethodWithFileUpload: UIImagePNGRepresentation([UIImage smilePic]) stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil success:^(NSURLSessionDataTask * task, id responseObject) {
+        NSLog(@"%@", responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@", error);
+    }];
+}
+
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.contentArray.count;
 }

@@ -131,5 +131,32 @@ typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
     
 }
 
+- (void)createRequestWithPOSTmethodWithFileUpload:(NSData *)data stringURL:(NSString *)urlString dictionaryParametrsToJSON:(NSDictionary *)dictionary classForFill:(Class)class success:(void (^)(NSURLSessionDataTask *task, id responseObject))successBlock failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failureBlock {
+    
+    recieveBlock receiver = successBlock;
+    failBlock blockForError = failureBlock;
+    
+    [self fillManagerWithURLstring:urlString setParamterDictionary:dictionary setClass:class];
+    
+    [self fillMutableURLrequestWithMethod:@"POST"];
+    
+    [self setHTTPHeaderFieldForAuth];
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
+                                                       options:0
+                                                         error:&error];
+    NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [self.urlRequest setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
+//    self.sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [self.urlRequest setValue:@"application/octet-stream" forHTTPHeaderField:kContentType];
+    
+    [self.urlRequest setHTTPBody:data];
+    
+    [self createTaskWithSuccess:receiver failure:blockForError];
+    
+}
+
 
 @end
