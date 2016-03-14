@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Nmr-MY-iBg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="gwe-7U-oK2">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -189,10 +189,10 @@
             </objects>
             <point key="canvasLocation" x="-103" y="2386"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Photo Collection-->
         <scene sceneID="ixq-d7-csG">
             <objects>
-                <collectionViewController id="9KG-Xq-Umf" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="MSPhotoCollection" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9KG-Xq-Umf" customClass="MSPhotoCollection" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="d9I-RA-2c0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -203,14 +203,28 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="EQp-xw-8Mp">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MSPhotoCollectionCell" id="EQp-xw-8Mp" customClass="MSPhotoCollectionCell">
+                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUu-m1-HrF">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="BUu-m1-HrF" firstAttribute="leading" secondItem="EQp-xw-8Mp" secondAttribute="leading" id="GXo-Be-enX"/>
+                                    <constraint firstAttribute="bottom" secondItem="BUu-m1-HrF" secondAttribute="bottom" id="WeV-te-tzQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="BUu-m1-HrF" secondAttribute="trailing" id="ZbE-ra-4yE"/>
+                                    <constraint firstItem="BUu-m1-HrF" firstAttribute="top" secondItem="EQp-xw-8Mp" secondAttribute="top" id="bpq-AV-yv1"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="photo" destination="BUu-m1-HrF" id="r6s-uv-w5u"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -219,6 +233,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="4Nz-EI-suZ"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lao-hO-xlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

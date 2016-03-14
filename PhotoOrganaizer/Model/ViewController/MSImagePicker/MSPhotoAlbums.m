@@ -8,6 +8,7 @@
 
 #import "MSPhotoAlbums.h"
 #import "MSPhotoAlbumCell.h"
+#import "MSPhotoCollection.h"
 
 @import Photos;
 
@@ -24,15 +25,14 @@
 - (void)awakeFromNib {
     PHFetchOptions *allPhotosOptions = [[PHFetchOptions alloc] init];
     allPhotosOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    PHFetchResult *allPhotos = [PHAsset fetchAssetsWithOptions:allPhotosOptions];
     
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
     
-//    PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
+    PHFetchResult *topLevelUserCollections = [PHCollectionList fetchTopLevelUserCollectionsWithOptions:nil];
     
     // Store the PHFetchResult objects and localized titles for each section.
-    self.sectionFetchResults = @[allPhotos, smartAlbums];
-    self.sectionLocalizedTitles = @[@"", NSLocalizedString(@"Smart Albums", @""), NSLocalizedString(@"Albums", @"")];
+    self.sectionFetchResults = @[smartAlbums, topLevelUserCollections];
+    self.sectionLocalizedTitles = @[NSLocalizedString(@"Smart Albums", @""), NSLocalizedString(@"Albums", @"")];
     
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
@@ -81,13 +81,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     
-    if (section == 0) {
-        // The "All Photos" section only ever has a single row.
-        numberOfRows = 1;
-    } else {
-        PHFetchResult *fetchResult = self.sectionFetchResults[section];
-        numberOfRows = fetchResult.count;
-    }
+    PHFetchResult *fetchResult = self.sectionFetchResults[section];
+    numberOfRows = fetchResult.count;
+    
     
     return numberOfRows;
 }
@@ -98,12 +94,20 @@
     cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MSPhotoAlbumCell class]) forIndexPath:indexPath];
     
     PHFetchResult *fetchResult = self.sectionFetchResults[indexPath.section];
-            [cell setupWithModel:fetchResult[indexPath.row]];
+    [cell setupWithModel:fetchResult[indexPath.row]];
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return self.sectionLocalizedTitles[section];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PHFetchResult *fetchResult = self.sectionFetchResults[indexPath.section];
+    PHCollection *collection = (PHCollection *)fetchResult;
+    MSPhotoCollection *collectionGrid = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSPhotoCollection class])];
+    collectionGrid.title = collection.localizedTitle;
+    [self.navigationController pushViewController:collectionGrid animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

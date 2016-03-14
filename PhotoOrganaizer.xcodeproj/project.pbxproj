@@ -24,6 +24,8 @@
 		2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */; };
 		2D4C1E201C7331040077843B /* MSCreateNewFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */; };
 		2D74A6E01C763266006A207F /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D74A6DF1C763266006A207F /* NSData+MD5.m */; };
+		2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */; };
+		2D77A6EC1C9766E3008D1BDF /* MSPhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D77A6EB1C9766E3008D1BDF /* MSPhotoCollectionCell.m */; };
 		2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */; };
 		2D8EED961C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8EED931C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.m */; };
 		2D8EED971C8B0933008BB5FF /* MSThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8EED951C8B0933008BB5FF /* MSThumbnail.m */; };
@@ -106,6 +108,10 @@
 		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
 		2D74A6DE1C763266006A207F /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "Category/NSData+MD5/NSData+MD5.h"; sourceTree = "<group>"; };
 		2D74A6DF1C763266006A207F /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "Category/NSData+MD5/NSData+MD5.m"; sourceTree = "<group>"; };
+		2D77A6E61C9761F6008D1BDF /* MSPhotoCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoCollection.h; path = Model/ViewController/MSPhotoCollection/MSPhotoCollection.h; sourceTree = "<group>"; };
+		2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoCollection.m; path = Model/ViewController/MSPhotoCollection/MSPhotoCollection.m; sourceTree = "<group>"; };
+		2D77A6EA1C9766E3008D1BDF /* MSPhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoCollectionCell.h; path = Model/Cells/MSPhotoCollectionCell/MSPhotoCollectionCell.h; sourceTree = "<group>"; };
+		2D77A6EB1C9766E3008D1BDF /* MSPhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoCollectionCell.m; path = Model/Cells/MSPhotoCollectionCell/MSPhotoCollectionCell.m; sourceTree = "<group>"; };
 		2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glossy_emoticon_button.png; sourceTree = "<group>"; };
 		2D8EED921C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MSThumbnail+CoreDataProperties.h"; path = "Model/CoreData/MSThumbnail+CoreDataProperties.h"; sourceTree = "<group>"; };
 		2D8EED931C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MSThumbnail+CoreDataProperties.m"; path = "Model/CoreData/MSThumbnail+CoreDataProperties.m"; sourceTree = "<group>"; };
@@ -328,6 +334,7 @@
 		2D42EF7D1C51218300DCDBD2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				2D77A6E91C9766B9008D1BDF /* MSPhotoCollectionCell */,
 				2D988E631C7DA52200BEDAF1 /* MSPhotoAlbumCell */,
 				2D40AEEF1C6DE7F100024FB3 /* MSGalleryRollCell */,
 				2D42EF7E1C51218A00DCDBD2 /* MSFolderViewerCell */,
@@ -388,6 +395,24 @@
 				2D74A6DF1C763266006A207F /* NSData+MD5.m */,
 			);
 			name = "NSData+MD5";
+			sourceTree = "<group>";
+		};
+		2D77A6E51C976177008D1BDF /* MSPhotoCollection */ = {
+			isa = PBXGroup;
+			children = (
+				2D77A6E61C9761F6008D1BDF /* MSPhotoCollection.h */,
+				2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */,
+			);
+			name = MSPhotoCollection;
+			sourceTree = "<group>";
+		};
+		2D77A6E91C9766B9008D1BDF /* MSPhotoCollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				2D77A6EA1C9766E3008D1BDF /* MSPhotoCollectionCell.h */,
+				2D77A6EB1C9766E3008D1BDF /* MSPhotoCollectionCell.m */,
+			);
+			name = MSPhotoCollectionCell;
 			sourceTree = "<group>";
 		};
 		2D8E46D81C4578D50035B8B9 /* Resources */ = {
@@ -505,6 +530,7 @@
 		2D906FE41C3EFD8900DF01A4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2D77A6E51C976177008D1BDF /* MSPhotoCollection */,
 				2D988E5F1C7D9DC100BEDAF1 /* MSImagePicker */,
 				2DD108291C6CC15A00EB1757 /* MSGalleryRoll */,
 				2D42EF821C5124C800DCDBD2 /* MSFolderViewer */,
@@ -819,6 +845,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D77A6EC1C9766E3008D1BDF /* MSPhotoCollectionCell.m in Sources */,
 				2D40AEF21C6DE82600024FB3 /* MSGalleryRollCell.m in Sources */,
 				FC28B94B1C8B739900AD8FBF /* MSCache.m in Sources */,
 				2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */,
@@ -852,6 +879,7 @@
 				2D74A6E01C763266006A207F /* NSData+MD5.m in Sources */,
 				2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
+				2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */,
 				2D988E621C7D9E0600BEDAF1 /* MSPhotoAlbums.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
