@@ -213,16 +213,26 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BUu-m1-HrF">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nuI-2B-dpb">
+                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="ACE-3a-pJe"/>
+                                                <constraint firstAttribute="width" constant="20" id="eQF-aV-l0l"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
+                                    <constraint firstItem="nuI-2B-dpb" firstAttribute="top" secondItem="EQp-xw-8Mp" secondAttribute="top" id="FgK-tG-Gz3"/>
                                     <constraint firstItem="BUu-m1-HrF" firstAttribute="leading" secondItem="EQp-xw-8Mp" secondAttribute="leading" id="GXo-Be-enX"/>
                                     <constraint firstAttribute="bottom" secondItem="BUu-m1-HrF" secondAttribute="bottom" id="WeV-te-tzQ"/>
                                     <constraint firstAttribute="trailing" secondItem="BUu-m1-HrF" secondAttribute="trailing" id="ZbE-ra-4yE"/>
                                     <constraint firstItem="BUu-m1-HrF" firstAttribute="top" secondItem="EQp-xw-8Mp" secondAttribute="top" id="bpq-AV-yv1"/>
+                                    <constraint firstItem="nuI-2B-dpb" firstAttribute="leading" secondItem="EQp-xw-8Mp" secondAttribute="leading" id="pZw-4V-zm5"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="checkmark" destination="nuI-2B-dpb" id="zez-ea-d38"/>
                                     <outlet property="photo" destination="BUu-m1-HrF" id="r6s-uv-w5u"/>
                                 </connections>
                             </collectionViewCell>

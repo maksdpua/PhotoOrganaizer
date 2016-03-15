@@ -104,9 +104,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     PHFetchResult *fetchResult = self.sectionFetchResults[indexPath.section];
-    PHCollection *collection = (PHCollection *)fetchResult;
+    // Configure the AAPLAssetGridViewController with the asset collection.
+    PHCollection *collection = fetchResult[indexPath.row];
+    PHAssetCollection *assetCollection = (PHAssetCollection *)collection;
+    PHFetchResult *assetsFetchResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:nil];
     MSPhotoCollection *collectionGrid = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSPhotoCollection class])];
-    collectionGrid.title = collection.localizedTitle;
+    
+    collectionGrid.assetsFetchResults = assetsFetchResult;
+    collectionGrid.assetCollection = assetCollection;
+    collectionGrid.title = assetCollection.localizedTitle;
+    
     [self.navigationController pushViewController:collectionGrid animated:YES];
 }
 

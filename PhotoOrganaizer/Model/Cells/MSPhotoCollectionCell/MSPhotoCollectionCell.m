@@ -11,9 +11,27 @@
 @interface MSPhotoCollectionCell()
 
 @property (nonatomic, weak) IBOutlet UIImageView *photo;
+@property (nonatomic, weak) IBOutlet UIImageView *checkmark;
 
 @end
 
 @implementation MSPhotoCollectionCell
+
+- (void)awakeFromNib {
+    
+}
+
+- (void)setupWithImage:(UIImage *)image {
+    self.photo.image = image;
+    self.checkmark.image = [UIImage smilePic];
+    [self.checkmark setHidden:YES];
+}
+
+- (void)checkmarkIsDiplayed:(BOOL)isDisplayed {
+    [self.checkmark setHidden:isDisplayed];
+    [self setNeedsDisplay];
+}
+
+
 
 @end

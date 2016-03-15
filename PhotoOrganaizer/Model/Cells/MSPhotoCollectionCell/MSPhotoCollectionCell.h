@@ -10,4 +10,8 @@
 
 @interface MSPhotoCollectionCell : UICollectionViewCell
 
+- (void)setupWithImage:(UIImage *)image;
+
+- (void)checkmarkIsDiplayed:(BOOL)isDisplayed;
+
 @end
