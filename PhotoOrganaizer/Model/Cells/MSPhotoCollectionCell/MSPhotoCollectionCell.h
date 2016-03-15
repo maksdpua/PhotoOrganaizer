@@ -12,6 +12,6 @@
 
 - (void)setupWithImage:(UIImage *)image;
 
-- (void)checkmarkIsDiplayed:(BOOL)isDisplayed;
+- (void)setCheckmarkHidden:(BOOL)isHidden;
 
 @end

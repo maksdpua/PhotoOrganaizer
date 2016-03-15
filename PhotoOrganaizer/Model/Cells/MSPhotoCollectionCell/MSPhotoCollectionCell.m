@@ -27,9 +27,8 @@
     [self.checkmark setHidden:YES];
 }
 
-- (void)checkmarkIsDiplayed:(BOOL)isDisplayed {
-    [self.checkmark setHidden:isDisplayed];
-    [self setNeedsDisplay];
+- (void)setCheckmarkHidden:(BOOL)isHidden {
+    [self.checkmark setHidden:isHidden];
 }
 
 

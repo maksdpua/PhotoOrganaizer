@@ -8,12 +8,15 @@
 
 #import "MSPhotoCollection.h"
 #import "MSPhotoCollectionCell.h"
+#import "MSRequestManager.h"
+#import "MSFolderPathManager.h"
 
-@interface MSPhotoCollection ()
+@interface MSPhotoCollection ()<MSRequestManagerDelegate>
 //<PHPhotoLibraryChangeObserver>
 
 @property (nonatomic, strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
+@property (nonatomic, strong) MSRequestManager *requestManager;
 
 @end
 
@@ -29,6 +32,11 @@ static CGSize AssetGridThumbnailSize;
     [self resetCachedAssets];
     
 //    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
 }
 
 - (void)dealloc {
@@ -301,6 +309,7 @@ static CGSize AssetGridThumbnailSize;
                                   resultHandler:^(UIImage *result, NSDictionary *info) {
                                       // Set the cell's thumbnail image if it's still showing the same asset.
                                       [cell setupWithImage:result];
+                                      
                                   }];
     
     
@@ -312,12 +321,12 @@ static CGSize AssetGridThumbnailSize;
 #pragma mark <UICollectionViewDelegate>
 
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-
-return AssetGridThumbnailSize;
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView
+//                  layout:(UICollectionViewLayout *)collectionViewLayout
+//  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//
+//    return CGSizeMake((self.collectionView.bounds.size.width/3)-4, (self.collectionView.bounds.size.width/3)-4);
+//}
 
 // Uncomment this method to specify if the specified item should be highlighted during tracking
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -340,10 +349,18 @@ return AssetGridThumbnailSize;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     [self.imageManager requestImageDataForAsset:asset options:PHImageContentModeDefault resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        
+        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"/%@", dataUTI], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+        [self.requestManager createRequestWithPOSTmethodWithFileUpload:imageData stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+            NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+        } download:^(NSProgress *downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@", responseObject);
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"%@", error);
+        }];
     }];
-    [cell checkmarkIsDiplayed:NO];
-//    [cell setSelected:YES];
+    [cell setCheckmarkHidden:NO];
     
     
 }

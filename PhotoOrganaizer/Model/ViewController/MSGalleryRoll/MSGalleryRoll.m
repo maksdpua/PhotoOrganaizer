@@ -15,14 +15,16 @@
 #import "MSFolderPathManager.h"
 #import "MSCache.h"
 
-@interface MSGalleryRoll()<MSRequestManagerDelegate>
+@interface MSGalleryRoll()<MSRequestManagerDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSArray *contentArray;
 
 @end
 
-@implementation MSGalleryRoll
+@implementation MSGalleryRoll {
+    CGFloat cellWidth;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -120,6 +122,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSGalleryRollCell *cell = nil;
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
+    cellWidth = cell.frame.size.width;
     [cell setupWithImage:nil];
     [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
@@ -151,6 +154,20 @@
         });
     }
     return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
+    if (photo.imageThumbnail.data) {
+        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+        if (image) {
+            return CGSizeMake(image.size.width, image.size.height);
+        }
+    }
+    return CGSizeMake(self.collectionView.contentSize.width/3, self.collectionView.contentSize.width/3);
+    
 }
 
 

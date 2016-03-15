@@ -21,6 +21,7 @@
 		2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D42EF801C5121F200DCDBD2 /* MSFolderViewerCell.m */; };
 		2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D42EF841C5124F000DCDBD2 /* MSFolderViewer.m */; };
 		2D4570741C40186400934FF5 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4570731C40186400934FF5 /* LoginService.m */; };
+		2D493A0F1C9867B600465986 /* MSPhotoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D493A0E1C9867B600465986 /* MSPhotoLayout.m */; };
 		2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */; };
 		2D4C1E201C7331040077843B /* MSCreateNewFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */; };
 		2D74A6E01C763266006A207F /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D74A6DF1C763266006A207F /* NSData+MD5.m */; };
@@ -102,6 +103,8 @@
 		2D42EF841C5124F000DCDBD2 /* MSFolderViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSFolderViewer.m; path = Model/ViewController/MSFolderViewer/MSFolderViewer.m; sourceTree = "<group>"; };
 		2D4570721C40186400934FF5 /* LoginService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Classes/LoginService/LoginService.h; sourceTree = "<group>"; };
 		2D4570731C40186400934FF5 /* LoginService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Classes/LoginService/LoginService.m; sourceTree = "<group>"; };
+		2D493A0D1C9867B600465986 /* MSPhotoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoLayout.h; path = Classes/MSPhotoLayout/MSPhotoLayout.h; sourceTree = "<group>"; };
+		2D493A0E1C9867B600465986 /* MSPhotoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoLayout.m; path = Classes/MSPhotoLayout/MSPhotoLayout.m; sourceTree = "<group>"; };
 		2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSCreateNewFolderView.xib; path = Model/View/MSCreateNewFolderView.xib; sourceTree = "<group>"; };
 		2D4C1E1E1C7331040077843B /* MSCreateNewFolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSCreateNewFolderView.h; path = Model/View/MSNewFolderView/MSCreateNewFolderView.h; sourceTree = "<group>"; };
 		2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSCreateNewFolderView.m; path = Model/View/MSNewFolderView/MSCreateNewFolderView.m; sourceTree = "<group>"; };
@@ -212,6 +215,7 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D493A0C1C98678700465986 /* MSPhotoLayout */,
 				2D9044541C8DD16200A4DF1E /* MSFolderPathManager */,
 				FC28B9481C8B72C500AD8FBF /* MSCache */,
 				2DDF2B101C501C8500330CEA /* MSAnimation */,
@@ -367,6 +371,15 @@
 				2D4570731C40186400934FF5 /* LoginService.m */,
 			);
 			name = LoginService;
+			sourceTree = "<group>";
+		};
+		2D493A0C1C98678700465986 /* MSPhotoLayout */ = {
+			isa = PBXGroup;
+			children = (
+				2D493A0D1C9867B600465986 /* MSPhotoLayout.h */,
+				2D493A0E1C9867B600465986 /* MSPhotoLayout.m */,
+			);
+			name = MSPhotoLayout;
 			sourceTree = "<group>";
 		};
 		2D4C1E1A1C732F360077843B /* MSNewFolderView */ = {
@@ -861,6 +874,7 @@
 				2D305AD51C726FAE00B4F018 /* MSGalleryRollNavigation.m in Sources */,
 				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
 				2D03385F1C7BAE1300CFF7A4 /* UIButton+Path.m in Sources */,
+				2D493A0F1C9867B600465986 /* MSPhotoLayout.m in Sources */,
 				FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */,
 				2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */,
 				2D42EF851C5124F000DCDBD2 /* MSFolderViewer.m in Sources */,
