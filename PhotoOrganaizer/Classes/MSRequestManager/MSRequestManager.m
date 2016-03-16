@@ -166,7 +166,7 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
                                                        options:0
                                                          error:&error];
-    NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSASCIIStringEncoding];
     [self.urlRequest setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
 
     

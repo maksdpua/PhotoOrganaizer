@@ -141,10 +141,14 @@
                     if (image) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+                            
                             if (updateCell) {
                                 [updateCell setupWithImage:image];
                             }
                             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                            [UIView animateWithDuration:0.3f animations:^{
+                                [self.collectionView.collectionViewLayout invalidateLayout];
+                            }];
                         });
                     }
                 }
@@ -160,13 +164,16 @@
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
+    
     if (photo.imageThumbnail.data) {
-        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
-        if (image) {
-            return CGSizeMake(image.size.width, image.size.height);
+        UIImage *image = [UIImage imageWithImage:[UIImage imageWithData:photo.imageThumbnail.data] scaledToWidth:self.view.frame.size.width/3];
+        if (image.size.width>=image.size.height) {
+            return CGSizeMake(self.collectionView.contentSize.width/3-1, image.size.height-1);
+        } else {
+            return CGSizeMake(image.size.width-1, image.size.height-1);
         }
     }
-    return CGSizeMake(self.collectionView.contentSize.width/3, self.collectionView.contentSize.width/3);
+    return CGSizeMake(self.collectionView.contentSize.width/3-1, self.collectionView.contentSize.width/3-1);
     
 }
 

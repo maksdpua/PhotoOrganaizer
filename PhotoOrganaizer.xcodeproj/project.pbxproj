@@ -24,7 +24,6 @@
 		2D493A0F1C9867B600465986 /* MSPhotoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D493A0E1C9867B600465986 /* MSPhotoLayout.m */; };
 		2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */; };
 		2D4C1E201C7331040077843B /* MSCreateNewFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */; };
-		2D74A6E01C763266006A207F /* NSData+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D74A6DF1C763266006A207F /* NSData+MD5.m */; };
 		2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */; };
 		2D77A6EC1C9766E3008D1BDF /* MSPhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D77A6EB1C9766E3008D1BDF /* MSPhotoCollectionCell.m */; };
 		2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */; };
@@ -109,8 +108,6 @@
 		2D4C1E1E1C7331040077843B /* MSCreateNewFolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSCreateNewFolderView.h; path = Model/View/MSNewFolderView/MSCreateNewFolderView.h; sourceTree = "<group>"; };
 		2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSCreateNewFolderView.m; path = Model/View/MSNewFolderView/MSCreateNewFolderView.m; sourceTree = "<group>"; };
 		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
-		2D74A6DE1C763266006A207F /* NSData+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MD5.h"; path = "Category/NSData+MD5/NSData+MD5.h"; sourceTree = "<group>"; };
-		2D74A6DF1C763266006A207F /* NSData+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+MD5.m"; path = "Category/NSData+MD5/NSData+MD5.m"; sourceTree = "<group>"; };
 		2D77A6E61C9761F6008D1BDF /* MSPhotoCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoCollection.h; path = Model/ViewController/MSPhotoCollection/MSPhotoCollection.h; sourceTree = "<group>"; };
 		2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoCollection.m; path = Model/ViewController/MSPhotoCollection/MSPhotoCollection.m; sourceTree = "<group>"; };
 		2D77A6EA1C9766E3008D1BDF /* MSPhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoCollectionCell.h; path = Model/Cells/MSPhotoCollectionCell/MSPhotoCollectionCell.h; sourceTree = "<group>"; };
@@ -242,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				2D03385C1C7BADB500CFF7A4 /* UIButton+Path */,
-				2D74A6DD1C763217006A207F /* NSData+MD5 */,
 				2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
 			);
@@ -399,15 +395,6 @@
 				2D4C1E1A1C732F360077843B /* MSNewFolderView */,
 			);
 			name = VIew;
-			sourceTree = "<group>";
-		};
-		2D74A6DD1C763217006A207F /* NSData+MD5 */ = {
-			isa = PBXGroup;
-			children = (
-				2D74A6DE1C763266006A207F /* NSData+MD5.h */,
-				2D74A6DF1C763266006A207F /* NSData+MD5.m */,
-			);
-			name = "NSData+MD5";
 			sourceTree = "<group>";
 		};
 		2D77A6E51C976177008D1BDF /* MSPhotoCollection */ = {
@@ -890,7 +877,6 @@
 				2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */,
 				2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,
-				2D74A6E01C763266006A207F /* NSData+MD5.m in Sources */,
 				2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
 				2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */,

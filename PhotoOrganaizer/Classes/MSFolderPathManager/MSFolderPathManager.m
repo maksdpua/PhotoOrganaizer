@@ -11,7 +11,7 @@
 @interface MSFolderPathManager()
 
 @property (nonatomic, strong) NSMutableArray *pathArray;
-@property (nonatomic, strong) NSString *selectedCellPath;
+@property (nonatomic, strong) NSMutableArray *idArray;
 
 @end
 
@@ -31,7 +31,6 @@
     if (self) {
         self.pathArray = [NSMutableArray new];
         [self.pathArray addObject:@""];
-        self.selectedCellPath = [NSString new];
     }
     return self;
 }

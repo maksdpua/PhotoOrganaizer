@@ -55,7 +55,7 @@ static CGSize AssetGridThumbnailSize;
 - (CGSize)sizeForAssetGridThumbnailSize {
     CGFloat scale = [UIScreen mainScreen].scale;
     CGSize cellSize = self.contentView.frame.size;
-    return CGSizeMake(cellSize.width * scale, cellSize.height * scale);;
+    return CGSizeMake(cellSize.width * scale, cellSize.height * scale);
 }
 
 

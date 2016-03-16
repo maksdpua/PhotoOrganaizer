@@ -16,6 +16,5 @@
 #import <POP/POP.h>
 #import <MagicalRecord/MagicalRecord.h>
 #import "UIImage+SharedPics.h"
-#import "NSData+MD5.h"
 
 #endif /* PrefixHeader_pch */

@@ -10,6 +10,7 @@
 #import "MSPhotoCollectionCell.h"
 #import "MSRequestManager.h"
 #import "MSFolderPathManager.h"
+#import "MSFolder.h"
 
 @interface MSPhotoCollection ()<MSRequestManagerDelegate>
 //<PHPhotoLibraryChangeObserver>
@@ -349,7 +350,8 @@ static CGSize AssetGridThumbnailSize;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     [self.imageManager requestImageDataForAsset:asset options:PHImageContentModeDefault resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"/%@", dataUTI], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+//        MSFolder *folder = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager]getLastPathInArray]];
+        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],dataUTI], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
         [self.requestManager createRequestWithPOSTmethodWithFileUpload:imageData stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
             NSLog(@"Upload %f", uploadProgress.fractionCompleted);
         } download:^(NSProgress *downloadProgress) {

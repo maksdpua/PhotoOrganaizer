@@ -14,4 +14,5 @@
 
 + (UIImage *)smilePic;
 
++ (UIImage *)imageWithImage:(UIImage *)image scaledToWidth:(float) i_width;
 @end
