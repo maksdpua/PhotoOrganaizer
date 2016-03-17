@@ -23,6 +23,8 @@
 @dynamic tag;
 @dynamic toFolder;
 @dynamic imageThumbnail;
+@dynamic height;
+@dynamic width;
 
 
 @end

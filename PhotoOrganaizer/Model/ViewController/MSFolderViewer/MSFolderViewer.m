@@ -63,7 +63,7 @@
 }
 
 - (void)requestForData {
-    NSDictionary *parameters = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @NO, @"include_deleted" :@YES};
+    NSDictionary *parameters = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parameters classForFill:[MSFolder class] upload:^(NSProgress *uploadProgress) {
         
     } download:^(NSProgress *downloadProgress) {

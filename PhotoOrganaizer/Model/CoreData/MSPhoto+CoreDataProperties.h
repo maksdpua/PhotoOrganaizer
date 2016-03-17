@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *revPhoto;
 @property (nullable, nonatomic, retain) NSDate *clientModified;
 @property (nullable, nonatomic, retain) NSString *tag;
+@property (nullable, nonatomic, retain) NSString *width;
+@property (nullable, nonatomic, retain) NSString *height;
 @property (nullable, nonatomic, retain) MSFolder *toFolder;
 @property (nullable, nonatomic, retain) MSThumbnail *imageThumbnail;
 

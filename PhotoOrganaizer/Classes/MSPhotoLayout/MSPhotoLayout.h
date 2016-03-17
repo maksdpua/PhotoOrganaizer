@@ -8,15 +8,35 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol MSPhotoDelegate;
+@protocol MSPinterestLayoutAttributesDelegate <NSObject>
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width;
+
+@end
+
+//...
+
+@interface MSPinterestLayoutAttributes : UICollectionViewLayoutAttributes <NSCopying>
+
+@property (nonatomic) CGFloat photoHeight;
+
+@end
+
+//...
 
 @interface MSPhotoLayout : UICollectionViewLayout
 
+@property (nonatomic, weak) id <MSPinterestLayoutAttributesDelegate> delegate;
+
+@property (nonatomic) NSInteger numberOfColumns;
+
+@property (nonatomic) CGFloat cellPadding;
+
+
+- (void)prepareLayout;
+
+- (void)setup;
 
 @end
 
-@protocol MSPhotoDelegate <NSObject>
 
-
-
-@end

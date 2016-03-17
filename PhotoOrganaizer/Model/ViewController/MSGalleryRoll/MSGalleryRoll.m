@@ -14,8 +14,9 @@
 #import "MSPhotoImagePickerNavigation.h"
 #import "MSFolderPathManager.h"
 #import "MSCache.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface MSGalleryRoll()<MSRequestManagerDelegate, UICollectionViewDelegateFlowLayout>
+@interface MSGalleryRoll()<MSRequestManagerDelegate>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSArray *contentArray;
@@ -24,10 +25,16 @@
 
 @implementation MSGalleryRoll {
     CGFloat cellWidth;
+    MSPhotoLayout *layout;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.collectionView.alwaysBounceVertical = YES;
+    layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
+    if (layout) {
+        layout.delegate = self;
+    }
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     [self createRequestToFolderContent];
 }
@@ -146,9 +153,11 @@
                                 [updateCell setupWithImage:image];
                             }
                             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                            [UIView animateWithDuration:0.3f animations:^{
-                                [self.collectionView.collectionViewLayout invalidateLayout];
-                            }];
+//                            [UIView animateWithDuration:0.3f animations:^{
+//                            [self.collectionViewLayout invalidateLayout];
+
+                                
+//                            }];
                         });
                     }
                 }
@@ -160,23 +169,44 @@
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//- (CGSize)collectionView:(UICollectionView *)collectionView
+//                  layout:(UICollectionViewLayout *)collectionViewLayout
+//  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
+//    
+//    if (photo.imageThumbnail.data) {
+//        UIImage *image = [UIImage imageWithImage:[UIImage imageWithData:photo.imageThumbnail.data] scaledToWidth:self.view.frame.size.width/3];
+//        if (image.size.width>=image.size.height) {
+//            return CGSizeMake(self.collectionView.contentSize.width/3-1, image.size.height-1);
+//        } else {
+//            return CGSizeMake(image.size.width-1, image.size.height-1);
+//        }
+//    }
+//    return CGSizeMake(self.collectionView.contentSize.width/3-1, self.collectionView.contentSize.width/3-1);
+//    
+//}
+
+@end
+
+#pragma mark - LayoutDelegate category
+
+@implementation MSGalleryRoll (LayoutDelegate)
+
+#pragma mark - KGPinterestLayoutAttributesDelegate
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width
+{
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
-    
-    if (photo.imageThumbnail.data) {
-        UIImage *image = [UIImage imageWithImage:[UIImage imageWithData:photo.imageThumbnail.data] scaledToWidth:self.view.frame.size.width/3];
-        if (image.size.width>=image.size.height) {
-            return CGSizeMake(self.collectionView.contentSize.width/3-1, image.size.height-1);
-        } else {
-            return CGSizeMake(image.size.width-1, image.size.height-1);
-        }
-    }
-    return CGSizeMake(self.collectionView.contentSize.width/3-1, self.collectionView.contentSize.width/3-1);
+//    if (photo.imageThumbnail.data) {
+//        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+        
+        CGRect boundingRect = CGRectMake(0, 0, width, CGFLOAT_MAX);
+        CGRect rect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(photo.width.floatValue, photo.height.floatValue), boundingRect);
+        return rect.size.height;
+//    }
+//    return self.collectionView.frame.size.height/3-1;
     
 }
-
 
 
 

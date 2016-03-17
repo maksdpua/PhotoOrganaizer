@@ -26,6 +26,10 @@
     } else {
         self = [self.class MR_createEntity];
         self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
+        
+        [self setValue:[NSString stringWithFormat:@"%@", [[[[dictionary valueForKey:@"media_info"] valueForKey:@"metadata"] valueForKey:@"dimensions"] valueForKey:@"height"]] forKey:@"height"];
+        [self setValue:[NSString stringWithFormat:@"%@", [[[[dictionary valueForKey:@"media_info"] valueForKey:@"metadata"] valueForKey:@"dimensions"] valueForKey:@"width"]] forKey:@"width"];
+
     }
     
     return self;
