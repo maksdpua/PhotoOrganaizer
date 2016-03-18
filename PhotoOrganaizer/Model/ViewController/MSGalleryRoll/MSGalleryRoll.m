@@ -15,6 +15,7 @@
 #import "MSFolderPathManager.h"
 #import "MSCache.h"
 #import <AVFoundation/AVFoundation.h>
+#import "MSPhotoLayout.h"
 
 @interface MSGalleryRoll()<MSRequestManagerDelegate>
 
@@ -39,10 +40,12 @@
     [self createRequestToFolderContent];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+//    self.collectionView.delegate = nil;
+//    self.collectionView.dataSource = nil;
+}
 
 - (void)createRequestToFolderContent {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -109,20 +112,12 @@
 }
 
 - (void)test {
-    NSDictionary *param = @{@"path" : @"/folder", @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-    [self.requestManager createRequestWithPOSTmethodWithFileUpload:UIImagePNGRepresentation([UIImage folderPic]) stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-        NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-    } download:^(NSProgress *downloadProgress) {
-        
-    } success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@", responseObject);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"%@", error);
-    }];
+
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
     return self.contentArray.count;
 }
 
@@ -131,7 +126,6 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     cellWidth = cell.frame.size.width;
     [cell setupWithImage:nil];
-    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
     if (photo.imageThumbnail.data) {
         UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
@@ -152,12 +146,11 @@
                             if (updateCell) {
                                 [updateCell setupWithImage:image];
                             }
-                            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-//                            [UIView animateWithDuration:0.3f animations:^{
-//                            [self.collectionViewLayout invalidateLayout];
 
+                            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                            [UIView animateWithDuration:0.3f animations:^{
                                 
-//                            }];
+                            }];
                         });
                     }
                 }
@@ -188,25 +181,27 @@
 
 @end
 
+
 #pragma mark - LayoutDelegate category
 
 @implementation MSGalleryRoll (LayoutDelegate)
 
 #pragma mark - KGPinterestLayoutAttributesDelegate
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width
-{
+- (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width {
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
-//    if (photo.imageThumbnail.data) {
-//        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
-        
+    if (photo.imageThumbnail.data) {
+        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+    
         CGRect boundingRect = CGRectMake(0, 0, width, CGFLOAT_MAX);
-        CGRect rect = AVMakeRectWithAspectRatioInsideRect(CGSizeMake(photo.width.floatValue, photo.height.floatValue), boundingRect);
+        CGRect rect = AVMakeRectWithAspectRatioInsideRect(image.size, boundingRect);
         return rect.size.height;
-//    }
-//    return self.collectionView.frame.size.height/3-1;
+    }
+    return self.collectionView.frame.size.height/3-1;
     
 }
+
+
 
 
 

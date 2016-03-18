@@ -13,4 +13,6 @@
 
 - (void)setupWithImage:(UIImage *)image;
 
+- (void)resizeCellView;
+
 @end

@@ -123,9 +123,8 @@
     return layoutAttributes;
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
-}
+
+
 
 #pragma mark - Interface
 
