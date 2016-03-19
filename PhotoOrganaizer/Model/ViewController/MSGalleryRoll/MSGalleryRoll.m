@@ -146,16 +146,17 @@
                     UIImage *image = [UIImage imageWithData:responseData];
                     if (image) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+//                            MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
                         
-                            if (updateCell) {
-                                [updateCell setupWithImage:image];
-                            }
+//                            if (updateCell) {
+                                [cell setupWithImage:image];
+//                            }
 
                             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
                             
                             [UIView animateWithDuration:0.5f animations:^{
-                                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+//                                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+                                [self.collectionViewLayout invalidateLayout];
                             }];
                         });
                     }
@@ -201,6 +202,9 @@
     
         CGRect boundingRect = CGRectMake(0, 0, width, CGFLOAT_MAX);
         CGRect rect = AVMakeRectWithAspectRatioInsideRect(image.size, boundingRect);
+        
+        NSLog(@"new height: %f", rect.size.height);
+        
         return rect.size.height;
     }
     return self.collectionView.frame.size.width/3-1;

@@ -146,7 +146,9 @@
         for (int i = 0; i < self.numberOfColumns; i++) {
             [yOffset addObject:[NSNumber numberWithFloat:0.f]];
         }
-        
+    
+    self.contentHeight = 0;
+    
         for (int i = 0; i < [self.collectionView numberOfItemsInSection:0]; i++)
         {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
