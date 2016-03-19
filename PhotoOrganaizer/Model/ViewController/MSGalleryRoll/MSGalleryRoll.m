@@ -24,10 +24,7 @@
 
 @end
 
-@implementation MSGalleryRoll {
-    CGFloat cellWidth;
-    MSPhotoLayout *layout;
-}
+@implementation MSGalleryRoll
 
 - (void)dealloc
 {
@@ -37,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.collectionView.alwaysBounceVertical = YES;
-    layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
+    MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
     if (layout) {
         layout.delegate = self;
     }
@@ -46,11 +43,7 @@
 }
 
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-//    self.collectionView.delegate = nil;
-//    self.collectionView.dataSource = nil;
-}
+
 
 - (void)createRequestToFolderContent {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -128,17 +121,19 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSGalleryRollCell *cell = nil;
+    
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
-    cellWidth = cell.frame.size.width;
     [cell setupWithImage:nil];
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
     if (photo.imageThumbnail.data) {
+        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
         UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
         if (image) {
             [cell setupWithImage:image];
         }
     } else {
         [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             MSCache *cache = [MSCache new];
             [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
@@ -146,16 +141,14 @@
                     UIImage *image = [UIImage imageWithData:responseData];
                     if (image) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-//                            MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-                        
-//                            if (updateCell) {
-                                [cell setupWithImage:image];
-//                            }
-
                             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                            
+                            MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+                            [updateCell setupWithImage:nil];
+                            [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
+                            if (updateCell) {
+                                [cell setupWithImage:image];
+                            }
                             [UIView animateWithDuration:0.5f animations:^{
-//                                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
                                 [self.collectionViewLayout invalidateLayout];
                             }];
                         });
@@ -169,22 +162,7 @@
     return cell;
 }
 
-//- (CGSize)collectionView:(UICollectionView *)collectionView
-//                  layout:(UICollectionViewLayout *)collectionViewLayout
-//  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
-//    
-//    if (photo.imageThumbnail.data) {
-//        UIImage *image = [UIImage imageWithImage:[UIImage imageWithData:photo.imageThumbnail.data] scaledToWidth:self.view.frame.size.width/3];
-//        if (image.size.width>=image.size.height) {
-//            return CGSizeMake(self.collectionView.contentSize.width/3-1, image.size.height-1);
-//        } else {
-//            return CGSizeMake(image.size.width-1, image.size.height-1);
-//        }
-//    }
-//    return CGSizeMake(self.collectionView.contentSize.width/3-1, self.collectionView.contentSize.width/3-1);
-//    
-//}
+
 
 @end
 
