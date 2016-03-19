@@ -130,8 +130,8 @@
 
 - (void)prepareLayout
 {
-    if (!self.cache.count)
-    {
+//    if (!self.cache.count)
+//    {
         CGFloat columnWidth = self.contentWidth / self.numberOfColumns;
         
         NSMutableArray <NSNumber *> *xOffset = [NSMutableArray new];
@@ -162,14 +162,18 @@
             attributes.photoHeight = photoHeight;
             attributes.frame = insetFrame;
             
-            [self.cache addObject:attributes];
+            if (self.cache.count > indexPath.row) {
+                [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
+            } else {
+                [self.cache addObject:attributes];
+            }
             
             self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(frame));
             yOffset[column] = @(yOffset[column].floatValue + height);
             
             column = column >= (self.numberOfColumns - 1) ? 0 : ++column;
         }
-    }
+//    }
 }
 
 

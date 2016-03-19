@@ -29,6 +29,11 @@
     MSPhotoLayout *layout;
 }
 
+- (void)dealloc
+{
+    NSLog(@"%@ - %@", NSStringFromSelector(_cmd), NSStringFromClass([self class]));
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.collectionView.alwaysBounceVertical = YES;
@@ -142,14 +147,15 @@
                     if (image) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-                            
+                        
                             if (updateCell) {
                                 [updateCell setupWithImage:image];
                             }
 
                             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                            [UIView animateWithDuration:0.3f animations:^{
-                                
+                            
+                            [UIView animateWithDuration:0.5f animations:^{
+                                [collectionView reloadItemsAtIndexPaths:@[indexPath]];
                             }];
                         });
                     }
@@ -197,7 +203,7 @@
         CGRect rect = AVMakeRectWithAspectRatioInsideRect(image.size, boundingRect);
         return rect.size.height;
     }
-    return self.collectionView.frame.size.height/3-1;
+    return self.collectionView.frame.size.width/3-1;
     
 }
 

@@ -24,6 +24,7 @@
     MSMainVC *loginViewController;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backToFolderViewer) name:kTokenWasAccepted object:nil];
@@ -90,14 +91,14 @@
             [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 self.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
             } completion:^(BOOL finished) {
-                
+                galleryRollNavigation = nil;
             }];
         } else {
             [UIView animateWithDuration:animationDuration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 self.view.frame = CGRectMake(-CGRectGetWidth(self.view.frame), 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
             } completion:^(BOOL finished) {
                 [self presentViewController:galleryRollNavigation animated:NO completion:^{
-                    
+                    galleryRollNavigation = nil;
                 }];
             }];
         }
