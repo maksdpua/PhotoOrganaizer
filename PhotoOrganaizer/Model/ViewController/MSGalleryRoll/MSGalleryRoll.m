@@ -133,7 +133,6 @@
         }
     } else {
         [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             MSCache *cache = [MSCache new];
             [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
