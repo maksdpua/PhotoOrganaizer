@@ -20,19 +20,15 @@
 @interface MSGalleryRoll()<MSRequestManagerDelegate>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
-@property (nonatomic, strong) NSArray *contentArray;
+@property (nonatomic, strong) NSMutableArray *contentArray;
 
 @end
 
 @implementation MSGalleryRoll
 
-- (void)dealloc
-{
-    NSLog(@"%@ - %@", NSStringFromSelector(_cmd), NSStringFromClass([self class]));
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
@@ -57,7 +53,9 @@
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         MSFolder *folder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-        self.contentArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
+        NSArray *dataArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
+        self.contentArray = [NSMutableArray new];
+        [self.contentArray addObjectsFromArray:dataArray];
         [self.collectionView reloadData];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -68,17 +66,17 @@
 
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
     NSMutableArray *photos = notification.object;
-//    [self.collectionView performBatchUpdates:^{
-//        NSUInteger resultsSize = self.contentArray.count; //data is the previous array of data
-//        [self.data addObjectsFromArray:newData];
-//        NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
-//        
-//        for (NSUInteger i = resultsSize; i < resultsSize + newData.count; i++) {
-//            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i
-//                                                              inSection:0]];
-//        }
-//        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
-//    } completion:nil];
+    [self.collectionView performBatchUpdates:^{
+        NSUInteger resultsSize = self.contentArray.count; //data is the previous array of data
+        [self.contentArray addObjectsFromArray:photos];
+        NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
+        
+        for (NSUInteger i = resultsSize; i < resultsSize + photos.count; i++) {
+            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i
+                                                              inSection:0]];
+        }
+        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
+    } completion:nil];
     
 }
 
@@ -143,40 +141,58 @@
     cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     [cell setupWithImage:nil];
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
-    if (photo.imageThumbnail.data) {
-        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
-        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
-        if (image) {
-            [cell setupWithImage:image];
-        }
-    } else {
+    id obj = [[self.contentArray objectAtIndex:indexPath.row] class];
+    if ([[obj class]isSubclassOfClass:[NSDictionary class]]) {
         [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            MSCache *cache = [MSCache new];
-            [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
-                if (responseData) {
-                    UIImage *image = [UIImage imageWithData:responseData];
-                    if (image) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                            MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-                            [updateCell setupWithImage:nil];
-                            [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
-                            if (updateCell) {
-                                [cell setupWithImage:image];
-                            }
-                            [UIView animateWithDuration:0.5f animations:^{
-                                [self.collectionViewLayout invalidateLayout];
-                            }];
-                        });
+        NSDictionary *dataDic = [self.contentArray objectAtIndex:indexPath.row];
+        [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
+        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+        [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+            NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+        } download:^(NSProgress *downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"%@", responseObject);
+            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"%@", error);
+        }];
+    } else if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
+        if (photo.imageThumbnail.data) {
+            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+            UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+            if (image) {
+                [cell setupWithImage:image];
+            }
+        } else {
+            [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                MSCache *cache = [MSCache new];
+                [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                    if (responseData) {
+                        UIImage *image = [UIImage imageWithData:responseData];
+                        if (image) {
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                                MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+                                [updateCell setupWithImage:nil];
+                                [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
+                                if (updateCell) {
+                                    [cell setupWithImage:image];
+                                }
+                                [UIView animateWithDuration:0.5f animations:^{
+                                    [self.collectionViewLayout invalidateLayout];
+                                }];
+                            });
+                        }
                     }
-                }
-            } errorBlock:^(NSError *error) {
-                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
-            }];
-        });
+                } errorBlock:^(NSError *error) {
+                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+                }];
+            });
+        }
     }
-    return cell;
+        return cell;
 }
 
 
@@ -191,19 +207,32 @@
 #pragma mark - KGPinterestLayoutAttributesDelegate
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width {
-    MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
-    if (photo.imageThumbnail.data) {
-        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
-    
-        CGRect boundingRect = CGRectMake(0, 0, width, CGFLOAT_MAX);
-        CGRect rect = AVMakeRectWithAspectRatioInsideRect(image.size, boundingRect);
-        
-        NSLog(@"new height: %f", rect.size.height);
-        
-        return rect.size.height;
+    CGFloat resultHeight;
+    id obj = [self.contentArray objectAtIndex:indexPath.row];
+    UIImage *image = [UIImage new];
+    if ([[obj class] isSubclassOfClass:[MSPhoto class]]) {
+        MSPhoto *photo = obj;
+        if (photo.imageThumbnail.data) {
+            image = [UIImage imageWithData:photo.imageThumbnail.data];
+            resultHeight =  [self calculateHeightFromImage:image andWidth:width];
+        } else {
+            resultHeight = self.collectionView.frame.size.width/3-1;
+        }
+    } else if ([[obj class] isSubclassOfClass:[NSDictionary class]]) {
+        NSDictionary *dataDic = obj;
+        image = [UIImage imageWithData:[dataDic valueForKey:@"imageData"]];
+        resultHeight =  [self calculateHeightFromImage:image andWidth:width];
     }
-    return self.collectionView.frame.size.width/3-1;
     
+    return resultHeight;
+    
+}
+
+- (CGFloat)calculateHeightFromImage:(UIImage *)image andWidth:(CGFloat)width {
+    CGRect boundingRect = CGRectMake(0, 0, width, CGFLOAT_MAX);
+    CGRect rect = AVMakeRectWithAspectRatioInsideRect(image.size, boundingRect);
+    
+    return rect.size.height;
 }
 
 - (void)dealloc {

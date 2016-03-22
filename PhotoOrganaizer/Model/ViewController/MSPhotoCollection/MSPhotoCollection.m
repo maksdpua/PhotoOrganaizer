@@ -375,16 +375,7 @@ static CGSize AssetGridThumbnailSize;
     }];
 }
 
-//        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],dataUTI], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-//        [self.requestManager createRequestWithPOSTmethodWithFileUpload:imageData stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-//            NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-//        } download:^(NSProgress *downloadProgress) {
-//
-//        } success:^(NSURLSessionDataTask *task, id responseObject) {
-//            NSLog(@"%@", responseObject);
-//        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//            NSLog(@"%@", error);
-//        }];
+        
 
 
 /*
