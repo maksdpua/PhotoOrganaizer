@@ -40,6 +40,8 @@ static NSString *const kTag = @"tag";
 
 static NSString *const kStringRecevied = @"stringRecevied";
 static NSString *const kDefaultFolderPath = @"defaultFolderPath";
+static NSString *const kPhotosWasSelected = @"photosWasSelected";
+
 
 #define urlPath(mainURL, secondURL) [NSString stringWithFormat: @"%@%@", mainURL, secondURL]
 

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
 @property (nonatomic, strong) MSRequestManager *requestManager;
+@property (nonatomic, strong) NSMutableArray *photoToUploadArray;
 
 @end
 
@@ -37,6 +38,7 @@ static CGSize AssetGridThumbnailSize;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.photoToUploadArray = [NSMutableArray new];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
 }
 
@@ -275,6 +277,12 @@ static CGSize AssetGridThumbnailSize;
 }
 */
 
+- (IBAction)uploadSelectedPhotos:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPhotosWasSelected object:self.photoToUploadArray];
+    }];
+}
+
 #pragma mark <UICollectionViewDataSource>
 
 //- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -350,22 +358,35 @@ static CGSize AssetGridThumbnailSize;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     [self.imageManager requestImageDataForAsset:asset options:PHImageContentModeDefault resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-//        MSFolder *folder = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager]getLastPathInArray]];
-        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],dataUTI], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-        [self.requestManager createRequestWithPOSTmethodWithFileUpload:imageData stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-            NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-        } download:^(NSProgress *downloadProgress) {
-            
-        } success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"%@", responseObject);
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"%@", error);
-        }];
+        NSDictionary *data = @{@"imageName" : dataUTI, @"imageData" : imageData};
+        if (self.photoToUploadArray.count>0) {
+            if ([self.photoToUploadArray containsObject:data]) {
+                [self.photoToUploadArray removeObject:data];
+                [cell setCheckmarkHidden:YES];
+            } else {
+                [self.photoToUploadArray addObject:data];
+                [cell setCheckmarkHidden:NO];
+            }
+        } else {
+            [self.photoToUploadArray addObject:data];
+            [cell setCheckmarkHidden:NO];
+        }
+        
     }];
-    [cell setCheckmarkHidden:NO];
-    
-    
 }
+
+//        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],dataUTI], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+//        [self.requestManager createRequestWithPOSTmethodWithFileUpload:imageData stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+//            NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+//        } download:^(NSProgress *downloadProgress) {
+//
+//        } success:^(NSURLSessionDataTask *task, id responseObject) {
+//            NSLog(@"%@", responseObject);
+//        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+//            NSLog(@"%@", error);
+//        }];
+
+
 /*
 // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {

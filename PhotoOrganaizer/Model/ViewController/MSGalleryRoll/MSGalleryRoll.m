@@ -33,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
     if (layout) {
@@ -41,6 +42,7 @@
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     [self createRequestToFolderContent];
 }
+
 
 
 
@@ -62,6 +64,22 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         NSLog(@"Error %@", error);
     }];
+}
+
+- (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
+    NSMutableArray *photos = notification.object;
+//    [self.collectionView performBatchUpdates:^{
+//        NSUInteger resultsSize = self.contentArray.count; //data is the previous array of data
+//        [self.data addObjectsFromArray:newData];
+//        NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
+//        
+//        for (NSUInteger i = resultsSize; i < resultsSize + newData.count; i++) {
+//            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i
+//                                                              inSection:0]];
+//        }
+//        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
+//    } completion:nil];
+    
 }
 
 - (IBAction)actionSheet:(id)sender {
@@ -188,7 +206,9 @@
     
 }
 
-
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 
