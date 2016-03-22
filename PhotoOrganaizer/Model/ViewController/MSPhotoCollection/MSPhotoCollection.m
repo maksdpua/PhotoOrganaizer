@@ -24,7 +24,7 @@
 
 @implementation MSPhotoCollection
 
-//static NSString * const reuseIdentifier = @"Cell";
+static NSString * const kPHImageFileURLKey = @"PHImageFileURLKey";
 
 static NSString * const CellReuseIdentifier = @"Cell";
 static CGSize AssetGridThumbnailSize;
@@ -358,7 +358,8 @@ static CGSize AssetGridThumbnailSize;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     [self.imageManager requestImageDataForAsset:asset options:PHImageContentModeDefault resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
-        NSDictionary *data = @{@"imageName" : dataUTI, @"imageData" : imageData};
+        
+        NSDictionary *data = @{@"imageName" : [[info valueForKey:kPHImageFileURLKey] lastPathComponent], @"imageData" : imageData};
         if (self.photoToUploadArray.count>0) {
             if ([self.photoToUploadArray containsObject:data]) {
                 [self.photoToUploadArray removeObject:data];

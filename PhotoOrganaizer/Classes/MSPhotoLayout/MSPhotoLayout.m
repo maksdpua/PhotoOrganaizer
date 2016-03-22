@@ -54,6 +54,7 @@
 @interface MSPhotoLayout ()
 
 @property (nonatomic) NSMutableArray <MSPinterestLayoutAttributes *> *cache;
+@property (nonatomic) NSMutableArray <MSPinterestLayoutAttributes *> *layoutAttributes;
 
 @property (nonatomic) CGFloat contentHeight;
 @property (nonatomic) CGFloat contentWidth;
@@ -87,6 +88,7 @@
 - (void)setup
 {
     self.cache = [NSMutableArray new];
+    self.layoutAttributes = [NSMutableArray new];
     self.numberOfColumns = 3;
     self.cellPadding = 1.f;
     self.contentHeight = 0.f;
@@ -118,9 +120,14 @@
     [self.cache enumerateObjectsUsingBlock:^(MSPinterestLayoutAttributes * _Nonnull attributes, NSUInteger idx, BOOL * _Nonnull stop) {
         if (CGRectIntersectsRect(attributes.frame, rect)) {
             [layoutAttributes addObject:attributes];
+            [self.layoutAttributes addObject:attributes];
         }
     }];
     return layoutAttributes;
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.layoutAttributes objectAtIndex:indexPath.row];
 }
 
 
