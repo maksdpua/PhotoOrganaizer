@@ -149,24 +149,44 @@
     MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     
     [cell setupWithImage:nil];
-    MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
-    id obj = [[self.contentArray objectAtIndex:indexPath.row] class];
+    
+    id obj = [self.contentArray objectAtIndex:indexPath.row];
+    
+    
+    
+    
+    
+    
+    
+    
+    
     if ([[obj class]isSubclassOfClass:[NSDictionary class]]) {
         [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
         NSDictionary *dataDic = [self.contentArray objectAtIndex:indexPath.row];
         [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
-        NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-        [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-            NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-        } download:^(NSProgress *downloadProgress) {
-            
-        } success:^(NSURLSessionDataTask *task, id responseObject) {
-            NSLog(@"%@", responseObject);
-            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"%@", error);
-        }];
+        NSBlockOperation *uploadImage = [[NSBlockOperation alloc] init];
+        if (!uploadImage.isExecuting) {
+            [uploadImage addExecutionBlock:^{
+                NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+                [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+//                    NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+                } download:^(NSProgress *downloadProgress) {
+                    
+                } success:^(NSURLSessionDataTask *task, id responseObject) {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        NSLog(@"%@", responseObject);
+                        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                    }];
+                    
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                    NSLog(@"%@", error);
+                }];
+            }];
+            [uploadImage start];
+        }
+        
     } else if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
+        MSPhoto *photo = obj;
         if (photo.imageThumbnail.data) {
             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
             UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
@@ -174,34 +194,45 @@
                 [cell setupWithImage:image];
             }
         } else {
-            [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                MSCache *cache = [MSCache new];
-                [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
-                    if (responseData) {
-                        UIImage *image = [UIImage imageWithData:responseData];
-                        if (image) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                                MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-                                
-                                [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
-                                if (updateCell) {
-                                    [updateCell setupWithImage:nil];
-                                    [updateCell setupWithImage:image];
-                                } else {
-                                    [updateCell setupWithImage:nil];
+            NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
+            if (!loadImageIntoCellOp.isExecuting) {
+                [loadImageIntoCellOp addExecutionBlock:^{
+                    [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+                    //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    MSCache *cache = [MSCache new];
+                    [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            if (responseData) {
+                                UIImage *image = [UIImage imageWithData:responseData];
+                                if (image) {
+                                    //                            dispatch_async(dispatch_get_main_queue(), ^{
+                                    
+                                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                                    MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
+                                    
+//                                    [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
+                                    if (updateCell) {
+//                                        [updateCell setupWithImage:nil];
+                                        [updateCell setupWithImage:image];
+                                    } else {
+//                                        [updateCell setupWithImage:nil];
+                                    }
+                                    [UIView animateWithDuration:0.5f animations:^{
+                                        [self.collectionViewLayout invalidateLayout];
+                                    }];
+                                    //                            });
                                 }
-                                [UIView animateWithDuration:0.5f animations:^{
-                                    [self.collectionViewLayout invalidateLayout];
-                                }];
-                            });
-                        }
-                    }
-                } errorBlock:^(NSError *error) {
-                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+                            }
+                        }];
+                        
+                    } errorBlock:^(NSError *error) {
+                        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+                    }];
                 }];
-            });
+                [loadImageIntoCellOp start];
+            }
+            
+//            });
         }
     }
     
