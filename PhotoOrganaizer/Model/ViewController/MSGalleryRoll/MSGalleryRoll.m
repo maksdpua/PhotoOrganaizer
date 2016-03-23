@@ -21,6 +21,8 @@
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *contentArray;
+@property NSOperationQueue *uploadImage;
+@property (nonatomic, strong) NSMutableArray *photosNameToUpload;
 
 @end
 
@@ -28,7 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.photosNameToUpload = [NSMutableArray new];
+    self.uploadImage = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
@@ -152,37 +155,33 @@
     
     id obj = [self.contentArray objectAtIndex:indexPath.row];
     
-    
-    
-    
-    
-    
-    
-    
-    
     if ([[obj class]isSubclassOfClass:[NSDictionary class]]) {
-        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
         NSDictionary *dataDic = [self.contentArray objectAtIndex:indexPath.row];
-        [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
-        NSBlockOperation *uploadImage = [[NSBlockOperation alloc] init];
-        if (!uploadImage.isExecuting) {
-            [uploadImage addExecutionBlock:^{
-                NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-                [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-//                    NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-                } download:^(NSProgress *downloadProgress) {
-                    
-                } success:^(NSURLSessionDataTask *task, id responseObject) {
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                        NSLog(@"%@", responseObject);
-                        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+        if (![self.photosNameToUpload containsObject:[dataDic valueForKey:@"imageName"]]) {
+            [self.photosNameToUpload addObject:[dataDic valueForKey:@"imageName"]];
+            [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+            NSBlockOperation *uploadImage = [NSBlockOperation new];
+                [uploadImage addExecutionBlock:^{
+                    NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+                    [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+                        //                    NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+                    } download:^(NSProgress *downloadProgress) {
+                        
+                    } success:^(NSURLSessionDataTask *task, id responseObject) {
+                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            NSLog(@"%@", responseObject);
+                            
+                            [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
+                            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                            [self.collectionViewLayout invalidateLayout];
+                        }];
+                        
+                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                        NSLog(@"%@", error);
                     }];
-                    
-                } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                    NSLog(@"%@", error);
                 }];
-            }];
             [uploadImage start];
+
         }
         
     } else if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
@@ -280,6 +279,7 @@
 }
 
 - (void)dealloc {
+    [self.photosNameToUpload removeAllObjects];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

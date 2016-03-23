@@ -127,8 +127,11 @@
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+
     return [self.layoutAttributes objectAtIndex:indexPath.row];
 }
+
+
 
 
 
@@ -175,6 +178,7 @@
                 [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
             } else {
                 [self.cache addObject:attributes];
+                [self.layoutAttributes addObject:attributes];
             }
             
             self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(frame));
