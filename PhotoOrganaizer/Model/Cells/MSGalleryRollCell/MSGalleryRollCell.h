@@ -11,8 +11,8 @@
 
 @interface MSGalleryRollCell : UICollectionViewCell
 
-- (void)setupWithImage:(UIImage *)image;
+@property (nonatomic, weak) IBOutlet UIImageView *photo;
 
-- (void)resizeCellView;
+- (void)setupWithImage:(UIImage *)image;
 
 @end

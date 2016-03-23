@@ -146,9 +146,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MSGalleryRollCell *cell = nil;
+    MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     
-    cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     [cell setupWithImage:nil];
     MSPhoto *photo = [self.contentArray objectAtIndex:indexPath.row];
     id obj = [[self.contentArray objectAtIndex:indexPath.row] class];
@@ -185,10 +184,13 @@
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
                                 MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-                                [updateCell setupWithImage:nil];
+                                
                                 [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
                                 if (updateCell) {
-                                    [cell setupWithImage:image];
+                                    [updateCell setupWithImage:nil];
+                                    [updateCell setupWithImage:image];
+                                } else {
+                                    [updateCell setupWithImage:nil];
                                 }
                                 [UIView animateWithDuration:0.5f animations:^{
                                     [self.collectionViewLayout invalidateLayout];
@@ -202,7 +204,8 @@
             });
         }
     }
-        return cell;
+    
+    return cell;
 }
 
 

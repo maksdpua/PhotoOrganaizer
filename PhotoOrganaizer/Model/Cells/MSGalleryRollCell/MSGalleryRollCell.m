@@ -13,7 +13,7 @@
 
 @interface MSGalleryRollCell()
 
-@property (nonatomic, weak) IBOutlet UIImageView *photo;
+
 
 @end
 
