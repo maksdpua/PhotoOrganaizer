@@ -178,7 +178,7 @@
                 [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
             } else {
                 [self.cache addObject:attributes];
-                [self.layoutAttributes addObject:attributes];
+//                [self.layoutAttributes addObject:attributes];
             }
             
             self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(frame));
