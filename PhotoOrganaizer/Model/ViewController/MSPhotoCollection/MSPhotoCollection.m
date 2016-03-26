@@ -372,7 +372,7 @@ static CGSize AssetGridThumbnailSize;
             [self.photoToUploadArray addObject:data];
             [cell setCheckmarkHidden:NO];
         }
-        
+        NSLog(@"ARRAY %lu", (unsigned long)self.photoToUploadArray.count);
     }];
 }
 

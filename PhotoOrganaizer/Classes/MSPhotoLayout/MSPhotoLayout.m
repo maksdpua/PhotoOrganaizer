@@ -128,7 +128,7 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    return [self.layoutAttributes objectAtIndex:indexPath.row];
+    return [self.cache objectAtIndex:indexPath.row];
 }
 
 
@@ -138,8 +138,7 @@
 
 #pragma mark - Interface
 
-- (void)prepareLayout
-{
+- (void)prepareLayout {
 //    if (!self.cache.count)
 //    {
         CGFloat columnWidth = self.contentWidth / self.numberOfColumns;
@@ -156,8 +155,8 @@
         for (int i = 0; i < self.numberOfColumns; i++) {
             [yOffset addObject:[NSNumber numberWithFloat:0.f]];
         }
-    
-    self.contentHeight = 0;
+        self.cache = [NSMutableArray new];
+        self.contentHeight = 0;
     
         for (int i = 0; i < [self.collectionView numberOfItemsInSection:0]; i++)
         {
@@ -178,7 +177,6 @@
                 [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
             } else {
                 [self.cache addObject:attributes];
-//                [self.layoutAttributes addObject:attributes];
             }
             
             self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(frame));

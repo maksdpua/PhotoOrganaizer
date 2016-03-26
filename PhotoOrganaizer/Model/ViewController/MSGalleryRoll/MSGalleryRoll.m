@@ -70,26 +70,33 @@
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
     NSMutableArray *photos = notification.object;
     NSUInteger resultsSize = self.contentArray.count;
-    [self.contentArray addObjectsFromArray:photos];
-    NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
-    [self.collectionView performBatchUpdates:^{
-        
-        for (NSUInteger i = resultsSize; i < resultsSize + photos.count; i++) {
-            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i
-                                                              inSection:0]];
-        }
-        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
-        
-    } completion:nil];
     
-    [self.collectionView performBatchUpdates:^{
-        for (NSUInteger i = 0; i<arrayWithIndexPaths.count; i++) {
-            
-             [self.collectionView moveItemAtIndexPath:arrayWithIndexPaths[i] toIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-        }
-        
-    } completion:nil];
+    NSMutableIndexSet *set = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, photos.count)];
     
+    [self.contentArray insertObjects:photos atIndexes:set];
+    
+    [self.collectionView reloadData];
+    
+//    NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
+//    [self.collectionView performBatchUpdates:^{
+//        
+//        for (NSUInteger i = resultsSize; i < resultsSize + photos.count; i++) {
+//            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i
+//                                                              inSection:0]];
+//        }
+//        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
+//        
+//    } completion:nil];
+//    
+//    [self.collectionView performBatchUpdates:^{
+//        for (NSUInteger i = 0; i<arrayWithIndexPaths.count; i++) {
+//            
+//             [self.collectionView moveItemAtIndexPath:arrayWithIndexPaths[i] toIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+//        }
+//        
+//        
+//    } completion:nil];
+//    [self.collectionViewLayout invalidateLayout];
     
 }
 
