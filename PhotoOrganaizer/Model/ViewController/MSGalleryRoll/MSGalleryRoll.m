@@ -16,14 +16,16 @@
 #import "MSCache.h"
 #import <AVFoundation/AVFoundation.h>
 #import "MSPhotoLayout.h"
+#import "MSGalleryRollDataSource.h"
 
-@interface MSGalleryRoll()<MSRequestManagerDelegate>
+@interface MSGalleryRoll()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *contentArray;
 @property NSOperationQueue *imageLoadingOperationQueue;
 @property (nonatomic, strong) NSMutableArray *photosNameToUpload;
 @property (nonatomic, strong) NSMutableDictionary *thumbnailsToUpload;
+@property (nonatomic, strong) MSGalleryRollDataSource *dataSource;
 
 @end
 
@@ -31,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dataSource = [[MSGalleryRollDataSource alloc]initWithDelegate:self];
     self.photosNameToUpload = [NSMutableArray new];
     self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];

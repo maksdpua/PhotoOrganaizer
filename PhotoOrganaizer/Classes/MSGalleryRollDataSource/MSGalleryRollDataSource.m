@@ -15,7 +15,7 @@
 @interface MSGalleryRollDataSource()<MSRequestManagerDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
-
+@property (nonatomic, strong) NSMutableArray *contentArray;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -26,24 +26,29 @@
     self = [super init];
     if (self) {
         self.delegate = delegate;
+        self.contentArray = [NSMutableArray new];
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
         [self setupFetchedResultsController];
     }
     return self;
 }
 
-#pragma mark - DataSOurce methods
+#pragma mark - DataSource methods
 
 - (void)setupFetchedResultsController {
-    self.fetchedResultsController = [MSFolder MR_fetchAllSortedBy:@"" ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]] groupBy:nil delegate:self];
+    self.fetchedResultsController = [MSFolder MR_fetchAllSortedBy:nil ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]] groupBy:nil delegate:self];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientModified"
+                                                                   ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    [self.contentArray addObjectsFromArray: [[self.fetchedResultsController.fetchedObjects sortedArrayUsingDescriptors:sortDescriptors] lastObject]];
 }
 
 - (NSUInteger)countOfModels {
-    return self.fetchedResultsController.fetchedObjects.count;
+    return self.contentArray.count;
 }
 
 - (MSPhoto *)modelAtIndex:(NSInteger)index {
-    return self.fetchedResultsController.fetchedObjects[index];
+    return self.contentArray[index];
 }
 
 - (void)removeModelAtIndex:(NSIndexPath *)indexPath {
