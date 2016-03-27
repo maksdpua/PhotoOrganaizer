@@ -21,8 +21,9 @@
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *contentArray;
-@property NSOperationQueue *uploadImage;
+@property NSOperationQueue *imageLoadingOperationQueue;
 @property (nonatomic, strong) NSMutableArray *photosNameToUpload;
+@property (nonatomic, strong) NSMutableDictionary *thumbnailsToUpload;
 
 @end
 
@@ -31,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.photosNameToUpload = [NSMutableArray new];
-    self.uploadImage = [NSOperationQueue new];
+    self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
@@ -42,6 +43,10 @@
     [self createRequestToFolderContent];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.thumbnailsToUpload = [NSMutableDictionary new];
+}
 
 
 
@@ -69,35 +74,10 @@
 
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
     NSMutableArray *photos = notification.object;
-    NSUInteger resultsSize = self.contentArray.count;
     
     NSMutableIndexSet *set = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, photos.count)];
-    
     [self.contentArray insertObjects:photos atIndexes:set];
-    
     [self.collectionView reloadData];
-    
-//    NSMutableArray *arrayWithIndexPaths = [NSMutableArray array];
-//    [self.collectionView performBatchUpdates:^{
-//        
-//        for (NSUInteger i = resultsSize; i < resultsSize + photos.count; i++) {
-//            [arrayWithIndexPaths addObject:[NSIndexPath indexPathForRow:i
-//                                                              inSection:0]];
-//        }
-//        [self.collectionView insertItemsAtIndexPaths:arrayWithIndexPaths];
-//        
-//    } completion:nil];
-//    
-//    [self.collectionView performBatchUpdates:^{
-//        for (NSUInteger i = 0; i<arrayWithIndexPaths.count; i++) {
-//            
-//             [self.collectionView moveItemAtIndexPath:arrayWithIndexPaths[i] toIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-//        }
-//        
-//        
-//    } completion:nil];
-//    [self.collectionViewLayout invalidateLayout];
-    
 }
 
 - (IBAction)actionSheet:(id)sender {
@@ -178,7 +158,7 @@
                         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                             NSLog(@"%@", responseObject);
                             
-                            [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
+//                            [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
                             [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
                             [self.collectionViewLayout invalidateLayout];
                         }];
@@ -188,64 +168,81 @@
                     }];
                 }];
             [uploadImage start];
-
         }
         
     } else if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
-        MSPhoto *photo = obj;
-        if (photo.imageThumbnail.data) {
-            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
-            UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
-            if (image) {
-                [cell setupWithImage:image];
-            }
-        } else {
-            NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
-            if (!loadImageIntoCellOp.isExecuting) {
-                [loadImageIntoCellOp addExecutionBlock:^{
-                    [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-                    //            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    MSCache *cache = [MSCache new];
-                    [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            if (responseData) {
-                                UIImage *image = [UIImage imageWithData:responseData];
-                                if (image) {
-                                    //                            dispatch_async(dispatch_get_main_queue(), ^{
-                                    
-                                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                                    MSGalleryRollCell *updateCell = (id)[collectionView cellForItemAtIndexPath:indexPath];
-                                    
-//                                    [MBProgressHUD hideAllHUDsForView:updateCell.contentView animated:NO];
-                                    if (updateCell) {
-//                                        [updateCell setupWithImage:nil];
-                                        [updateCell setupWithImage:image];
-                                    } else {
-//                                        [updateCell setupWithImage:nil];
-                                    }
-                                    [UIView animateWithDuration:0.5f animations:^{
-                                        [self.collectionViewLayout invalidateLayout];
-                                    }];
-                                    //                            });
-                                }
-                            }
-                        }];
-                        
-                    } errorBlock:^(NSError *error) {
-                        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
-                    }];
-                }];
-                [loadImageIntoCellOp start];
-            }
-            
-//            });
-        }
+        [self loadImageInBackgroundWithCell:cell indexPath:indexPath andPhotoObject:obj];
     }
     
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    MSPhoto *obj = [self.contentArray objectAtIndex:indexPath.row];
+    if (self.thumbnailsToUpload.count > 0) {
+        NSBlockOperation *ongoingDownloadOperation = [self.thumbnailsToUpload objectForKey:obj.path];
+        if (ongoingDownloadOperation) {
+            //Cancel operation and remove from dictionary
+            [ongoingDownloadOperation cancel];
+            [self.thumbnailsToUpload removeObjectForKey:obj.path];
+        }
+    }
+    
+}
 
+- (void)loadImageInBackgroundWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
+    MSPhoto *photo = obj;
+    if (photo.imageThumbnail.data) {
+        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+        if (image) {
+            [cell setupWithImage:image];
+        }
+    } else {
+        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+        NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakOp = loadImageIntoCellOp;
+        [loadImageIntoCellOp addExecutionBlock:^{
+            
+            MSCache *cache = [MSCache new];
+            [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    if (!weakOp.isCancelled) {
+                        if (responseData) {
+                            UIImage *image = [UIImage imageWithData:responseData];
+                            if (image) {
+                                
+                                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                                MSGalleryRollCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                                
+                                if (updateCell) {
+                                    [updateCell setupWithImage:image];
+                                }
+                                [UIView animateWithDuration:0.5f animations:^{
+                                    [self.collectionViewLayout invalidateLayout];
+                                }];
+                            }
+                        }
+                    }
+                }];
+                
+            } errorBlock:^(NSError *error) {
+                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+            }];
+        }];
+        if (photo.path) {
+            [self.thumbnailsToUpload setObject:loadImageIntoCellOp forKey:photo.path];
+        }
+        //Add the operation to the designated background queue
+        if (loadImageIntoCellOp) {
+            [self.imageLoadingOperationQueue addOperation:loadImageIntoCellOp];
+        }
+        [cell setupWithImage:nil];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self.imageLoadingOperationQueue cancelAllOperations];
+}
 
 @end
 
