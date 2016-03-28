@@ -19,6 +19,7 @@
 - (NSUInteger)countOfModels;
 - (MSPhoto *)modelAtIndex:(NSInteger)index;
 - (void)removeModelAtIndex:(NSIndexPath *)indexPath;
+- (void)addNewObjectsWithArray:(NSMutableArray *)objectsArray;
 
 @end
 
@@ -27,5 +28,7 @@
 @optional
 
 - (void)contentWasChanged;
+
+- (void)uploadDataToServer;
 
 @end

@@ -31,6 +31,8 @@
 
 @implementation MSGalleryRoll
 
+#pragma mark - Lifecycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [[MSGalleryRollDataSource alloc]initWithDelegate:self];
@@ -51,8 +53,24 @@
     self.thumbnailsToUpload = [NSMutableDictionary new];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    //Cancel all operations with load images
+    [self.imageLoadingOperationQueue cancelAllOperations];
+}
 
+- (void)dealloc {
+    [self.photosNameToUpload removeAllObjects];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
+- (void)contentWasChanged {
+    [self.collectionView reloadData];
+}
+
+#pragma mark - Requests and upload data
+
+//request to server
 
 - (void)createRequestToFolderContent {
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -63,11 +81,11 @@
     } download:^(NSProgress *downloadProgress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        MSFolder *folder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-        NSArray *dataArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
-        self.contentArray = [NSMutableArray new];
-        [self.contentArray addObjectsFromArray:dataArray];
-        [self.collectionView reloadData];
+//        MSFolder *folder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
+//        NSArray *dataArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
+//        self.contentArray = [NSMutableArray new];
+//        [self.contentArray addObjectsFromArray:dataArray];
+//        [self.collectionView reloadData];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
@@ -75,21 +93,24 @@
     }];
 }
 
+//Notification with new imagedata to upload
+
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
     NSMutableArray *photos = notification.object;
     
     NSMutableIndexSet *set = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, photos.count)];
     [self.contentArray insertObjects:photos atIndexes:set];
     [self.collectionView reloadData];
+
 }
+
+#pragma mark - Actions
 
 - (IBAction)actionSheet:(id)sender {
     UIAlertController *actSheet = [UIAlertController
-                                     alertControllerWithTitle:nil
-                                     message:nil
-                                     preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    
+                                   alertControllerWithTitle:nil
+                                   message:nil
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *choosePhoto = [UIAlertAction
                                   actionWithTitle:@"Load new photos..."
@@ -97,82 +118,44 @@
                                   handler:^(UIAlertAction * action) {
                                       MSPhotoImagePickerNavigation *photoImagePickerNavigation = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSPhotoImagePickerNavigation class])];
                                       [self presentViewController:photoImagePickerNavigation animated:YES completion:nil];
-                                 
                                   }];
     UIAlertAction *clearCache = [UIAlertAction
-                             actionWithTitle:@"Clear cache"
-                             style:UIAlertActionStyleDestructive
-                             handler:^(UIAlertAction * action) {
-                                 [MSThumbnail MR_truncateAll];
-                                 [actSheet removeFromParentViewController];
-                             }];
+                                 actionWithTitle:@"Clear cache"
+                                 style:UIAlertActionStyleDestructive
+                                 handler:^(UIAlertAction * action) {
+                                     [MSThumbnail MR_truncateAll];
+                                     [actSheet removeFromParentViewController];
+                                 }];
     UIAlertAction *cancel = [UIAlertAction
                              actionWithTitle:@"Cancel"
                              style:UIAlertActionStyleCancel
                              handler:^(UIAlertAction * action) {
                                  [actSheet removeFromParentViewController];
                              }];
-    UIAlertAction *test = [UIAlertAction
-                             actionWithTitle:@"test"
-                             style:UIAlertActionStyleDefault
-                             handler:^(UIAlertAction * action) {
-                                 [self test];
-                                 [actSheet removeFromParentViewController];
-                             }];
     
     [actSheet addAction:choosePhoto];
     [actSheet addAction:clearCache];
     [actSheet addAction:cancel];
-    [actSheet addAction:test];
     
     [self presentViewController:actSheet animated:YES completion:nil];
 }
 
-- (void)test {
-
-}
-
+#pragma mark - UICollectionView datasource methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return self.contentArray.count;
+//    return self.contentArray.count;
+    return [self.dataSource countOfModels];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
-    
     [cell setupWithImage:nil];
     
-    id obj = [self.contentArray objectAtIndex:indexPath.row];
-    
+//    id obj = [self.contentArray objectAtIndex:indexPath.row];
+    id obj = [self.dataSource modelAtIndex:indexPath.row];
     if ([[obj class]isSubclassOfClass:[NSDictionary class]]) {
-        NSDictionary *dataDic = [self.contentArray objectAtIndex:indexPath.row];
-        if (![self.photosNameToUpload containsObject:[dataDic valueForKey:@"imageName"]]) {
-            [self.photosNameToUpload addObject:[dataDic valueForKey:@"imageName"]];
-            [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-            NSBlockOperation *uploadImage = [NSBlockOperation new];
-                [uploadImage addExecutionBlock:^{
-                    NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-                    [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-                        //                    NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-                    } download:^(NSProgress *downloadProgress) {
-                        
-                    } success:^(NSURLSessionDataTask *task, id responseObject) {
-                        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            NSLog(@"%@", responseObject);
-                            
-//                            [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
-                            [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                            [self.collectionViewLayout invalidateLayout];
-                        }];
-                        
-                    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                        NSLog(@"%@", error);
-                    }];
-                }];
-            [uploadImage start];
-        }
-        
+        [self uploadImageDataToServerWithCell:cell indexPath:indexPath andPhotoObject:obj];
     } else if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
         [self loadImageInBackgroundWithCell:cell indexPath:indexPath andPhotoObject:obj];
     }
@@ -181,7 +164,8 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    MSPhoto *obj = [self.contentArray objectAtIndex:indexPath.row];
+//    MSPhoto *obj = [self.contentArray objectAtIndex:indexPath.row];
+    MSPhoto *obj = [self.dataSource modelAtIndex:indexPath.row];
     if (self.thumbnailsToUpload.count > 0) {
         NSBlockOperation *ongoingDownloadOperation = [self.thumbnailsToUpload objectForKey:obj.path];
         if (ongoingDownloadOperation) {
@@ -193,6 +177,39 @@
     
 }
 
+#pragma mark - Work with image load methods
+
+//Upload images to server in cell
+
+- (void)uploadImageDataToServerWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
+    NSDictionary *dataDic = obj;
+    if (![self.photosNameToUpload containsObject:[dataDic valueForKey:@"imageName"]]) {
+        [self.photosNameToUpload addObject:[dataDic valueForKey:@"imageName"]];
+        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+        NSBlockOperation *uploadImage = [NSBlockOperation new];
+        [uploadImage addExecutionBlock:^{
+            NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+            [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
+                //                    NSLog(@"Upload %f", uploadProgress.fractionCompleted);
+            } download:^(NSProgress *downloadProgress) {
+                
+            } success:^(NSURLSessionDataTask *task, id responseObject) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
+                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                    [self.collectionViewLayout invalidateLayout];
+                }];
+                
+            } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                NSLog(@"%@", error);
+            }];
+        }];
+        [uploadImage start];
+    }
+}
+
+//download image thumbnail in cell
+
 - (void)loadImageInBackgroundWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
     MSPhoto *photo = obj;
     if (photo.imageThumbnail.data) {
@@ -200,7 +217,7 @@
         if (image) {
             [cell setupWithImage:image];
         }
-    } else {
+    } /*else {
         [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
         NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
         __weak NSBlockOperation *weakOp = loadImageIntoCellOp;
@@ -227,7 +244,6 @@
                         }
                     }
                 }];
-                
             } errorBlock:^(NSError *error) {
                 [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
             }];
@@ -240,11 +256,7 @@
             [self.imageLoadingOperationQueue addOperation:loadImageIntoCellOp];
         }
         [cell setupWithImage:nil];
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [self.imageLoadingOperationQueue cancelAllOperations];
+    }*/
 }
 
 @end
@@ -258,7 +270,8 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width {
     CGFloat resultHeight;
-    id obj = [self.contentArray objectAtIndex:indexPath.row];
+//    id obj = [self.contentArray objectAtIndex:indexPath.row];
+    id obj = [self.dataSource modelAtIndex:indexPath.row];
     UIImage *image = [UIImage new];
     if ([[obj class] isSubclassOfClass:[MSPhoto class]]) {
         MSPhoto *photo = obj;
@@ -284,12 +297,5 @@
     
     return rect.size.height;
 }
-
-- (void)dealloc {
-    [self.photosNameToUpload removeAllObjects];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
 
 @end

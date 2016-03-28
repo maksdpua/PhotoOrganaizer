@@ -11,15 +11,16 @@
 #import "MSRequestManager.h"
 #import "MSFolderPathManager.h"
 #import "MSFolder.h"
+#import "MSGalleryRollDataSource.h"
 
-@interface MSPhotoCollection ()<MSRequestManagerDelegate>
+@interface MSPhotoCollection ()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate>
 //<PHPhotoLibraryChangeObserver>
 
 @property (nonatomic, strong) PHCachingImageManager *imageManager;
 @property CGRect previousPreheatRect;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *photoToUploadArray;
-
+@property (nonnull, strong) MSGalleryRollDataSource *dataSource;
 @end
 
 @implementation MSPhotoCollection
@@ -40,6 +41,7 @@ static CGSize AssetGridThumbnailSize;
     [super viewDidLoad];
     self.photoToUploadArray = [NSMutableArray new];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    self.dataSource = [[MSGalleryRollDataSource alloc]initWithDelegate:self];
 }
 
 - (void)dealloc {
@@ -278,8 +280,10 @@ static CGSize AssetGridThumbnailSize;
 */
 
 - (IBAction)uploadSelectedPhotos:(id)sender {
+    
     [self dismissViewControllerAnimated:YES completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPhotosWasSelected object:self.photoToUploadArray];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kPhotosWasSelected object:self.photoToUploadArray];
+        [self.dataSource addNewObjectsWithArray:self.photoToUploadArray];
     }];
 }
 

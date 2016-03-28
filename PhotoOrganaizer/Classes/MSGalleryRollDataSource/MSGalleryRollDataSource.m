@@ -11,6 +11,7 @@
 #import "MSFolderPathManager.h"
 #import "MSFolder.h"
 #import "MSPhoto.h"
+#import "MSCache.h"
 
 @interface MSGalleryRollDataSource()<MSRequestManagerDelegate, NSFetchedResultsControllerDelegate>
 
@@ -26,7 +27,6 @@
     self = [super init];
     if (self) {
         self.delegate = delegate;
-        self.contentArray = [NSMutableArray new];
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
         [self setupFetchedResultsController];
     }
@@ -36,11 +36,9 @@
 #pragma mark - DataSource methods
 
 - (void)setupFetchedResultsController {
-    self.fetchedResultsController = [MSFolder MR_fetchAllSortedBy:nil ascending:YES withPredicate:[NSPredicate predicateWithFormat:@"path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]] groupBy:nil delegate:self];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"clientModified"
-                                                                   ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    [self.contentArray addObjectsFromArray: [[self.fetchedResultsController.fetchedObjects sortedArrayUsingDescriptors:sortDescriptors] lastObject]];
+    self.contentArray = [NSMutableArray new];
+    self.fetchedResultsController = [MSPhoto MR_fetchAllSortedBy:@"clientModified" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"toFolder.path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]] groupBy:nil delegate:self];
+    [self.contentArray addObjectsFromArray:self.fetchedResultsController.fetchedObjects];
 }
 
 - (NSUInteger)countOfModels {
@@ -55,6 +53,40 @@
     MSPhoto *modelToRemove = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [modelToRemove MR_deleteEntity];
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+}
+
+- (void)addNewDataObjectToUpload {
+    
+}
+
+- (void)addNewObjectsWithArray:(NSMutableArray *)objectsArray {
+    for (NSDictionary *dataDic in objectsArray) {
+        
+        MSPhoto *newPhoto = [MSPhoto MR_createEntity];
+        NSString *path = [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]];
+        [newPhoto setValue:path forKey:@"path"];
+        [newPhoto checkForBackFolderAndAddWith:path photoObject:newPhoto];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        
+        NSDictionary *param = @{@"path" : path, @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+        [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:[MSPhoto class] upload:^(NSProgress *uploadProgress) {
+
+        } download:^(NSProgress *downloadProgress) {
+            
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
+            MSPhoto *photo = responseObject;
+            MSCache *cache = [[MSCache alloc]init];
+            [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                
+            } errorBlock:^(NSError *error) {
+                
+            }];
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"%@", error);
+        }];
+        
+        
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

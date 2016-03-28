@@ -23,12 +23,34 @@
     id obj = [self.class MR_findFirstByAttribute:kPath withValue:pathString];
     if (obj) {
         self = obj;
+        self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
     } else {
         self = [self.class MR_createEntity];
         self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
     }
+    [self checkForBackFolderAndAddWith:self.path photoObject:self];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     return self;
+}
+
+- (void)checkForBackFolderAndAddWith:(NSString *)path photoObject:(MSPhoto *)object {
+    NSArray *pathArray = [path componentsSeparatedByString:@"/"];
+    if (pathArray.count>2) {
+        NSMutableArray *backFolderPathArray = [NSMutableArray new];
+        [backFolderPathArray addObjectsFromArray:pathArray];
+        [backFolderPathArray removeLastObject];
+        NSString *backFolderPath = [backFolderPathArray componentsJoinedByString:@"/"];
+        if (object) {
+            [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addPhotosObject:object];
+        }
+    } else {
+        if (object) {
+            [[MSFolder MR_findFirstByAttribute:@"idFolder" withValue:@"root"] addPhotosObject:object];
+        }
+
+    }
 }
 
 @end
