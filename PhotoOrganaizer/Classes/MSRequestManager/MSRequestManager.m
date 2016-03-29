@@ -19,6 +19,7 @@ static NSString *const kDropboxAPIarg = @"Dropbox-API-Arg";
 
 @property (nonatomic, strong) AFHTTPSessionManager *sessionManager;
 @property (nonatomic, strong) NSMutableURLRequest *urlRequest;
+@property (nonatomic, strong) NSString *urlString;
 
 typedef void (^recieveBlock)(NSURLSessionDataTask *task, id responseObject);
 typedef void (^failBlock)(NSURLSessionDataTask *task, NSError *error);
@@ -28,7 +29,6 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
 @end
 
 @implementation MSRequestManager {
-    NSString *_urlString;
     NSDictionary *_jsonDictionary;
     Class _class;
 }
@@ -45,7 +45,7 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
 }
 
 - (void)setURLstring:(NSString *)string {
-    _urlString = string;
+    self.urlString = string;
 }
 
 - (void)setJSONdictionary:(NSDictionary *)dictionary {
@@ -85,7 +85,7 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
 
 - (void)fillMutableURLrequestWithMethod:(NSString *)method {
     [self.urlRequest setHTTPMethod:method];
-    [self.urlRequest setURL:[NSURL URLWithString:_urlString]];
+    [self.urlRequest setURL:[NSURL URLWithString:self.urlString]];
 }
 
 - (void)fillManagerWithURLstring:(NSString *)urlString setParamterDictionary:(NSDictionary *)paramtersDictionary setClass:(Class)class {

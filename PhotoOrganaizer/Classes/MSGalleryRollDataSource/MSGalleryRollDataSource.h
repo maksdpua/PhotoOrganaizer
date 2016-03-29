@@ -20,6 +20,8 @@
 - (MSPhoto *)modelAtIndex:(NSInteger)index;
 - (void)removeModelAtIndex:(NSIndexPath *)indexPath;
 - (void)addNewObjectsWithArray:(NSMutableArray *)objectsArray;
+- (void)requestForThumbnailWithPhoto:(MSPhoto *)photo;
+- (BOOL)checkForUploadingDataByPath:(NSString *)path;
 
 @end
 
@@ -27,8 +29,8 @@
 
 @optional
 
-- (void)contentWasChanged;
-
-- (void)uploadDataToServer;
+- (void)contentWasChangedAtIndexPath:(NSIndexPath *)indexPath
+                       forChangeType:(NSFetchedResultsChangeType)type
+                        newIndexPath:(NSIndexPath *)newIndexPath;
 
 @end

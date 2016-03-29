@@ -35,7 +35,7 @@ static NSString *const kRoot = @"root";
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"file"]){
             if ([MSValidator isPhotoPathExtension:[element valueForKey:kName]] && ![MSPhoto MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
-                __unused MSPhoto *photo = [[MSPhoto new]initClassWithDictionary:element];
+                __unused MSPhoto *photo = [[MSPhoto alloc]initClassWithDictionary:element];
 //                [self checkForBackFolderAndAddWith:photo.path photoObject:photo];
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"deleted"]){
@@ -46,7 +46,7 @@ static NSString *const kRoot = @"root";
             }
         }
     }
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     return self;
 }
 

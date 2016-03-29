@@ -26,7 +26,7 @@ typedef void (^recieveBlock)(NSData *data);
 - (void)cacheForImageWithKey:(MSPhoto *)photo completeBlock:(void (^)(NSData *responseData))complete errorBlock:(void (^)(NSError *error))fail {
     self.answerBlock = complete;
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
-    NSDictionary *parametrs = @{@"path" : photo.idPhoto, @"format" : @"jpeg", @"size" : @"w640h480"};
+    NSDictionary *parametrs = @{@"path" : photo.path, @"format" : @"jpeg", @"size" : @"w640h480"};
     
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", kContentURL, kGetThumbnail] dictionaryParametrsToJSON:parametrs classForFill:nil upload:^(NSProgress *uploadProgress) {
         

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15C50" minimumToolsVersion="Automatic">
     <entity name="MSFolder" representedClassName="MSFolder" syncable="YES">
         <attribute name="idFolder" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nameOfFolder" optional="YES" attributeType="String" syncable="YES"/>
@@ -18,6 +18,7 @@
         <attribute name="serverModified" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="sizePhoto" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="upload" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="width" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imageThumbnail" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MSThumbnail" inverseName="toPhoto" inverseEntity="MSThumbnail" syncable="YES"/>
         <relationship name="toFolder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MSFolder" inverseName="photos" inverseEntity="MSFolder" syncable="YES"/>
@@ -28,7 +29,7 @@
     </entity>
     <elements>
         <element name="MSFolder" positionX="142" positionY="81" width="128" height="133"/>
-        <element name="MSPhoto" positionX="-83" positionY="233" width="128" height="223"/>
+        <element name="MSPhoto" positionX="-83" positionY="233" width="128" height="240"/>
         <element name="MSThumbnail" positionX="45" positionY="234" width="128" height="75"/>
     </elements>
 </model>

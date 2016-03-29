@@ -25,6 +25,7 @@
 @dynamic imageThumbnail;
 @dynamic height;
 @dynamic width;
+@dynamic upload;
 
 
 @end

@@ -6,7 +6,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PhotoOrganaizer/Classes/MSGalleryRollDataSource/MSGalleryRollDataSource.m"
-            timestampString = "480893083.803507"
+            filePath = "PhotoOrganaizer/Model/CoreData/MSFolder.m"
+            timestampString = "480965596.781992"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "-addNewObjectsWithArray:"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-initClassWithDictionary:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

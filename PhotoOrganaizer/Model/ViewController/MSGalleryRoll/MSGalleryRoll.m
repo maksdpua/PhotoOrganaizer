@@ -23,7 +23,7 @@
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *contentArray;
 @property NSOperationQueue *imageLoadingOperationQueue;
-@property (nonatomic, strong) NSMutableArray *photosNameToUpload;
+@property (nonatomic, strong) NSMutableArray *uploadingThumbnails;
 @property (nonatomic, strong) NSMutableDictionary *thumbnailsToUpload;
 @property (nonatomic, strong) MSGalleryRollDataSource *dataSource;
 
@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [[MSGalleryRollDataSource alloc]initWithDelegate:self];
-    self.photosNameToUpload = [NSMutableArray new];
+    self.uploadingThumbnails = [NSMutableArray new];
     self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
     self.collectionView.alwaysBounceVertical = YES;
@@ -60,13 +60,11 @@
 }
 
 - (void)dealloc {
-    [self.photosNameToUpload removeAllObjects];
+    [self.uploadingThumbnails removeAllObjects];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)contentWasChanged {
-    [self.collectionView reloadData];
-}
+
 
 #pragma mark - Requests and upload data
 
@@ -183,8 +181,8 @@
 
 - (void)uploadImageDataToServerWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
     NSDictionary *dataDic = obj;
-    if (![self.photosNameToUpload containsObject:[dataDic valueForKey:@"imageName"]]) {
-        [self.photosNameToUpload addObject:[dataDic valueForKey:@"imageName"]];
+    if (![self.uploadingThumbnails containsObject:[dataDic valueForKey:@"imageName"]]) {
+        [self.uploadingThumbnails addObject:[dataDic valueForKey:@"imageName"]];
         [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
         NSBlockOperation *uploadImage = [NSBlockOperation new];
         [uploadImage addExecutionBlock:^{
@@ -213,50 +211,58 @@
 - (void)loadImageInBackgroundWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
     MSPhoto *photo = obj;
     if (photo.imageThumbnail.data) {
+        [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
         UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
         if (image) {
             [cell setupWithImage:image];
         }
-    } /*else {
-        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-        NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
-        __weak NSBlockOperation *weakOp = loadImageIntoCellOp;
-        [loadImageIntoCellOp addExecutionBlock:^{
-            
-            MSCache *cache = [MSCache new];
-            [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    if (!weakOp.isCancelled) {
-                        if (responseData) {
-                            UIImage *image = [UIImage imageWithData:responseData];
-                            if (image) {
-                                
-                                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                                MSGalleryRollCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-                                
-                                if (updateCell) {
-                                    [updateCell setupWithImage:image];
+    }   else {
+        if (![self.uploadingThumbnails containsObject:photo.path] || photo.idPhoto) {
+            [self.uploadingThumbnails addObject:photo.path];
+            [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+            NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
+            [loadImageIntoCellOp addExecutionBlock:^{
+                
+                MSCache *cache = [MSCache new];
+                [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                            if (responseData) {
+                                UIImage *image = [UIImage imageWithData:responseData];
+                                if (image) {
+                                    
+                                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                                    MSGalleryRollCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                                    
+                                    if (updateCell) {
+                                        [updateCell setupWithImage:image];
+                                    }
+                                    [UIView animateWithDuration:0.5f animations:^{
+                                        [self.collectionViewLayout invalidateLayout];
+                                    }];
+                                    [self.uploadingThumbnails removeObject:photo.path];
                                 }
-                                [UIView animateWithDuration:0.5f animations:^{
-                                    [self.collectionViewLayout invalidateLayout];
-                                }];
-                            }
                         }
-                    }
+                    }];
+                } errorBlock:^(NSError *error) {
+                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
                 }];
-            } errorBlock:^(NSError *error) {
-                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
             }];
-        }];
-        if (photo.path) {
-            [self.thumbnailsToUpload setObject:loadImageIntoCellOp forKey:photo.path];
+            [loadImageIntoCellOp start];
+            [cell setupWithImage:nil];
+
         }
-        //Add the operation to the designated background queue
-        if (loadImageIntoCellOp) {
-            [self.imageLoadingOperationQueue addOperation:loadImageIntoCellOp];
-        }
-        [cell setupWithImage:nil];
-    }*/
+    } 
+}
+
+#pragma mark - MSGalleryRollDataSourceDelegate methods
+
+- (void)contentWasChangedAtIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+//    [self.collectionView reloadData];
+    if (type == NSFetchedResultsChangeInsert) {
+        [self.collectionView reloadData];
+    } else if (type == NSFetchedResultsChangeUpdate) {
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    }
 }
 
 @end

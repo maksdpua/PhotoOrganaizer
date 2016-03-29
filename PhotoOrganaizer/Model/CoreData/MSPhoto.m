@@ -23,14 +23,12 @@
     id obj = [self.class MR_findFirstByAttribute:kPath withValue:pathString];
     if (obj) {
         self = obj;
-        self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
     } else {
         self = [self.class MR_createEntity];
-        self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
+        NSLog(@"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
     }
+    self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
     [self checkForBackFolderAndAddWith:self.path photoObject:self];
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     return self;
 }
