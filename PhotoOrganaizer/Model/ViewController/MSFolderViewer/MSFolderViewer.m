@@ -69,8 +69,10 @@
     } download:^(NSProgress *downloadProgress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-        self.contentArray = [self sortPhotosInArray:folderContent.folders.allObjects andKey:@"nameOfFolder"];
+//        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
+        NSArray *fold = [MSFolder MR_findAllSortedBy:@"nameOfFolder" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"folder.path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]]];
+//        self.contentArray = [self sortPhotosInArray:folderContent.folders.allObjects andKey:@"nameOfFolder"];
+        self.contentArray = fold;
                 NSArray *all = [MSFolder MR_findAll];
                 for (MSFolder *f in all) {
                     NSLog(@"Folder %@", f.nameOfFolder);

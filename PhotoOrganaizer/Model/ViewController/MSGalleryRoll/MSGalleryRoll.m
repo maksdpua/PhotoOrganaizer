@@ -216,8 +216,8 @@
         if (image) {
             [cell setupWithImage:image];
         }
-    }   else {
-        if (![self.uploadingThumbnails containsObject:photo.path] || photo.idPhoto) {
+    }   /*else {
+        if (![self.uploadingThumbnails containsObject:photo.path] || !(photo.idPhoto==nil)) {
             [self.uploadingThumbnails addObject:photo.path];
             [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
             NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
@@ -251,18 +251,20 @@
             [cell setupWithImage:nil];
 
         }
-    } 
+    } */
 }
 
 #pragma mark - MSGalleryRollDataSourceDelegate methods
 
 - (void)contentWasChangedAtIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-//    [self.collectionView reloadData];
-    if (type == NSFetchedResultsChangeInsert) {
-        [self.collectionView reloadData];
-    } else if (type == NSFetchedResultsChangeUpdate) {
-        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    }
+    [self.collectionView reloadData];
+//    if (type == NSFetchedResultsChangeInsert) {
+//        [self.collectionView performBatchUpdates:^{
+//            [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
+//        } completion:nil];
+//    } else if (type == NSFetchedResultsChangeUpdate) {
+//        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+//    }
 }
 
 @end

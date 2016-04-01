@@ -29,7 +29,7 @@
     }
     self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
     [self checkForBackFolderAndAddWith:self.path photoObject:self];
-    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     return self;
 }
 

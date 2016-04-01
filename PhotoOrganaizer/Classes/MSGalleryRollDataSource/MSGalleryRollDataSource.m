@@ -102,7 +102,7 @@
         
     }
     
-//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

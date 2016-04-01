@@ -19,5 +19,6 @@
 @dynamic tag;
 @dynamic folders;
 @dynamic photos;
+@dynamic folder;
 
 @end

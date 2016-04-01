@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *tag;
 @property (nullable, nonatomic, retain) NSSet<MSFolder *> *folders;
 @property (nullable, nonatomic, retain) NSSet<MSPhoto *> *photos;
+@property (nullable, nonatomic, retain) MSFolder *folder;
 
 
 @end
