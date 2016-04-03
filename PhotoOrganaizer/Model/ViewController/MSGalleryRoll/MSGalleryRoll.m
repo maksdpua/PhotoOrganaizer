@@ -17,6 +17,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MSPhotoLayout.h"
 #import "MSGalleryRollDataSource.h"
+#import "MSManagerDownloads.h"
 
 @interface MSGalleryRoll()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate>
 
@@ -39,6 +40,7 @@
     self.uploadingThumbnails = [NSMutableArray new];
     self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
     if (layout) {
@@ -91,7 +93,7 @@
     }];
 }
 
-//Notification with new imagedata to upload
+#pragma mark - Notifications methods
 
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
     NSMutableArray *photos = notification.object;
@@ -100,6 +102,13 @@
     [self.contentArray insertObjects:photos atIndexes:set];
     [self.collectionView reloadData];
 
+}
+
+- (void)reloadDownloadSection {
+    if (self.collectionView.numberOfSections>1) {
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+    }
+    
 }
 
 #pragma mark - Actions
@@ -150,11 +159,8 @@
     MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
     [cell setupWithImage:nil];
     
-//    id obj = [self.contentArray objectAtIndex:indexPath.row];
     id obj = [self.dataSource modelAtIndex:indexPath.row];
-    if ([[obj class]isSubclassOfClass:[NSDictionary class]]) {
-        [self uploadImageDataToServerWithCell:cell indexPath:indexPath andPhotoObject:obj];
-    } else if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
+    if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
         [self loadImageInBackgroundWithCell:cell indexPath:indexPath andPhotoObject:obj];
     }
     
@@ -162,7 +168,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-//    MSPhoto *obj = [self.contentArray objectAtIndex:indexPath.row];
+
     MSPhoto *obj = [self.dataSource modelAtIndex:indexPath.row];
     if (self.thumbnailsToUpload.count > 0) {
         NSBlockOperation *ongoingDownloadOperation = [self.thumbnailsToUpload objectForKey:obj.path];
@@ -176,35 +182,6 @@
 }
 
 #pragma mark - Work with image load methods
-
-//Upload images to server in cell
-
-- (void)uploadImageDataToServerWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
-    NSDictionary *dataDic = obj;
-    if (![self.uploadingThumbnails containsObject:[dataDic valueForKey:@"imageName"]]) {
-        [self.uploadingThumbnails addObject:[dataDic valueForKey:@"imageName"]];
-        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-        NSBlockOperation *uploadImage = [NSBlockOperation new];
-        [uploadImage addExecutionBlock:^{
-            NSDictionary *param = @{@"path" : [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]], @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-            [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:nil upload:^(NSProgress *uploadProgress) {
-                //                    NSLog(@"Upload %f", uploadProgress.fractionCompleted);
-            } download:^(NSProgress *downloadProgress) {
-                
-            } success:^(NSURLSessionDataTask *task, id responseObject) {
-                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                    [cell setupWithImage:[UIImage imageWithData:[dataDic valueForKey:@"imageData"]]];
-                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                    [self.collectionViewLayout invalidateLayout];
-                }];
-                
-            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                NSLog(@"%@", error);
-            }];
-        }];
-        [uploadImage start];
-    }
-}
 
 //download image thumbnail in cell
 
