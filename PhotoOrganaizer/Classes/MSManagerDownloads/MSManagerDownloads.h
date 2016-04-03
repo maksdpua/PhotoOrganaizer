@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MSUploadInfo.h"
 
 static NSString * const MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION = @"MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION";
 
@@ -15,5 +16,9 @@ static NSString * const MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION = @"MANAGER_DO
 + (instancetype)sharedManager;
 
 - (void)addNewPath:(NSArray <NSString *> *)path;
+
+- (NSUInteger)modelsCount;
+
+- (MSUploadInfo *)uploadModelAtIndex:(NSUInteger)index;
 
 @end

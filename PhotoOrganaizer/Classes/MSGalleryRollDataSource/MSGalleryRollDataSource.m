@@ -59,53 +59,14 @@
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
-- (void)requestForThumbnailWithPhoto:(MSPhoto *)photo {
-    MSCache *cache = [[MSCache alloc]init];
-    [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
-        [self.uploadObjectsInProgressDataBase removeObject:photo.path];
-    } errorBlock:^(NSError *error) {
-        
-    }];
-}
-
-- (BOOL)checkForUploadingDataByPath:(NSString *)path {
-    if ([self.uploadObjectsInProgressDataBase containsObject:path]) {
-        return YES;
-    }
-    return NO;
-}
-
-- (void)addNewObjectsWithArray:(NSMutableArray *)objectsArray {
-    
-    
-    for (NSDictionary *dataDic in objectsArray) {
-        
-        MSPhoto *newPhoto = [MSPhoto MR_createEntity];
-        NSString *path = [NSString stringWithFormat:@"%@/%@", [[MSFolderPathManager sharedManager]getLastPathInArray],[dataDic valueForKey:@"imageName"]];
-        [self.uploadObjectsInProgressDataBase addObject:path];
-        [newPhoto setValue:path forKey:@"path"];
-        [newPhoto checkForBackFolderAndAddWith:path photoObject:newPhoto];
-    
-        NSDictionary *param = @{@"path" : path, @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
-        [self.requestManager createRequestWithPOSTmethodWithFileUpload:[dataDic valueForKey:@"imageData"] stringURL:[NSString stringWithFormat:@"%@files/upload", kContentURL] dictionaryParametrsToJSON:param classForFill:[MSPhoto class] upload:^(NSProgress *uploadProgress) {
-            [newPhoto setValue:[NSString stringWithFormat:@"%f", uploadProgress.fractionCompleted]forKey:@"upload"];
-        } download:^(NSProgress *downloadProgress) {
-            
-        } success:^(NSURLSessionDataTask *task, id responseObject) {
-            
-            MSPhoto *photo = responseObject;
-            [photo setValue:nil forKey:@"upload"];
-            [self requestForThumbnailWithPhoto:photo];
-        } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"%@", error);
-        }];
-        
-    }
-    
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-}
 
 #pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
+        if ([self.delegate respondsToSelector:@selector(contentWasChangedAtIndex:)]) {
+            [self.delegate contentWasChangedAtIndex:sectionIndex];
+        }
+}
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self setupFetchedResultsController];

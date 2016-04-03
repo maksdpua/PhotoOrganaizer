@@ -105,10 +105,7 @@
 }
 
 - (void)reloadDownloadSection {
-    if (self.collectionView.numberOfSections>1) {
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-    }
-    
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 
 #pragma mark - Actions
@@ -149,19 +146,34 @@
 
 #pragma mark - UICollectionView datasource methods
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    if ([[MSManagerDownloads sharedManager] modelsCount] > 0) {
+        return 2;
+    } else {
+        return 1;
+    }
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    
-//    return self.contentArray.count;
-    return [self.dataSource countOfModels];
+    if (section==1) {
+        return [[MSManagerDownloads sharedManager] modelsCount];
+    } else {
+        return [self.dataSource countOfModels];
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
-    [cell setupWithImage:nil];
-    
-    id obj = [self.dataSource modelAtIndex:indexPath.row];
-    if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
-        [self loadImageInBackgroundWithCell:cell indexPath:indexPath andPhotoObject:obj];
+    if (indexPath.section>0) {
+        
+    } else {
+        
+        [cell setupWithImage:nil];
+        
+        id obj = [self.dataSource modelAtIndex:indexPath.row];
+        if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
+            [self loadImageInCell:cell indexPath:indexPath andPhotoObject:obj];
+        }
     }
     
     return cell;
@@ -185,7 +197,7 @@
 
 //download image thumbnail in cell
 
-- (void)loadImageInBackgroundWithCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
+- (void)loadImageInCell:(MSGalleryRollCell *)cell indexPath:(NSIndexPath *)indexPath andPhotoObject:(id)obj {
     MSPhoto *photo = obj;
     if (photo.imageThumbnail.data) {
         [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
@@ -193,55 +205,59 @@
         if (image) {
             [cell setupWithImage:image];
         }
-    }   /*else {
-        if (![self.uploadingThumbnails containsObject:photo.path] || !(photo.idPhoto==nil)) {
-            [self.uploadingThumbnails addObject:photo.path];
-            [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
-            NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
-            [loadImageIntoCellOp addExecutionBlock:^{
-                
-                MSCache *cache = [MSCache new];
-                [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
-                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                            if (responseData) {
-                                UIImage *image = [UIImage imageWithData:responseData];
-                                if (image) {
-                                    
-                                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
-                                    MSGalleryRollCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-                                    
-                                    if (updateCell) {
-                                        [updateCell setupWithImage:image];
-                                    }
-                                    [UIView animateWithDuration:0.5f animations:^{
-                                        [self.collectionViewLayout invalidateLayout];
-                                    }];
-                                    [self.uploadingThumbnails removeObject:photo.path];
+    }   else {
+        [MBProgressHUD showHUDAddedTo:cell.contentView animated:YES];
+        
+        NSBlockOperation *loadImageIntoCellOp = [[NSBlockOperation alloc] init];
+        __weak NSBlockOperation *weakLoadImageIntoCellOp = loadImageIntoCellOp;
+        [loadImageIntoCellOp addExecutionBlock:^{
+            
+            MSCache *cache = [MSCache new];
+            [cache cacheForImageWithKey:photo completeBlock:^(NSData *responseData) {
+                [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                    if (!weakLoadImageIntoCellOp.isCancelled) {
+                        if (responseData) {
+                            UIImage *image = [UIImage imageWithData:responseData];
+                            if (image) {
+                                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
+                                MSGalleryRollCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+                                if (updateCell) {
+                                    [updateCell setupWithImage:image];
                                 }
+                                [UIView animateWithDuration:0.5f animations:^{
+                                    [self.collectionViewLayout invalidateLayout];
+                                }];
+                                [self.thumbnailsToUpload removeObjectForKey:photo.path];
+                            }
                         }
-                    }];
-                } errorBlock:^(NSError *error) {
-                    [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
+                    }
                 }];
+            } errorBlock:^(NSError *error) {
+                [MBProgressHUD hideAllHUDsForView:cell.contentView animated:NO];
             }];
-            [loadImageIntoCellOp start];
-            [cell setupWithImage:nil];
-
+        }];
+        if (photo.path) {
+            [self.thumbnailsToUpload setObject:loadImageIntoCellOp forKey:photo.path];
         }
-    } */
+        if (loadImageIntoCellOp) {
+            [self.imageLoadingOperationQueue addOperation:loadImageIntoCellOp];
+        }
+        [cell setupWithImage:nil];
+    }
 }
 
 #pragma mark - MSGalleryRollDataSourceDelegate methods
 
+- (void)contentWasChangedAtIndex:(NSUInteger)sectionIndex {
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex]];
+}
+
 - (void)contentWasChangedAtIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-    [self.collectionView reloadData];
-//    if (type == NSFetchedResultsChangeInsert) {
-//        [self.collectionView performBatchUpdates:^{
-//            [self.collectionView insertItemsAtIndexPaths:@[newIndexPath]];
-//        } completion:nil];
-//    } else if (type == NSFetchedResultsChangeUpdate) {
-//        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-//    }
+    if (type == NSFetchedResultsChangeInsert) {
+        [self.collectionView reloadData];
+    } else if (type == NSFetchedResultsChangeUpdate) {
+        [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    }
 }
 
 @end
@@ -266,10 +282,6 @@
         } else {
             resultHeight = self.collectionView.frame.size.width/3-1;
         }
-    } else if ([[obj class] isSubclassOfClass:[NSDictionary class]]) {
-        NSDictionary *dataDic = obj;
-        image = [UIImage imageWithData:[dataDic valueForKey:@"imageData"]];
-        resultHeight =  [self calculateHeightFromImage:image andWidth:width];
     }
     
     return resultHeight;

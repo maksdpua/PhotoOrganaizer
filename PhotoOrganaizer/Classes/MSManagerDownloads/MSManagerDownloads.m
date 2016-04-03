@@ -90,4 +90,14 @@
     
 }
 
+#pragma mark - Download datasource
+
+- (NSUInteger)modelsCount {
+    return _uploads.count;
+}
+
+- (MSUploadInfo *)uploadModelAtIndex:(NSUInteger)index {
+    return [_uploads objectAtIndex:index];
+}
+
 @end
