@@ -15,7 +15,7 @@ static NSString * const MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION = @"MANAGER_DO
 
 + (instancetype)sharedManager;
 
-- (void)addNewPath:(NSArray <NSString *> *)path;
+- (void)addNewImageInfo:(NSArray <NSDictionary *> *)imageInfo ;
 
 - (NSUInteger)modelsCount;
 

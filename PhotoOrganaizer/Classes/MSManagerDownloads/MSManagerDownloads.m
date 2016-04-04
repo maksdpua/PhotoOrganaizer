@@ -28,7 +28,7 @@
     static MSManagerDownloads *sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] init];
+        sharedManager = [[MSManagerDownloads alloc] init];
     });
     return sharedManager;
 }
@@ -41,13 +41,14 @@
     return self;
 }
 
-- (void)addNewPath:(NSArray<NSString *> *)path {
-    [path enumerateObjectsUsingBlock:^(NSString * _Nonnull objPath, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path LIKE[cd] %@", objPath];
+- (void)addNewImageInfo:(NSArray <NSDictionary *> *)imageInfo {
+    [imageInfo enumerateObjectsUsingBlock:^(NSDictionary * _Nonnull objPath, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"path LIKE[cd] %@", [objPath valueForKey:@"path"]];
         NSArray *found = [_uploads filteredArrayUsingPredicate:predicate];
         if (!found.count) {
             MSUploadInfo *info = [MSUploadInfo new];
-            info.path = objPath;
+            info.path = [objPath valueForKey:@"path"];
+            info.data = [objPath valueForKey:@"imageData"];
             info.status = Wait;
             
             [_uploads addObject:info];
@@ -57,8 +58,11 @@
     [self startUpload];
 }
 
+//{
+
+
 - (void)startUpload {
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (!_uploads.count && !_currentUpload)
             return;
         
@@ -66,25 +70,27 @@
         _currentUpload.status = InProgress;
         _currentUpload.progress = 0.f;
         
-        NSDictionary *parametrs = @{};
-        
-        [self.requestManager createRequestWithPOSTmethodWithFileUpload:_currentUpload.data stringURL:[NSString stringWithFormat:@""] dictionaryParametrsToJSON:parametrs classForFill:[MSPhoto class]
+        NSDictionary *parametrs = @{@"path" : _currentUpload.path, @"mode" : @"add", @"autorename" : @YES, @"mute" : @NO};
+    self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+        [self.requestManager createRequestWithPOSTmethodWithFileUpload:_currentUpload.data stringURL:urlPath(kContentURL, kUpload) dictionaryParametrsToJSON:parametrs classForFill:[MSPhoto class]
                                                                 upload:^(NSProgress *uploadProgress) {
                                                                     _currentUpload.progress = uploadProgress.fractionCompleted;
                                                                 } download:^(NSProgress *downloadProgress) {
                                                                     
                                                                 } success:^(NSURLSessionDataTask *task, id responseObject) {
+                                                                    NSLog(@"Succes %@", responseObject);
                                                                     _currentUpload.status = Completed;
                                                                     
                                                                     [_uploads removeObject:_currentUpload];
-                                                                    
-                                                                    
                                                                     
                                                                     _currentUpload = nil;
                                                                     
                                                                     [self startUpload];
                                                                 } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                                                                    NSLog(@"Error %@", error);
+                                                                    [_uploads removeObject:_currentUpload];
                                                                     
+                                                                    _currentUpload = nil;
                                                                 }];
     });
     
@@ -93,7 +99,10 @@
 #pragma mark - Download datasource
 
 - (NSUInteger)modelsCount {
-    return _uploads.count;
+    if (_uploads.count) {
+        return _uploads.count;
+    }
+    return 0;
 }
 
 - (MSUploadInfo *)uploadModelAtIndex:(NSUInteger)index {

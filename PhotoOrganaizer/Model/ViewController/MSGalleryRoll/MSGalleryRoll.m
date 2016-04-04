@@ -11,6 +11,7 @@
 #import "MSAuth.h"
 #import "MSFolder.h"
 #import "MSGalleryRollCell.h"
+#import "MSGalleryRollLoadCell.h"
 #import "MSPhotoImagePickerNavigation.h"
 #import "MSFolderPathManager.h"
 #import "MSCache.h"
@@ -40,7 +41,7 @@
     self.uploadingThumbnails = [NSMutableArray new];
     self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDownloadSection) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
     if (layout) {
@@ -96,10 +97,6 @@
 #pragma mark - Notifications methods
 
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
-    NSMutableArray *photos = notification.object;
-    
-    NSMutableIndexSet *set = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, photos.count)];
-    [self.contentArray insertObjects:photos atIndexes:set];
     [self.collectionView reloadData];
 
 }
@@ -155,28 +152,45 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (section==1) {
-        return [[MSManagerDownloads sharedManager] modelsCount];
+    if ([[MSManagerDownloads sharedManager] modelsCount] > 0) {
+        if (section == 0) {
+            return [[MSManagerDownloads sharedManager] modelsCount];
+        } else {
+            return [self.dataSource countOfModels];
+        }
     } else {
         return [self.dataSource countOfModels];
     }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MSGalleryRollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
-    if (indexPath.section>0) {
-        
+    MSGalleryRollCell *cell = [MSGalleryRollCell new];
+    MSGalleryRollLoadCell *loadCell = [MSGalleryRollLoadCell new];
+    if ([self.collectionView numberOfSections] > 1) {
+        if (indexPath.section == 0) {
+            loadCell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollLoadCell forIndexPath:indexPath];
+            [loadCell setupWithModel:[[MSManagerDownloads sharedManager] uploadModelAtIndex:indexPath.row]];
+            return loadCell;
+        } else {
+            cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
+            [cell setupWithImage:nil];
+            
+            id obj = [self.dataSource modelAtIndex:indexPath.row];
+            if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
+                [self loadImageInCell:cell indexPath:indexPath andPhotoObject:obj];
+            }
+            return cell;
+        }
     } else {
-        
+        cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollCell forIndexPath:indexPath];
         [cell setupWithImage:nil];
         
         id obj = [self.dataSource modelAtIndex:indexPath.row];
         if ([[obj class]isSubclassOfClass:[MSPhoto class]]) {
             [self loadImageInCell:cell indexPath:indexPath andPhotoObject:obj];
         }
+        return cell;
     }
-    
-    return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -227,7 +241,10 @@
                                 [UIView animateWithDuration:0.5f animations:^{
                                     [self.collectionViewLayout invalidateLayout];
                                 }];
-                                [self.thumbnailsToUpload removeObjectForKey:photo.path];
+                                if (photo.path) {
+                                    [self.thumbnailsToUpload removeObjectForKey:photo.path];
+                                }
+                                
                             }
                         }
                     }
@@ -271,7 +288,7 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width {
     CGFloat resultHeight;
-//    id obj = [self.contentArray objectAtIndex:indexPath.row];
+
     id obj = [self.dataSource modelAtIndex:indexPath.row];
     UIImage *image = [UIImage new];
     if ([[obj class] isSubclassOfClass:[MSPhoto class]]) {
@@ -279,6 +296,8 @@
         if (photo.imageThumbnail.data) {
             image = [UIImage imageWithData:photo.imageThumbnail.data];
             resultHeight =  [self calculateHeightFromImage:image andWidth:width];
+        } else if (indexPath.section == 1) {
+            
         } else {
             resultHeight = self.collectionView.frame.size.width/3-1;
         }

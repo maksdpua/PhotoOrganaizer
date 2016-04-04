@@ -12,6 +12,8 @@
 #import "MSFolderPathManager.h"
 #import "MSFolder.h"
 #import "MSGalleryRollDataSource.h"
+#import "MSUploadInfo.h"
+#import "MSManagerDownloads.h"
 
 @interface MSPhotoCollection ()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate>
 //<PHPhotoLibraryChangeObserver>
@@ -252,38 +254,11 @@ static CGSize AssetGridThumbnailSize;
     return assets;
 }
 
-//- (void)viewDidLoad {
-//    [super viewDidLoad];
-//    
-//    // Uncomment the following line to preserve selection between presentations
-//    // self.clearsSelectionOnViewWillAppear = NO;
-//    
-//    // Register cell classes
-//    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-//    
-//    // Do any additional setup after loading the view.
-//}
-//
-//- (void)didReceiveMemoryWarning {
-//    [super didReceiveMemoryWarning];
-//    // Dispose of any resources that can be recreated.
-//}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)uploadSelectedPhotos:(id)sender {
     
     [self dismissViewControllerAnimated:YES completion:^{
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kPhotosWasSelected object:self.photoToUploadArray];
-        [self.dataSource addNewObjectsWithArray:self.photoToUploadArray];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPhotosWasSelected object:nil];
+        [[MSManagerDownloads sharedManager] addNewImageInfo:self.photoToUploadArray];
     }];
 }
 
@@ -362,18 +337,25 @@ static CGSize AssetGridThumbnailSize;
     
     PHAsset *asset = self.assetsFetchResults[indexPath.item];
     [self.imageManager requestImageDataForAsset:asset options:PHImageContentModeDefault resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+        NSString *path = nil;
         
-        NSDictionary *data = @{@"imageName" : [[info valueForKey:kPHImageFileURLKey] lastPathComponent], @"imageData" : imageData};
+        if ([[[MSFolderPathManager sharedManager] getLastPathInArray] isEqualToString:@""]) {
+            path = [NSString stringWithFormat:@"/%@", [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
+        } else {
+            path = [NSString stringWithFormat:@"%@%@",[[MSFolderPathManager sharedManager] getLastPathInArray], [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
+        }
+        
+        NSDictionary *dataDic = @{@"path" : path, @"imageData" : imageData};
         if (self.photoToUploadArray.count>0) {
-            if ([self.photoToUploadArray containsObject:data]) {
-                [self.photoToUploadArray removeObject:data];
+            if ([self.photoToUploadArray containsObject:dataDic]) {
+                [self.photoToUploadArray removeObject:dataDic];
                 [cell setCheckmarkHidden:YES];
             } else {
-                [self.photoToUploadArray addObject:data];
+                [self.photoToUploadArray addObject:dataDic];
                 [cell setCheckmarkHidden:NO];
             }
         } else {
-            [self.photoToUploadArray addObject:data];
+            [self.photoToUploadArray addObject:dataDic];
             [cell setCheckmarkHidden:NO];
         }
         NSLog(@"ARRAY %lu", (unsigned long)self.photoToUploadArray.count);

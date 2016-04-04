@@ -16,6 +16,7 @@ typedef enum {
 
 @interface MSUploadInfo : NSObject
 
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSMutableData *data;
 

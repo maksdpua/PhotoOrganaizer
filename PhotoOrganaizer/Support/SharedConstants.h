@@ -21,6 +21,7 @@ static NSString *const KMainURL = @"https://api.dropboxapi.com/2/";
 static NSString *const kContentURL = @"https://content.dropboxapi.com/2/";
 static NSString *const kListFolder = @"files/list_folder";
 static NSString *const kCreateFolder = @"files/create_folder";
+static NSString *const kUpload = @"files/upload";
 static NSString *const kGetThumbnail = @"files/get_thumbnail";
 
 
@@ -28,6 +29,7 @@ static NSString *const kFolderPic = @"blackfolder";
 
 static NSString *const kMSFolderViewerCell = @"MSFolderViewerCell";
 static NSString *const kMSGalleryRollCell = @"MSGalleryRollCell";
+static NSString *const kMSGalleryRollLoadCell = @"MSGalleryRollLoadCell";
 
 #pragma mark - CoreDataModelsEntriesKeys
 
