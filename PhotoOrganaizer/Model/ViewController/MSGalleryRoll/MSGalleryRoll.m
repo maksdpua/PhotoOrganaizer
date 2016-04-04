@@ -195,11 +195,9 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (!([[MSManagerDownloads sharedManager] modelsCount]>0) && indexPath.section == 1) {
+    if (!([[MSManagerDownloads sharedManager] modelsCount]>0) && indexPath.section == 0) {
         [self forItemAtIndexPath:indexPath];
-    } else {
-        [self forItemAtIndexPath:indexPath];
-    }
+    } 
 }
 
 - (void)forItemAtIndexPath:(NSIndexPath *)indexPath {

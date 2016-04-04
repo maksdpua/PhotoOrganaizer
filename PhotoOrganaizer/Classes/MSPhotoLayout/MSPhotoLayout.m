@@ -137,6 +137,27 @@
     }
 }
 
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    if (itemIndexPath.section == 0) {
+        return [self.cache objectAtIndex:itemIndexPath.row];
+    } else {
+        return [self.secondeCache objectAtIndex:itemIndexPath.row];
+    }
+}
+
+- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    if (itemIndexPath.section == 0) {
+        return [self.cache objectAtIndex:itemIndexPath.row];
+    } else {
+        return [self.secondeCache objectAtIndex:itemIndexPath.row];
+    }
+}
+
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+{
+    return YES;
+}
+
 
 #pragma mark - Interface
 

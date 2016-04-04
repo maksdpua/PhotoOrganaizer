@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoOrganaizer/Classes/MSPhotoLayout/MSPhotoLayout.m"
-            timestampString = "481488741.809989"
+            timestampString = "481493508.556021"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "-prepareLayout"
             landmarkType = "5">
          </BreakpointContent>
