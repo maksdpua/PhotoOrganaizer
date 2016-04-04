@@ -88,19 +88,21 @@
                                         </imageView>
                                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IXH-mU-YQY">
                                             <rect key="frame" x="0.0" y="40" width="50" height="2"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="2" id="jy4-Ea-txb"/>
+                                            </constraints>
                                         </progressView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="IXH-mU-YQY" secondAttribute="trailing" id="50V-Ua-nZi"/>
-                                    <constraint firstAttribute="bottom" secondItem="IXH-mU-YQY" secondAttribute="bottom" constant="8" id="Eem-BI-MyX"/>
                                     <constraint firstAttribute="bottom" secondItem="9ls-R9-lJF" secondAttribute="bottom" id="L6o-kO-Onn"/>
-                                    <constraint firstItem="IXH-mU-YQY" firstAttribute="leading" secondItem="GbG-3N-yVo" secondAttribute="leading" id="UcS-Hx-WDn"/>
+                                    <constraint firstItem="IXH-mU-YQY" firstAttribute="top" secondItem="GbG-3N-yVo" secondAttribute="top" constant="40" id="Pxs-Fm-Nqx"/>
                                     <constraint firstItem="9ls-R9-lJF" firstAttribute="top" secondItem="GbG-3N-yVo" secondAttribute="top" id="X2X-tE-aw5"/>
+                                    <constraint firstItem="IXH-mU-YQY" firstAttribute="leading" secondItem="GbG-3N-yVo" secondAttribute="leading" id="cZD-Ju-I5Y"/>
+                                    <constraint firstAttribute="trailing" secondItem="IXH-mU-YQY" secondAttribute="trailing" id="dA1-qZ-Iy3"/>
                                     <constraint firstAttribute="trailing" secondItem="9ls-R9-lJF" secondAttribute="trailing" id="n2a-55-t9B"/>
                                     <constraint firstItem="9ls-R9-lJF" firstAttribute="leading" secondItem="GbG-3N-yVo" secondAttribute="leading" id="pF0-fu-UMb"/>
-                                    <constraint firstItem="IXH-mU-YQY" firstAttribute="top" secondItem="GbG-3N-yVo" secondAttribute="top" constant="40" id="wfI-Mf-7cw"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="9ls-R9-lJF" id="Yf1-ME-EmU"/>

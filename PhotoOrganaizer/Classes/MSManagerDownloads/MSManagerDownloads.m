@@ -85,6 +85,8 @@
                                                                     
                                                                     _currentUpload = nil;
                                                                     
+                                                                    [[NSNotificationCenter defaultCenter]postNotificationName:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
+                                                                    
                                                                     [self startUpload];
                                                                 } failure:^(NSURLSessionDataTask *task, NSError *error) {
                                                                     NSLog(@"Error %@", error);

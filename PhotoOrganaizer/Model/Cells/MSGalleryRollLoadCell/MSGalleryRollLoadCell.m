@@ -12,13 +12,14 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 
-@property (nonatomic, strong) IBOutlet UIProgressView *progress;
+@property (nonatomic, weak) IBOutlet UIProgressView *progress;
 
 @end
 
 @implementation MSGalleryRollLoadCell
 
 - (void)setupWithModel:(MSUploadInfo *)model {
+    self.progress.progress = 0.f;
     if (model.progress) {
         self.progress.progress = model.progress;
     }

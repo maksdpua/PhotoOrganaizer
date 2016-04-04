@@ -41,7 +41,7 @@
     self.uploadingThumbnails = [NSMutableArray new];
     self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadDownloadSection) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCollectionView) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
     if (layout) {
@@ -101,8 +101,8 @@
 
 }
 
-- (void)reloadDownloadSection {
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+- (void)reloadCollectionView {
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Actions
@@ -144,6 +144,7 @@
 #pragma mark - UICollectionView datasource methods
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    [self.collectionView.collectionViewLayout invalidateLayout];
     if ([[MSManagerDownloads sharedManager] modelsCount] > 0) {
         return 2;
     } else {
@@ -166,7 +167,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MSGalleryRollCell *cell = [MSGalleryRollCell new];
     MSGalleryRollLoadCell *loadCell = [MSGalleryRollLoadCell new];
-    if ([self.collectionView numberOfSections] > 1) {
+    if ([[MSManagerDownloads sharedManager] modelsCount] > 0) {
         if (indexPath.section == 0) {
             loadCell = [collectionView dequeueReusableCellWithReuseIdentifier:kMSGalleryRollLoadCell forIndexPath:indexPath];
             [loadCell setupWithModel:[[MSManagerDownloads sharedManager] uploadModelAtIndex:indexPath.row]];
@@ -194,7 +195,14 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (!([[MSManagerDownloads sharedManager] modelsCount]>0) && indexPath.section == 1) {
+        [self forItemAtIndexPath:indexPath];
+    } else {
+        [self forItemAtIndexPath:indexPath];
+    }
+}
 
+- (void)forItemAtIndexPath:(NSIndexPath *)indexPath {
     MSPhoto *obj = [self.dataSource modelAtIndex:indexPath.row];
     if (self.thumbnailsToUpload.count > 0) {
         NSBlockOperation *ongoingDownloadOperation = [self.thumbnailsToUpload objectForKey:obj.path];
@@ -204,7 +212,6 @@
             [self.thumbnailsToUpload removeObjectForKey:obj.path];
         }
     }
-    
 }
 
 #pragma mark - Work with image load methods
@@ -288,23 +295,26 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView heightForPhotoAtIndexPath:(NSIndexPath *)indexPath withWidth:(CGFloat)width {
     CGFloat resultHeight;
-
-    id obj = [self.dataSource modelAtIndex:indexPath.row];
-    UIImage *image = [UIImage new];
-    if ([[obj class] isSubclassOfClass:[MSPhoto class]]) {
-        MSPhoto *photo = obj;
-        if (photo.imageThumbnail.data) {
-            image = [UIImage imageWithData:photo.imageThumbnail.data];
-            resultHeight =  [self calculateHeightFromImage:image andWidth:width];
-        } else if (indexPath.section == 1) {
-            
-        } else {
-            resultHeight = self.collectionView.frame.size.width/3-1;
-        }
-    }
     
+    if ([[MSManagerDownloads sharedManager] modelsCount] > 0 && [self.collectionView numberOfSections]>1 && indexPath.section == 0) {
+        resultHeight = self.collectionView.frame.size.width/3-1;
+    } else if ([[MSManagerDownloads sharedManager] modelsCount] > 0 && [self.collectionView numberOfSections] == 1){
+        resultHeight = self.collectionView.frame.size.width/3-1;
+    } else {
+        resultHeight = [self calculateHeightForItemAtIndexPath:indexPath andWidth:width];
+    }
     return resultHeight;
     
+}
+
+- (CGFloat)calculateHeightForItemAtIndexPath:(NSIndexPath *)indexPath andWidth:(CGFloat)width {
+    MSPhoto *photo = [self.dataSource modelAtIndex:indexPath.row];
+    if (photo.imageThumbnail.data) {
+        UIImage *image = [UIImage imageWithData:photo.imageThumbnail.data];
+        return [self calculateHeightFromImage:image andWidth:width];
+    } else {
+        return  self.collectionView.frame.size.width/3-1;
+    }
 }
 
 - (CGFloat)calculateHeightFromImage:(UIImage *)image andWidth:(CGFloat)width {

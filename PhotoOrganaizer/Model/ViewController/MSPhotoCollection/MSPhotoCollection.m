@@ -339,11 +339,13 @@ static CGSize AssetGridThumbnailSize;
     [self.imageManager requestImageDataForAsset:asset options:PHImageContentModeDefault resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         NSString *path = nil;
         
-        if ([[[MSFolderPathManager sharedManager] getLastPathInArray] isEqualToString:@""]) {
-            path = [NSString stringWithFormat:@"/%@", [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
-        } else {
-            path = [NSString stringWithFormat:@"%@%@",[[MSFolderPathManager sharedManager] getLastPathInArray], [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
-        }
+//        if ([[[MSFolderPathManager sharedManager] getLastPathInArray] isEqualToString:@""]) {
+//            path = [NSString stringWithFormat:@"/%@", [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
+//        } else {
+//            path = [NSString stringWithFormat:@"%@/%@",[[MSFolderPathManager sharedManager] getLastPathInArray], [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
+//        }
+        
+        path = [NSString stringWithFormat:@"%@/%@",[[MSFolderPathManager sharedManager] getLastPathInArray], [[info valueForKey:kPHImageFileURLKey] lastPathComponent]];
         
         NSDictionary *dataDic = @{@"path" : path, @"imageData" : imageData};
         if (self.photoToUploadArray.count>0) {
