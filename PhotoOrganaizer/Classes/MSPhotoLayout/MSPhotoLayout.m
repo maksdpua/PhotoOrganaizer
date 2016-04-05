@@ -130,11 +130,26 @@
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return [self.cache objectAtIndex:indexPath.row];
-    } else {
-        return [self.secondeCache objectAtIndex:indexPath.row];
+//    if (indexPath.section == 0) {
+//        return [self.cache objectAtIndex:indexPath.row];
+//    } else {
+//        return [self.secondeCache objectAtIndex:indexPath.row];
+//    }
+//    
+//    for (UICollectionViewLayoutAttributes *attrs in layoutArr) {
+//        if ([attrs.indexPath isEqual:indexPath]) {
+//            return attrs;
+//        }
+//    }
+    NSMutableArray *allAttributes = [NSMutableArray arrayWithArray:self.cache];
+    [allAttributes addObjectsFromArray:self.secondeCache];
+    UICollectionViewLayoutAttributes *attributeAtIndexPath = [UICollectionViewLayoutAttributes new];
+    for (UICollectionViewLayoutAttributes *attribute in allAttributes) {
+        if ([attribute.indexPath isEqual:indexPath]) {
+            attributeAtIndexPath = attribute;
+        }
     }
+    return attributeAtIndexPath;
 }
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
@@ -153,78 +168,78 @@
     }
 }
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
-{
-    return YES;
-}
-
 
 #pragma mark - Interface
 
 - (void)prepareLayout {
-//    if (!self.cache.count)
-//    {
-        CGFloat columnWidth = self.contentWidth / self.numberOfColumns;
-        
-        NSMutableArray <NSNumber *> *xOffset = [NSMutableArray new];
-        
-        for (int i = 0; i < self.numberOfColumns; i++)
-        {
-            [xOffset addObject:@(i * columnWidth)];
-        }
-        NSInteger column = 0;
-        
-        NSMutableArray <NSNumber *> *yOffset = [NSMutableArray arrayWithCapacity:self.numberOfColumns];
-        for (int i = 0; i < self.numberOfColumns; i++) {
-            [yOffset addObject:[NSNumber numberWithFloat:0.f]];
-        }
-        self.cache = [NSMutableArray new];
-        self.contentHeight = 0;
+
+    CGFloat columnWidth = self.contentWidth / self.numberOfColumns;
     
-        for (int i = 0; i < [self.collectionView numberOfSections]; i++)
-        {
-            for (int j = 0; j < [self.collectionView numberOfItemsInSection:i]; j++) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
-                
-                CGFloat width = columnWidth - self.cellPadding * 2;
-                CGFloat photoHeight = [self.delegate collectionView:self.collectionView heightForPhotoAtIndexPath:indexPath withWidth:width];
-                CGFloat height = self.cellPadding + photoHeight + self.cellPadding;
-                
-                CGRect frame = CGRectMake(xOffset[column].floatValue, yOffset[column].floatValue, columnWidth, height);
-                CGRect insetFrame = CGRectInset(frame, self.cellPadding, self.cellPadding);
-                
-                MSPinterestLayoutAttributes *attributes = [MSPinterestLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-                attributes.photoHeight = photoHeight;
-                attributes.frame = insetFrame;
-                if (i == 0) {
-                    if (self.cache.count > indexPath.row) {
-                        [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
-                    } else {
-                        [self.cache addObject:attributes];
-                    }
-                } else if (i == 1) {
-                    if (self.secondeCache.count > indexPath.row) {
-                        [self.secondeCache replaceObjectAtIndex:indexPath.row withObject:attributes];
-                    } else {
-                        [self.secondeCache addObject:attributes];
-                    }
+    NSMutableArray <NSNumber *> *xOffset = [NSMutableArray new];
+    
+    for (int i = 0; i < self.numberOfColumns; i++)
+    {
+        [xOffset addObject:@(i * columnWidth)];
+    }
+    NSInteger column = 0;
+    
+    NSMutableArray <NSNumber *> *yOffset = [NSMutableArray arrayWithCapacity:self.numberOfColumns];
+    for (int i = 0; i < self.numberOfColumns; i++) {
+        [yOffset addObject:[NSNumber numberWithFloat:0.f]];
+    }
+    self.cache = [NSMutableArray new];
+    self.secondeCache = [NSMutableArray new];
+    self.contentHeight = 0;
+    
+    NSInteger sectionCount = 1;
+    if ([self.collectionView.dataSource respondsToSelector:@selector(numberOfSectionsInCollectionView:)]) {
+        sectionCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
+    }
+//    [self.collectionView numberOfSections]
+    for (NSInteger section = 0; section < sectionCount; section++)
+    {
+        NSInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:section];
+        for (NSInteger item = 0; item < itemsCount; item++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:item inSection:section];
+            
+            CGFloat width = columnWidth - self.cellPadding * 2;
+            CGFloat photoHeight = [self.delegate collectionView:self.collectionView heightForPhotoAtIndexPath:indexPath withWidth:width];
+            CGFloat height = self.cellPadding + photoHeight + self.cellPadding;
+            
+            CGRect frame = CGRectMake(xOffset[column].floatValue, yOffset[column].floatValue, columnWidth, height);
+            CGRect insetFrame = CGRectInset(frame, self.cellPadding, self.cellPadding);
+            
+            MSPinterestLayoutAttributes *attributes = [MSPinterestLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+            attributes.photoHeight = photoHeight;
+            attributes.frame = insetFrame;
+            if (section == 0) {
+                if (self.cache.count > indexPath.row) {
+                    [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
+                } else {
+                    [self.cache addObject:attributes];
                 }
-                
-                
-//                if (self.cache.count > indexPath.row) {
-//                    [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
-//                } else {
-//                    [self.cache addObject:attributes];
-//                }
-                
-                self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(frame));
-                yOffset[column] = @(yOffset[column].floatValue + height);
-                
-                column = column >= (self.numberOfColumns - 1) ? 0 : ++column;
+            } else if (section == 1) {
+                if (self.secondeCache.count > indexPath.row) {
+                    [self.secondeCache replaceObjectAtIndex:indexPath.row withObject:attributes];
+                } else {
+                    [self.secondeCache addObject:attributes];
+                }
             }
             
+            
+            //                if (self.cache.count > indexPath.row) {
+            //                    [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
+            //                } else {
+            //                    [self.cache addObject:attributes];
+            //                }
+            
+            self.contentHeight = MAX(self.contentHeight, CGRectGetMaxY(frame));
+            yOffset[column] = @(yOffset[column].floatValue + height);
+            
+            column = column >= (self.numberOfColumns - 1) ? 0 : ++column;
         }
-//    }
+        
+    }
 }
 
 
