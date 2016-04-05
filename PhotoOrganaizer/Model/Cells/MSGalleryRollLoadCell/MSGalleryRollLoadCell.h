@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "MSUploadInfo.h"
 
+
 @interface MSGalleryRollLoadCell : UICollectionViewCell
 
 - (void)setupWithModel:(MSUploadInfo *)model;
+
+- (void)updateProgress:(NSNotification *)notidication;
 
 @end

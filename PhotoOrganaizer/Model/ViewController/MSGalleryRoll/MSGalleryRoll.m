@@ -42,6 +42,7 @@
     self.imageLoadingOperationQueue = [NSOperationQueue new];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCollectionView) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
+
     self.collectionView.alwaysBounceVertical = YES;
     MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
     if (layout) {
@@ -194,7 +195,15 @@
     }
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[MSManagerDownloads sharedManager]modelsCount] > 0 && indexPath.section == 0 && indexPath.row == 0) {
+        [[NSNotificationCenter defaultCenter] addObserver:cell selector:@selector(updateProgress:) name:@"inProgress" object:nil];
+    }
+    
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     if (!([[MSManagerDownloads sharedManager] modelsCount]>0) && indexPath.section == 0) {
         [self forItemAtIndexPath:indexPath];
     } 
