@@ -74,8 +74,8 @@
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
         [self.requestManager createRequestWithPOSTmethodWithFileUpload:_currentUpload.data stringURL:urlPath(kContentURL, kUpload) dictionaryParametrsToJSON:parametrs classForFill:[MSPhoto class]
                                                                 upload:^(NSProgress *uploadProgress) {
-                                                                    
-                                                                    [[NSNotificationCenter defaultCenter]postNotificationName:@"InProgress" object:[NSNumber numberWithFloat: uploadProgress.fractionCompleted]];
+                                                                    _currentUpload.progress = uploadProgress.fractionCompleted;
+                                                                    [[NSNotificationCenter defaultCenter]postNotificationName:_currentUpload.path object:_currentUpload];
                                                                 } download:^(NSProgress *downloadProgress) {
                                                                     
                                                                 } success:^(NSURLSessionDataTask *task, id responseObject) {

@@ -196,29 +196,32 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[MSManagerDownloads sharedManager]modelsCount] > 0 && indexPath.section == 0 && indexPath.row == 0) {
-        [[NSNotificationCenter defaultCenter] addObserver:cell selector:@selector(updateProgress:) name:@"inProgress" object:nil];
+    if ([[MSManagerDownloads sharedManager]modelsCount] > 0 && indexPath.section == 0) {
+        MSUploadInfo *uploadInfo = [[MSManagerDownloads sharedManager]uploadModelAtIndex:indexPath.row];
+        [[NSNotificationCenter defaultCenter] addObserver:cell selector:@selector(updateProgress:) name:uploadInfo.path object:nil];
     }
     
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    if (!([[MSManagerDownloads sharedManager] modelsCount]>0) && indexPath.section == 0) {
+    
+    if ([[MSManagerDownloads sharedManager] modelsCount] && indexPath.section == 0) {
+        MSUploadInfo *uploadInfo = [[MSManagerDownloads sharedManager]uploadModelAtIndex:indexPath.row];
+        [[NSNotificationCenter defaultCenter] removeObserver:cell name:uploadInfo.path object:nil];
+    } else {
         [self forItemAtIndexPath:indexPath];
-    } 
+    }
 }
 
 - (void)forItemAtIndexPath:(NSIndexPath *)indexPath {
-    MSPhoto *obj = [self.dataSource modelAtIndex:indexPath.row];
-    if (self.thumbnailsToUpload.count > 0) {
+    
+        MSPhoto *obj = [self.dataSource modelAtIndex:indexPath.row];
         NSBlockOperation *ongoingDownloadOperation = [self.thumbnailsToUpload objectForKey:obj.path];
         if (ongoingDownloadOperation) {
             //Cancel operation and remove from dictionary
             [ongoingDownloadOperation cancel];
             [self.thumbnailsToUpload removeObjectForKey:obj.path];
         }
-    }
 }
 
 #pragma mark - Work with image load methods

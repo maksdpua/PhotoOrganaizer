@@ -52,6 +52,7 @@
 		2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */; };
 		2DEAC5951CB115D700A665B1 /* MSManagerDownloads.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAC5941CB115D700A665B1 /* MSManagerDownloads.m */; };
 		2DEAC5991CB11BCD00A665B1 /* MSUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAC5981CB11BCD00A665B1 /* MSUploadInfo.m */; };
+		2DF4F2CF1CB5522E00088053 /* MSBlurEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF4F2CE1CB5522E00088053 /* MSBlurEffect.m */; };
 		2DFAB3F11C74925E004FA81E /* MSFolderViewNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFAB3F01C74925E004FA81E /* MSFolderViewNavigation.m */; };
 		B2B89E49FB466602F6785C61 /* libPods-PhotoOrganaizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5CEE70C0733EA3993ADAD81 /* libPods-PhotoOrganaizer.a */; };
 		FC28B94B1C8B739900AD8FBF /* MSCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FC28B94A1C8B739900AD8FBF /* MSCache.m */; };
@@ -165,6 +166,8 @@
 		2DEAC5941CB115D700A665B1 /* MSManagerDownloads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSManagerDownloads.m; path = Classes/MSManagerDownloads/MSManagerDownloads.m; sourceTree = "<group>"; };
 		2DEAC5971CB11BCD00A665B1 /* MSUploadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSUploadInfo.h; path = MSUploadInfo/MSUploadInfo.h; sourceTree = "<group>"; };
 		2DEAC5981CB11BCD00A665B1 /* MSUploadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSUploadInfo.m; path = MSUploadInfo/MSUploadInfo.m; sourceTree = "<group>"; };
+		2DF4F2CD1CB5522E00088053 /* MSBlurEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSBlurEffect.h; path = Classes/MSBluerEffect/MSBlurEffect.h; sourceTree = "<group>"; };
+		2DF4F2CE1CB5522E00088053 /* MSBlurEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSBlurEffect.m; path = Classes/MSBluerEffect/MSBlurEffect.m; sourceTree = "<group>"; };
 		2DFAB3EF1C74925E004FA81E /* MSFolderViewNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSFolderViewNavigation.h; path = Model/NavigationController/MSFolderViewNavigation/MSFolderViewNavigation.h; sourceTree = "<group>"; };
 		2DFAB3F01C74925E004FA81E /* MSFolderViewNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSFolderViewNavigation.m; path = Model/NavigationController/MSFolderViewNavigation/MSFolderViewNavigation.m; sourceTree = "<group>"; };
 		929ADEFCCC27CDCD3BB38851 /* Pods-PhotoOrganaizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoOrganaizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PhotoOrganaizer/Pods-PhotoOrganaizer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -242,6 +245,7 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2DF4F2CC1CB551E200088053 /* MSBlurEffect */,
 				2DEAC5921CB1159100A665B1 /* MSManagerDownloads */,
 				2D095CC71CA8141C00247518 /* MSGalleryRollDataSource */,
 				2D493A0C1C98678700465986 /* MSPhotoLayout */,
@@ -682,6 +686,15 @@
 			name = MSUploadInfo;
 			sourceTree = "<group>";
 		};
+		2DF4F2CC1CB551E200088053 /* MSBlurEffect */ = {
+			isa = PBXGroup;
+			children = (
+				2DF4F2CD1CB5522E00088053 /* MSBlurEffect.h */,
+				2DF4F2CE1CB5522E00088053 /* MSBlurEffect.m */,
+			);
+			name = MSBlurEffect;
+			sourceTree = "<group>";
+		};
 		2DFAB3EE1C74922C004FA81E /* MSFolderViewNavigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +918,7 @@
 				2D906FBB1C3EFD5400DF01A4 /* PhotoOrganaizer.xcdatamodeld in Sources */,
 				2D8EED961C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.m in Sources */,
 				2D1DAB981C47FA5500C7AA19 /* MSRequestManager.m in Sources */,
+				2DF4F2CF1CB5522E00088053 /* MSBlurEffect.m in Sources */,
 				2DFAB3F11C74925E004FA81E /* MSFolderViewNavigation.m in Sources */,
 				2D18BCC51C3F0CC200F923DF /* MSValidator.m in Sources */,
 				2D906FB21C3EFD5400DF01A4 /* AppDelegate.m in Sources */,

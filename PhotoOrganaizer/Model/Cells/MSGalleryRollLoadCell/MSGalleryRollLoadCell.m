@@ -8,6 +8,8 @@
 
 #import "MSGalleryRollLoadCell.h"
 #import "UCZProgressView.h"
+#import "MSUploadInfo.h"
+#import "MSBlurEffect.h"
 
 @interface MSGalleryRollLoadCell()
 
@@ -15,7 +17,8 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 
-@property (nonatomic, weak) IBOutlet UCZProgressView *progressView;
+@property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+@property (nonatomic, weak) IBOutlet UIVisualEffectView *blurView;
 
 @end
 
@@ -23,33 +26,28 @@
 
 
 - (void)awakeFromNib {
-//    self.progressView = [[UCZProgressView alloc] initWithFrame:self.imageView.frame];
-//    self.progressView.translatesAutoresizingMaskIntoConstraints = NO;
-//    self.progressView.backgroundColor = [UIColor clearColor];
-    self.progressView.showsText = YES;
-    self.progressView.indeterminate = NO;
-    self.progressView.tintColor = [UIColor blueColor];
-    self.progressView.textColor = [UIColor redColor];
+    [super awakeFromNib];
+}
 
-//    self.progressView.tintColor = [UIColor redColor];
-//    self.progressView.radius = 5.0;
-//    self.progressView.blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-//    [self.imageView addSubview:self.progressView];
-    
-    
-//    NSDictionary *views = NSDictionaryOfVariableBindings(_progressView);
-//    [self.imageView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_progressView]-0-|" options:0 metrics:nil views:views]];
-//    [self.imageView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_progressView]-0-|" options:0 metrics:nil views:views]];
-    
+
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
 }
 
 - (void)setupWithModel:(MSUploadInfo *)model {
     self.imageView.image = [UIImage imageWithData:model.data];
+    self.progressView.progress = 0.f;
 }
 
 - (void)updateProgress:(NSNotification *)notification {
-    NSNumber *progress = notification.object;
-    [self.progressView setProgress:progress.floatValue animated:YES];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        MSUploadInfo *info = notification.object;
+        NSLog(@"%f", info.progress);
+        [self.progressView setProgress: info.progress animated:YES];
+        NSLog(@"Progress %f", self.progressView.progress);
+    });
+    
 }
 
 

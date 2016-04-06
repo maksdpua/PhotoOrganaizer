@@ -86,26 +86,45 @@
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <color key="backgroundColor" white="1" alpha="0.59998337765957444" colorSpace="calibratedWhite"/>
                                         </imageView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DYd-PM-n39" customClass="UCZProgressView">
+                                        <visualEffectView opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Pp-X1-ghZ">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dpT-du-qh3">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WU3-4X-tZn">
+                                                        <rect key="frame" x="0.0" y="24" width="50" height="2"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="2" id="uqP-aH-w8f"/>
+                                                        </constraints>
+                                                    </progressView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="WU3-4X-tZn" secondAttribute="trailing" id="0Rx-l2-qIm"/>
+                                                    <constraint firstItem="WU3-4X-tZn" firstAttribute="centerY" secondItem="dpT-du-qh3" secondAttribute="centerY" id="3K9-oS-tn6"/>
+                                                    <constraint firstItem="WU3-4X-tZn" firstAttribute="leading" secondItem="dpT-du-qh3" secondAttribute="leading" id="3PV-9A-Qs3"/>
+                                                </constraints>
+                                            </view>
+                                            <blurEffect style="light"/>
+                                        </visualEffectView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
+                                    <constraint firstItem="7Pp-X1-ghZ" firstAttribute="centerY" secondItem="GbG-3N-yVo" secondAttribute="centerY" id="0go-v8-cQh"/>
+                                    <constraint firstItem="7Pp-X1-ghZ" firstAttribute="top" secondItem="GbG-3N-yVo" secondAttribute="top" id="1Zi-J2-uJv"/>
+                                    <constraint firstItem="7Pp-X1-ghZ" firstAttribute="leading" secondItem="GbG-3N-yVo" secondAttribute="leading" id="4xT-Hg-G9M"/>
                                     <constraint firstAttribute="bottom" secondItem="9ls-R9-lJF" secondAttribute="bottom" id="L6o-kO-Onn"/>
-                                    <constraint firstItem="DYd-PM-n39" firstAttribute="leading" secondItem="GbG-3N-yVo" secondAttribute="leading" id="WR2-1r-b7q"/>
                                     <constraint firstItem="9ls-R9-lJF" firstAttribute="top" secondItem="GbG-3N-yVo" secondAttribute="top" id="X2X-tE-aw5"/>
+                                    <constraint firstAttribute="trailing" secondItem="7Pp-X1-ghZ" secondAttribute="trailing" id="f7i-Ts-kQT"/>
+                                    <constraint firstAttribute="bottom" secondItem="7Pp-X1-ghZ" secondAttribute="bottom" id="lmJ-Ik-OH4"/>
                                     <constraint firstAttribute="trailing" secondItem="9ls-R9-lJF" secondAttribute="trailing" id="n2a-55-t9B"/>
                                     <constraint firstItem="9ls-R9-lJF" firstAttribute="leading" secondItem="GbG-3N-yVo" secondAttribute="leading" id="pF0-fu-UMb"/>
-                                    <constraint firstAttribute="bottom" secondItem="DYd-PM-n39" secondAttribute="bottom" id="w7p-Vm-Sea"/>
-                                    <constraint firstItem="DYd-PM-n39" firstAttribute="top" secondItem="GbG-3N-yVo" secondAttribute="top" id="yOC-n2-LQk"/>
-                                    <constraint firstAttribute="trailing" secondItem="DYd-PM-n39" secondAttribute="trailing" id="zBf-ZK-ibX"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="blurView" destination="7Pp-X1-ghZ" id="LdC-XQ-x8f"/>
                                     <outlet property="imageView" destination="9ls-R9-lJF" id="Yf1-ME-EmU"/>
-                                    <outlet property="progressView" destination="DYd-PM-n39" id="7fv-nG-Lm5"/>
+                                    <outlet property="progressView" destination="WU3-4X-tZn" id="SlT-Ga-0GJ"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MSGalleryRollCell" id="jZz-gl-L17" customClass="MSGalleryRollCell">
