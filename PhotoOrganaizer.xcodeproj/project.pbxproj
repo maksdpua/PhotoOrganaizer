@@ -41,6 +41,7 @@
 		2D906FCB1C3EFD5400DF01A4 /* PhotoOrganaizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FCA1C3EFD5400DF01A4 /* PhotoOrganaizerTests.m */; };
 		2D906FD61C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FD51C3EFD5400DF01A4 /* PhotoOrganaizerUITests.m */; };
 		2D906FE91C3EFE4700DF01A4 /* MSMainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */; };
+		2D9312AC1CB569F7004E13D0 /* MSFolderViewerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D9312AB1CB569F7004E13D0 /* MSFolderViewerDataSource.m */; };
 		2D988E621C7D9E0600BEDAF1 /* MSPhotoAlbums.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */; };
 		2D988E661C7DA56500BEDAF1 /* MSPhotoAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E651C7DA56500BEDAF1 /* MSPhotoAlbumCell.m */; };
 		2D988E6A1C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */; };
@@ -145,6 +146,8 @@
 		2D906FD71C3EFD5400DF01A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D906FE71C3EFE4700DF01A4 /* MSMainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSMainVC.h; path = Model/ViewController/MainVC/MSMainVC.h; sourceTree = "<group>"; };
 		2D906FE81C3EFE4700DF01A4 /* MSMainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSMainVC.m; path = Model/ViewController/MainVC/MSMainVC.m; sourceTree = "<group>"; };
+		2D9312AA1CB569F7004E13D0 /* MSFolderViewerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSFolderViewerDataSource.h; path = Classes/MSFolderViewerDataSource/MSFolderViewerDataSource.h; sourceTree = "<group>"; };
+		2D9312AB1CB569F7004E13D0 /* MSFolderViewerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSFolderViewerDataSource.m; path = Classes/MSFolderViewerDataSource/MSFolderViewerDataSource.m; sourceTree = "<group>"; };
 		2D988E601C7D9E0600BEDAF1 /* MSPhotoAlbums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoAlbums.h; path = Model/ViewController/MSImagePicker/MSPhotoAlbums.h; sourceTree = "<group>"; };
 		2D988E611C7D9E0600BEDAF1 /* MSPhotoAlbums.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoAlbums.m; path = Model/ViewController/MSImagePicker/MSPhotoAlbums.m; sourceTree = "<group>"; };
 		2D988E641C7DA56500BEDAF1 /* MSPhotoAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoAlbumCell.h; path = Model/Cells/MSPhotoAlbumCell/MSPhotoAlbumCell.h; sourceTree = "<group>"; };
@@ -245,6 +248,7 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D9312A91CB569CA004E13D0 /* MSFolderViewerDataSource */,
 				2DF4F2CC1CB551E200088053 /* MSBlurEffect */,
 				2DEAC5921CB1159100A665B1 /* MSManagerDownloads */,
 				2D095CC71CA8141C00247518 /* MSGalleryRollDataSource */,
@@ -596,6 +600,15 @@
 			name = NavigationController;
 			sourceTree = "<group>";
 		};
+		2D9312A91CB569CA004E13D0 /* MSFolderViewerDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				2D9312AA1CB569F7004E13D0 /* MSFolderViewerDataSource.h */,
+				2D9312AB1CB569F7004E13D0 /* MSFolderViewerDataSource.m */,
+			);
+			name = MSFolderViewerDataSource;
+			sourceTree = "<group>";
+		};
 		2D988E5F1C7D9DC100BEDAF1 /* MSImagePicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -914,6 +927,7 @@
 				2DEAC5951CB115D700A665B1 /* MSManagerDownloads.m in Sources */,
 				2D40AEF21C6DE82600024FB3 /* MSGalleryRollCell.m in Sources */,
 				FC28B94B1C8B739900AD8FBF /* MSCache.m in Sources */,
+				2D9312AC1CB569F7004E13D0 /* MSFolderViewerDataSource.m in Sources */,
 				2D42EF811C5121F200DCDBD2 /* MSFolderViewerCell.m in Sources */,
 				2D906FBB1C3EFD5400DF01A4 /* PhotoOrganaizer.xcdatamodeld in Sources */,
 				2D8EED961C8B0933008BB5FF /* MSThumbnail+CoreDataProperties.m in Sources */,

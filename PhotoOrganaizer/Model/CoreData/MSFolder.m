@@ -31,12 +31,11 @@ static NSString *const kRoot = @"root";
             } else {
                 self = [self.class MR_createEntity];
                 self = [super loadClassWithDictionary:element InstructionDictionary:[self dictionaryInstructionManager]];
-                [self checkForBackFolderAndAddWith:self.path photoObject:nil];
+                [self checkForBackFolderAndAddWith:self.path];
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"file"]){
             if ([MSValidator isPhotoPathExtension:[element valueForKey:kName]] && ![MSPhoto MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
                 __unused MSPhoto *photo = [[MSPhoto alloc]initClassWithDictionary:element];
-//                [self checkForBackFolderAndAddWith:photo.path photoObject:photo];
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"deleted"]){
             if ([self.class MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
@@ -46,29 +45,15 @@ static NSString *const kRoot = @"root";
             }
         }
     }
-//    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     return self;
 }
 
-- (void)checkForBackFolderAndAddWith:(NSString *)path photoObject:(MSPhoto *)object {
-    NSArray *pathArray = [path componentsSeparatedByString:@"/"];
-    if (pathArray.count>2) {
-        NSMutableArray *backFolderPathArray = [NSMutableArray new];
-        [backFolderPathArray addObjectsFromArray:pathArray];
-        [backFolderPathArray removeLastObject];
-        NSString *backFolderPath = [backFolderPathArray componentsJoinedByString:@"/"];
-        if (object) {
-            [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addPhotosObject:object];
-        } else {
-            [[MSFolder MR_findFirstByAttribute:kPath withValue:backFolderPath] addFoldersObject:self];
-        }
+- (void)checkForBackFolderAndAddWith:(NSString *)path {
+    if ([self checkForBackFolderInPath:path]) {
+            [[MSFolder MR_findFirstByAttribute:kPath withValue:[self checkForBackFolderInPath:path]] addFoldersObject:self];
     } else {
-        if (object) {
-            [[MSFolder MR_findFirstByAttribute:kIdFolder withValue:kRoot] addPhotosObject:object];
-        } else {
            [[MSFolder MR_findFirstByAttribute:kIdFolder withValue:kRoot] addFoldersObject:self];
-        }
-        
     }
 }
 

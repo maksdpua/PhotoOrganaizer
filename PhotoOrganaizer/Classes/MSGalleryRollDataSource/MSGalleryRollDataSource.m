@@ -18,9 +18,7 @@
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *contentArray;
-@property (nonatomic, strong) NSMutableArray *uploadObjectsInProgressDataBase;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) NSOperationQueue *queue;
 
 @end
 
@@ -30,7 +28,6 @@
     self = [super init];
     if (self) {
         self.delegate = delegate;
-        self.uploadObjectsInProgressDataBase = [NSMutableArray new];
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
         [self setupFetchedResultsController];
     }
@@ -40,17 +37,15 @@
 #pragma mark - DataSource methods
 
 - (void)setupFetchedResultsController {
-    self.contentArray = [NSMutableArray new];
     self.fetchedResultsController = [MSPhoto MR_fetchAllSortedBy:@"clientModified" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"toFolder.path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]] groupBy:nil delegate:self];
-    [self.contentArray addObjectsFromArray:self.fetchedResultsController.fetchedObjects];
 }
 
 - (NSUInteger)countOfModels {
-    return self.contentArray.count;
+    return self.fetchedResultsController.fetchedObjects.count;
 }
 
 - (MSPhoto *)modelAtIndex:(NSInteger)index {
-    return self.contentArray[index];
+    return self.fetchedResultsController.fetchedObjects[index];
 }
 
 - (void)removeModelAtIndex:(NSIndexPath *)indexPath {

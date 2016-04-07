@@ -59,6 +59,20 @@
 }
 
 
+- (NSString *)checkForBackFolderInPath:(NSString *)path {
+    NSArray *pathArray = [path componentsSeparatedByString:@"/"];
+    if (pathArray.count>2) {
+        NSMutableArray *backFolderPathArray = [NSMutableArray new];
+        [backFolderPathArray addObjectsFromArray:pathArray];
+        [backFolderPathArray removeLastObject];
+        return [backFolderPathArray componentsJoinedByString:@"/"];
+    } else {
+        return nil;
+    }
+}
+
+
+
 
 
 @end

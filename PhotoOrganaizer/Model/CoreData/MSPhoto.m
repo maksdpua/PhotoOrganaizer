@@ -25,7 +25,6 @@
         self = obj;
     } else {
         self = [self.class MR_createEntity];
-        NSLog(@"GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
     }
     self = [super loadClassWithDictionary:dictionary InstructionDictionary:[self dictionaryInstructionManager]];
     [self checkForBackFolderAndAddWith:self.path photoObject:self];

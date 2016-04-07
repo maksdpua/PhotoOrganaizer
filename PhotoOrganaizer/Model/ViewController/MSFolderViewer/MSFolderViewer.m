@@ -15,14 +15,16 @@
 #import "MSThumbnail.h"
 #import "MSFolderPathManager.h"
 #import "MSAuth.h"
+#import "MSFolderViewerDataSource.h"
 
-@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate>
+@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate, MSFolderViewerDataSourceDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) MSCreateNewFolderView *createFolderItem;
 @property (nonatomic, strong) NSArray *contentArray;
+@property (nonatomic, strong)MSFolderViewerDataSource *dataSource;
 
 @end
 
@@ -31,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
+    self.dataSource = [[MSFolderViewerDataSource alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
 }
 
@@ -145,17 +148,17 @@
 #pragma mark - UITableViewDelegate methdods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contentArray.count;
+    return [self.dataSource countOfModels];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MSFolderViewerCell *cell = [tableView dequeueReusableCellWithIdentifier:kMSFolderViewerCell];
-    [cell setupWithModel:[self.contentArray objectAtIndex:indexPath.row]];
+    [cell setupWithModel:[self.dataSource modelAtIndex:indexPath.row]];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MSFolder *folderInfo = [_contentArray objectAtIndex:indexPath.row];
+    MSFolder *folderInfo = [self.dataSource modelAtIndex:indexPath.row];
     [[MSFolderPathManager sharedManager] addEnteredFolderPath:folderInfo.path];
     MSFolderViewer *toNextFolder = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([MSFolderViewer class])];
     [self.navigationController pushViewController:toNextFolder animated:YES];
@@ -169,6 +172,12 @@
     }
     [super viewWillDisappear:animated];
 
+}
+
+#pragma mark - NSFolderViewerDataSourceDelegate methods
+
+- (void)contentWasChanged {
+    [self.tableView reloadData];
 }
 
 

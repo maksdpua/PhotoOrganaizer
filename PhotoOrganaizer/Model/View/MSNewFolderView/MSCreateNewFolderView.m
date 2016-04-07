@@ -51,7 +51,7 @@
     }
     NSDictionary *parametrs = @{@"path" : [NSString stringWithFormat:@"%@/%@", self.folderPath, self.folderName.text]};
     
-    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] upload:^(NSProgress *uploadProgress) {
+    [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kCreateFolder] dictionaryParametrsToJSON:parametrs classForFill:nil upload:^(NSProgress *uploadProgress) {
         
     } download:^(NSProgress *downloadProgress) {
         

@@ -25,5 +25,7 @@
 
 - (NSArray *)sortPhotosInArray:(NSArray *)array andKey:(NSString *)key;
 
+- (NSString *)checkForBackFolderInPath:(NSString *)path;
+
 @end
 
