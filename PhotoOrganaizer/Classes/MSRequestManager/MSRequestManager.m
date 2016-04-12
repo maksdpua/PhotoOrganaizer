@@ -57,11 +57,20 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
 }
 
 - (void)setHTTPbodyWithDictionary {
+    NSArray *pathArray = [_urlString componentsSeparatedByString:@"/"];
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
+
     if ([_jsonDictionary valueForKey:@"format"]) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
+                                                           options:0
+                                                             error:&error];
+        NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSASCIIStringEncoding];
+        [self.urlRequest setValue:jsonString forHTTPHeaderField:kDropboxAPIarg];
+        self.sessionManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    } else if ([[pathArray lastObject] isEqualToString:@"download"]) {
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_jsonDictionary
                                                            options:0
                                                              error:&error];
@@ -114,6 +123,8 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
     } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             failureBlock(task, error);
+            NSString* errResponse = [[NSString alloc] initWithData:(NSData *)error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",errResponse);
         } else {
             successBlock(task, _class ? [self fillObjectResponseWithDictionary:responseObject] : responseObject);
         }
@@ -143,7 +154,9 @@ typedef void (^downloadProgressBlock)(NSProgress*  downloadProgress);
     [self fillMutableURLrequestWithMethod:@"POST"];
 
     [self setHTTPHeaderFieldForAuth];
-    if (![dictionary valueForKey:@"format"]) {
+    NSArray *pathArray = [_urlString componentsSeparatedByString:@"/"];
+    NSString *last = [pathArray lastObject];
+    if (![dictionary valueForKey:@"format"] && ![last isEqualToString:@"download"]) {
         [self setHTTPHeaderFieldForJSONandApp];
     }
     [self setHTTPbodyWithDictionary];

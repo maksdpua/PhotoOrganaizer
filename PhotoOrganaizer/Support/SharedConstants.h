@@ -21,6 +21,7 @@ static NSString *const KMainURL = @"https://api.dropboxapi.com/2/";
 static NSString *const kContentURL = @"https://content.dropboxapi.com/2/";
 static NSString *const kListFolder = @"files/list_folder";
 static NSString *const kCreateFolder = @"files/create_folder";
+static NSString *const kDownload = @"files/download";
 static NSString *const kUpload = @"files/upload";
 static NSString *const kGetThumbnail = @"files/get_thumbnail";
 

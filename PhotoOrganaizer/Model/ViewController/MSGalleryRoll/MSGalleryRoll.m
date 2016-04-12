@@ -19,6 +19,7 @@
 #import "MSPhotoLayout.h"
 #import "MSGalleryRollDataSource.h"
 #import "MSManagerDownloads.h"
+#import "MSSavingProcessView.h"
 
 @interface MSGalleryRoll()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate>
 
@@ -28,6 +29,7 @@
 @property (nonatomic, strong) NSMutableArray *uploadingThumbnails;
 @property (nonatomic, strong) NSMutableDictionary *thumbnailsToUpload;
 @property (nonatomic, strong) MSGalleryRollDataSource *dataSource;
+@property (nonatomic, strong) MSSavingProcessView *processView;
 
 @end
 
@@ -211,6 +213,33 @@
     } else {
         [self forItemAtIndexPath:indexPath];
     }
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UIAlertController *actSheet = [UIAlertController
+                                   alertControllerWithTitle:nil
+                                   message:nil
+                                   preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *savePhoto = [UIAlertAction
+                                  actionWithTitle:@"Save photo..."
+                                  style:UIAlertActionStyleDefault
+                                  handler:^(UIAlertAction * action) {
+                                      MSPhoto *model = [self.dataSource modelAtIndex:indexPath.row];
+                                      self.processView = [[MSSavingProcessView alloc]initOnView:self.view path:model.path];
+                                  }];
+
+    UIAlertAction *cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action) {
+                                 [actSheet removeFromParentViewController];
+                             }];
+    
+    [actSheet addAction:savePhoto];
+    [actSheet addAction:cancel];
+    
+    [self presentViewController:actSheet animated:YES completion:nil];
 }
 
 - (void)forItemAtIndexPath:(NSIndexPath *)indexPath {

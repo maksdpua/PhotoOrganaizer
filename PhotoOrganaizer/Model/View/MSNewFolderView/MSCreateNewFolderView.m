@@ -30,7 +30,7 @@
         self.frame = view.frame;
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
         self.folderPath = path;
-        self.blurView.effect = nil; // "nil" means no blur/tint/vibrancy (plain, fully-transparent view)
+        self.blurView.effect = nil;
         self.alpha = 0;
         [view addSubview:self];
         [self showWithDuration:0.25 withAlpha:1];

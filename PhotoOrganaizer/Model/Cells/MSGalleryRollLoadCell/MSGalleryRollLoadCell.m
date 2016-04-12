@@ -45,9 +45,13 @@
         MSUploadInfo *info = notification.object;
         NSLog(@"%f", info.progress);
         [self.progressView setProgress: info.progress animated:YES];
-        NSLog(@"Progress %f", self.progressView.progress);
     });
     
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.imageView.image = nil;
 }
 
 

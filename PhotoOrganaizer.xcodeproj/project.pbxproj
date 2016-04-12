@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D03385F1C7BAE1300CFF7A4 /* UIButton+Path.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D03385E1C7BAE1300CFF7A4 /* UIButton+Path.m */; };
 		2D077FFB1CB2744D00197D3F /* MSGalleryRollLoadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D077FFA1CB2744C00197D3F /* MSGalleryRollLoadCell.m */; };
 		2D095CCA1CA8144D00247518 /* MSGalleryRollDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D095CC91CA8144D00247518 /* MSGalleryRollDataSource.m */; };
 		2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCBF1C3F0B1200F923DF /* NSObject+Extension.m */; };
@@ -46,6 +45,8 @@
 		2D988E661C7DA56500BEDAF1 /* MSPhotoAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E651C7DA56500BEDAF1 /* MSPhotoAlbumCell.m */; };
 		2D988E6A1C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */; };
 		2DD1082C1C6CC18B00EB1757 /* MSGalleryRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */; };
+		2DD1B6B11CBD193B00C2EDB0 /* MSSavingProcessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1B6B01CBD193B00C2EDB0 /* MSSavingProcessView.m */; };
+		2DD1B6B31CBD1C8C00C2EDB0 /* MSSavingProcessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DD1B6B21CBD1C8C00C2EDB0 /* MSSavingProcessView.xib */; };
 		2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DDF2B061C4FEEF100330CEA /* folder-generic.png */; };
 		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
 		2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */; };
@@ -79,8 +80,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2D03385D1C7BAE1300CFF7A4 /* UIButton+Path.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+Path.h"; path = "Category/UIButton+Path/UIButton+Path.h"; sourceTree = "<group>"; };
-		2D03385E1C7BAE1300CFF7A4 /* UIButton+Path.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Path.m"; path = "Category/UIButton+Path/UIButton+Path.m"; sourceTree = "<group>"; };
 		2D077FF91CB2744C00197D3F /* MSGalleryRollLoadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGalleryRollLoadCell.h; path = Model/Cells/MSGalleryRollLoadCell/MSGalleryRollLoadCell.h; sourceTree = "<group>"; };
 		2D077FFA1CB2744C00197D3F /* MSGalleryRollLoadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGalleryRollLoadCell.m; path = Model/Cells/MSGalleryRollLoadCell/MSGalleryRollLoadCell.m; sourceTree = "<group>"; };
 		2D095CC81CA8144D00247518 /* MSGalleryRollDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGalleryRollDataSource.h; path = Classes/MSGalleryRollDataSource/MSGalleryRollDataSource.h; sourceTree = "<group>"; };
@@ -156,6 +155,9 @@
 		2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoImagePickerNavigation.m; path = Model/NavigationController/MSPhotoImagePickerNavigation/MSPhotoImagePickerNavigation.m; sourceTree = "<group>"; };
 		2DD1082A1C6CC18B00EB1757 /* MSGalleryRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGalleryRoll.h; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.h; sourceTree = "<group>"; };
 		2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGalleryRoll.m; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.m; sourceTree = "<group>"; };
+		2DD1B6AF1CBD193B00C2EDB0 /* MSSavingProcessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSavingProcessView.h; path = Model/View/MSSavingProcessView/MSSavingProcessView.h; sourceTree = "<group>"; };
+		2DD1B6B01CBD193B00C2EDB0 /* MSSavingProcessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSavingProcessView.m; path = Model/View/MSSavingProcessView/MSSavingProcessView.m; sourceTree = "<group>"; };
+		2DD1B6B21CBD1C8C00C2EDB0 /* MSSavingProcessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSavingProcessView.xib; path = Model/View/MSSavingProcessView/MSSavingProcessView.xib; sourceTree = "<group>"; };
 		2DDF2B061C4FEEF100330CEA /* folder-generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder-generic.png"; sourceTree = "<group>"; };
 		2DDF2B091C4FF12B00330CEA /* UIImage+SharedPics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+SharedPics.h"; path = "Category/UIImage+SharedPics/UIImage+SharedPics.h"; sourceTree = "<group>"; };
 		2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SharedPics.m"; path = "Category/UIImage+SharedPics/UIImage+SharedPics.m"; sourceTree = "<group>"; };
@@ -218,15 +220,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2D03385C1C7BADB500CFF7A4 /* UIButton+Path */ = {
-			isa = PBXGroup;
-			children = (
-				2D03385D1C7BAE1300CFF7A4 /* UIButton+Path.h */,
-				2D03385E1C7BAE1300CFF7A4 /* UIButton+Path.m */,
-			);
-			name = "UIButton+Path";
-			sourceTree = "<group>";
-		};
 		2D077FF81CB2740D00197D3F /* MSGalleryRollLoadCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,7 +271,6 @@
 		2D18BCBC1C3F0ABD00F923DF /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				2D03385C1C7BADB500CFF7A4 /* UIButton+Path */,
 				2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */,
 				2D18BCBD1C3F0AC400F923DF /* NSObject+Extension */,
 			);
@@ -432,6 +424,7 @@
 		2D4C1E1B1C732F450077843B /* VIew */ = {
 			isa = PBXGroup;
 			children = (
+				2DD1B6AE1CBD18E700C2EDB0 /* MSSavingProcessView */,
 				2DE89C2A1C737C5D00EE82D3 /* MSOptionsView */,
 				2D4C1E1A1C732F360077843B /* MSNewFolderView */,
 			);
@@ -645,6 +638,16 @@
 			name = MSGalleryRoll;
 			sourceTree = "<group>";
 		};
+		2DD1B6AE1CBD18E700C2EDB0 /* MSSavingProcessView */ = {
+			isa = PBXGroup;
+			children = (
+				2DD1B6AF1CBD193B00C2EDB0 /* MSSavingProcessView.h */,
+				2DD1B6B01CBD193B00C2EDB0 /* MSSavingProcessView.m */,
+				2DD1B6B21CBD1C8C00C2EDB0 /* MSSavingProcessView.xib */,
+			);
+			name = MSSavingProcessView;
+			sourceTree = "<group>";
+		};
 		2DDF2B081C4FF07000330CEA /* UIImage+SharedPics */ = {
 			isa = PBXGroup;
 			children = (
@@ -846,6 +849,7 @@
 			files = (
 				2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */,
 				2D906FC01C3EFD5400DF01A4 /* LaunchScreen.storyboard in Resources */,
+				2DD1B6B31CBD1C8C00C2EDB0 /* MSSavingProcessView.xib in Resources */,
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
 				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
 				2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */,
@@ -942,7 +946,6 @@
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				2D305AD51C726FAE00B4F018 /* MSGalleryRollNavigation.m in Sources */,
 				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
-				2D03385F1C7BAE1300CFF7A4 /* UIButton+Path.m in Sources */,
 				2D493A0F1C9867B600465986 /* MSPhotoLayout.m in Sources */,
 				2D077FFB1CB2744D00197D3F /* MSGalleryRollLoadCell.m in Sources */,
 				FCBA44B31C53932C00471F0B /* MSFolder+CoreDataProperties.m in Sources */,
@@ -964,6 +967,7 @@
 				2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
 				2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */,
+				2DD1B6B11CBD193B00C2EDB0 /* MSSavingProcessView.m in Sources */,
 				2D988E621C7D9E0600BEDAF1 /* MSPhotoAlbums.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

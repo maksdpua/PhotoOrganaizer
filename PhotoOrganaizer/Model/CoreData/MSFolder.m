@@ -31,7 +31,7 @@ static NSString *const kRoot = @"root";
             } else {
                 self = [self.class MR_createEntity];
                 self = [super loadClassWithDictionary:element InstructionDictionary:[self dictionaryInstructionManager]];
-                [self checkForBackFolderAndAddWith:self.path];
+                [self checkForBackFolderAndAddWith:[self path]];
             }
         } else if ([[element valueForKey:kDotTag] isEqualToString:@"file"]){
             if ([MSValidator isPhotoPathExtension:[element valueForKey:kName]] && ![MSPhoto MR_findFirstByAttribute:kPath withValue:[NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]]]) {
