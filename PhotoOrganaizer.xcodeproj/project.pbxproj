@@ -25,6 +25,7 @@
 		2D493A0F1C9867B600465986 /* MSPhotoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D493A0E1C9867B600465986 /* MSPhotoLayout.m */; };
 		2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1C1C732F670077843B /* MSCreateNewFolderView.xib */; };
 		2D4C1E201C7331040077843B /* MSCreateNewFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */; };
+		2D74FDAD1CBE830900457C0B /* MSSavingProcessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D74FDAC1CBE830900457C0B /* MSSavingProcessView.xib */; };
 		2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */; };
 		2D77A6EC1C9766E3008D1BDF /* MSPhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D77A6EB1C9766E3008D1BDF /* MSPhotoCollectionCell.m */; };
 		2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */; };
@@ -46,7 +47,6 @@
 		2D988E6A1C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D988E691C7DD4E700BEDAF1 /* MSPhotoImagePickerNavigation.m */; };
 		2DD1082C1C6CC18B00EB1757 /* MSGalleryRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */; };
 		2DD1B6B11CBD193B00C2EDB0 /* MSSavingProcessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD1B6B01CBD193B00C2EDB0 /* MSSavingProcessView.m */; };
-		2DD1B6B31CBD1C8C00C2EDB0 /* MSSavingProcessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DD1B6B21CBD1C8C00C2EDB0 /* MSSavingProcessView.xib */; };
 		2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DDF2B061C4FEEF100330CEA /* folder-generic.png */; };
 		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
 		2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */; };
@@ -117,6 +117,7 @@
 		2D4C1E1E1C7331040077843B /* MSCreateNewFolderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSCreateNewFolderView.h; path = Model/View/MSNewFolderView/MSCreateNewFolderView.h; sourceTree = "<group>"; };
 		2D4C1E1F1C7331040077843B /* MSCreateNewFolderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSCreateNewFolderView.m; path = Model/View/MSNewFolderView/MSCreateNewFolderView.m; sourceTree = "<group>"; };
 		2D5328C21C412973006D9B6B /* SharedConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SharedConstants.h; path = Support/SharedConstants.h; sourceTree = "<group>"; };
+		2D74FDAC1CBE830900457C0B /* MSSavingProcessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSavingProcessView.xib; path = Model/View/MSSavingProcessView/MSSavingProcessView.xib; sourceTree = "<group>"; };
 		2D77A6E61C9761F6008D1BDF /* MSPhotoCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoCollection.h; path = Model/ViewController/MSPhotoCollection/MSPhotoCollection.h; sourceTree = "<group>"; };
 		2D77A6E71C9761F6008D1BDF /* MSPhotoCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSPhotoCollection.m; path = Model/ViewController/MSPhotoCollection/MSPhotoCollection.m; sourceTree = "<group>"; };
 		2D77A6EA1C9766E3008D1BDF /* MSPhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSPhotoCollectionCell.h; path = Model/Cells/MSPhotoCollectionCell/MSPhotoCollectionCell.h; sourceTree = "<group>"; };
@@ -157,7 +158,6 @@
 		2DD1082B1C6CC18B00EB1757 /* MSGalleryRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGalleryRoll.m; path = Model/ViewController/MSGalleryRoll/MSGalleryRoll.m; sourceTree = "<group>"; };
 		2DD1B6AF1CBD193B00C2EDB0 /* MSSavingProcessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSSavingProcessView.h; path = Model/View/MSSavingProcessView/MSSavingProcessView.h; sourceTree = "<group>"; };
 		2DD1B6B01CBD193B00C2EDB0 /* MSSavingProcessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSSavingProcessView.m; path = Model/View/MSSavingProcessView/MSSavingProcessView.m; sourceTree = "<group>"; };
-		2DD1B6B21CBD1C8C00C2EDB0 /* MSSavingProcessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MSSavingProcessView.xib; path = Model/View/MSSavingProcessView/MSSavingProcessView.xib; sourceTree = "<group>"; };
 		2DDF2B061C4FEEF100330CEA /* folder-generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder-generic.png"; sourceTree = "<group>"; };
 		2DDF2B091C4FF12B00330CEA /* UIImage+SharedPics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+SharedPics.h"; path = "Category/UIImage+SharedPics/UIImage+SharedPics.h"; sourceTree = "<group>"; };
 		2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SharedPics.m"; path = "Category/UIImage+SharedPics/UIImage+SharedPics.m"; sourceTree = "<group>"; };
@@ -643,7 +643,7 @@
 			children = (
 				2DD1B6AF1CBD193B00C2EDB0 /* MSSavingProcessView.h */,
 				2DD1B6B01CBD193B00C2EDB0 /* MSSavingProcessView.m */,
-				2DD1B6B21CBD1C8C00C2EDB0 /* MSSavingProcessView.xib */,
+				2D74FDAC1CBE830900457C0B /* MSSavingProcessView.xib */,
 			);
 			name = MSSavingProcessView;
 			sourceTree = "<group>";
@@ -849,7 +849,7 @@
 			files = (
 				2DDF2B071C4FEEF100330CEA /* folder-generic.png in Resources */,
 				2D906FC01C3EFD5400DF01A4 /* LaunchScreen.storyboard in Resources */,
-				2DD1B6B31CBD1C8C00C2EDB0 /* MSSavingProcessView.xib in Resources */,
+				2D74FDAD1CBE830900457C0B /* MSSavingProcessView.xib in Resources */,
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
 				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
 				2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */,

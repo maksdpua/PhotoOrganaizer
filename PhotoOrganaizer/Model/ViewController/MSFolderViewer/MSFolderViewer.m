@@ -88,8 +88,8 @@
 }
 
 - (void)setNavigationBarAndToolBarHidden:(BOOL)isDisplay {
-    [self.navigationController setNavigationBarHidden:isDisplay animated:YES];
-    [self.navigationController setToolbarHidden:isDisplay animated:YES];
+    [self.navigationController setNavigationBarHidden:isDisplay animated:NO];
+    [self.navigationController setToolbarHidden:isDisplay animated:NO];
 }
 
 - (void)reloadDataAfterDismissCreateFolderView {

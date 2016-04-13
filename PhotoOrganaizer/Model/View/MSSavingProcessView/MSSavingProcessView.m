@@ -8,22 +8,26 @@
 
 #import "MSSavingProcessView.h"
 #import "MSRequestManager.h"
+@import Photos;
 
 @interface MSSavingProcessView()<MSRequestManagerDelegate>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
-@property (nonatomic, strong) IBOutlet UIVisualEffectView *blurView;
+//@property (nonatomic, strong) IBOutlet UIVisualEffectView *blurView;
 @property (nonatomic, strong) IBOutlet UIProgressView *progressView;
+@property (nonatomic, strong) IBOutlet UILabel *status;
 @end
 
 @implementation MSSavingProcessView
 
 - (instancetype)initOnView:(UIView *)view path:(NSString *)path {
     self = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil]firstObject];
-    if (self = [super init]) {
+    if (self) {
+        self.status.text = @"Saving...";
         self.frame = view.frame;
+//        self.blurView.frame = view.frame;
         self.requestManager = [[MSRequestManager alloc] initWithDelegate:self];
-        self.blurView.effect = nil;
+        self.effect = nil;
         self.alpha = 0;
         self.progressView.progress = 0.f;
         [view addSubview:self];
@@ -35,7 +39,7 @@
 
 - (void)showWithDuration:(CGFloat)duration withAlpha:(CGFloat)alpha {
     [UIView animateWithDuration:duration animations:^{
-        self.blurView.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        self.effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
         self.alpha = alpha;
     }];
 }
@@ -43,7 +47,7 @@
 - (void)removeView {
     [UIView animateWithDuration:0.25 animations:^{
         self.alpha = 0;
-        self.blurView.effect = nil;
+        self.effect = nil;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
         
@@ -60,13 +64,46 @@
             [self.progressView setProgress: downloadProgress.fractionCompleted animated:YES];
         });
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"success %@", responseObject);
-        [self removeFromSuperview];
+        [self.progressView setHidden:YES];
+        self.status.text = @"Sucess!";
+
+        [UIView animateWithDuration:1 animations:^{
+            self.status.alpha = 0;
+        } completion:^(BOOL finished) {
+            NSData *data = responseObject;
+            [self savingPhotoToCameraRoll:[UIImage imageWithData:data]];
+            [UIView animateWithDuration:1.0 animations:^{
+                self.alpha = 0;
+            } completion:^(BOOL success) {
+                if (success) {
+                    [self removeFromSuperview];
+                }
+            }];
+        }];
+        
+        
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"error %@", error);
         
         [self removeFromSuperview];
     }];
+}
+
+- (void)savingPhotoToCameraRoll:(UIImage *)image {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges: ^{
+        
+        PHAssetChangeRequest *changeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+        changeRequest.creationDate          = [NSDate date];
+    }
+                                      completionHandler:^(BOOL success, NSError *error) {
+                                          if (success) {
+                                              NSLog(@"successfully saved");
+                                          }
+                                          else {
+                                              NSLog(@"error saving to photos: %@", error);
+                                          }
+                                      }];
 }
 
 @end

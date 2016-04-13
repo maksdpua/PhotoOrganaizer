@@ -9,10 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "MSPhoto.h"
 
-@interface MSSavingProcessView : UIView
+@protocol MSSavingProcessDelegate;
+
+@interface MSSavingProcessView : UIVisualEffectView
+
+@property (nonatomic, weak) id <MSSavingProcessDelegate>delegate;
 
 - (instancetype)initOnView:(UIView *)view path:(NSString *)path;
 
 @end
+
+@protocol MSSavingProcessDelegate <NSObject>
+
+@optional
+
+- (void)viewIsRemovingFromSuperView;
+
+@end
+
+
 
 

@@ -21,7 +21,7 @@
 #import "MSManagerDownloads.h"
 #import "MSSavingProcessView.h"
 
-@interface MSGalleryRoll()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate>
+@interface MSGalleryRoll()<MSRequestManagerDelegate, MSGalleryRollDataSourceDelegate, MSSavingProcessDelegate>
 
 @property (nonatomic, strong) MSRequestManager *requestManager;
 @property (nonatomic, strong) NSMutableArray *contentArray;
@@ -227,6 +227,8 @@
                                   handler:^(UIAlertAction * action) {
                                       MSPhoto *model = [self.dataSource modelAtIndex:indexPath.row];
                                       self.processView = [[MSSavingProcessView alloc]initOnView:self.view path:model.path];
+                                      self.processView.delegate = self;
+                                      [self setNavigationBarAndToolBarHidden:YES];
                                   }];
 
     UIAlertAction *cancel = [UIAlertAction
@@ -240,6 +242,15 @@
     [actSheet addAction:cancel];
     
     [self presentViewController:actSheet animated:YES completion:nil];
+}
+
+- (void)viewIsRemovingFromSuperView {
+    [self setNavigationBarAndToolBarHidden:NO];
+}
+
+- (void)setNavigationBarAndToolBarHidden:(BOOL)isDisplay {
+    [self.navigationController setNavigationBarHidden:isDisplay animated:YES];
+    [self.navigationController setToolbarHidden:isDisplay animated:YES];
 }
 
 - (void)forItemAtIndexPath:(NSIndexPath *)indexPath {
