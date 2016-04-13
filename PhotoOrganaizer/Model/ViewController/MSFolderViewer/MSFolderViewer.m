@@ -17,7 +17,7 @@
 #import "MSAuth.h"
 #import "MSFolderViewerDataSource.h"
 
-@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSCreateNewFolderDelegate, MSFolderViewerDataSourceDelegate>
+@interface MSFolderViewer()<UITableViewDelegate, UITableViewDataSource, MSRequestManagerDelegate, MSFolderViewerDataSourceDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) MSRequestManager *requestManager;
@@ -87,26 +87,14 @@
     }];
 }
 
-- (void)setNavigationBarAndToolBarHidden:(BOOL)isDisplay {
-    [self.navigationController setNavigationBarHidden:isDisplay animated:NO];
-    [self.navigationController setToolbarHidden:isDisplay animated:NO];
-}
-
 - (void)reloadDataAfterDismissCreateFolderView {
-    [self setNavigationBarAndToolBarHidden:NO];
     [self requestForData];
-}
-
-- (void)returnNavigationItems {
-    [self setNavigationBarAndToolBarHidden:NO];
 }
 
 #pragma mark - Actions
 
 - (IBAction)createFolderAction:(id)sender {
-    [self setNavigationBarAndToolBarHidden:YES];
-    self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.view andPath:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-    self.createFolderItem.delegate = self;
+    self.createFolderItem = [[MSCreateNewFolderView alloc]initOnView:self.navigationController.view andPath:[[MSFolderPathManager sharedManager] getLastPathInArray]];
 }
 
 - (IBAction)actionSheet:(id)sender {

@@ -57,10 +57,7 @@
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"Success %@", responseObject);
-        if ([self.delegate respondsToSelector:@selector(reloadDataAfterDismissCreateFolderView)]) {
-            [self.delegate reloadDataAfterDismissCreateFolderView];
             [self cancelButton:nil];
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"ERROR %@", error);
         [self cancelButton:nil];
@@ -75,7 +72,6 @@
     [UIView animateWithDuration:0.25 animations:^{
         self.alpha = 0;
         self.blurView.effect = nil;
-        [self.delegate returnNavigationItems];
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
         

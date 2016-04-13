@@ -51,7 +51,6 @@
 		2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0A1C4FF12B00330CEA /* UIImage+SharedPics.m */; };
 		2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */; };
 		2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DDF2B121C501CB100330CEA /* MSAnimation.m */; };
-		2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */; };
 		2DEAC5951CB115D700A665B1 /* MSManagerDownloads.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAC5941CB115D700A665B1 /* MSManagerDownloads.m */; };
 		2DEAC5991CB11BCD00A665B1 /* MSUploadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAC5981CB11BCD00A665B1 /* MSUploadInfo.m */; };
 		2DF4F2CF1CB5522E00088053 /* MSBlurEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF4F2CE1CB5522E00088053 /* MSBlurEffect.m */; };
@@ -165,8 +164,6 @@
 		2DDF2B0E1C50095700330CEA /* MSAPIMethodsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAPIMethodsManager.m; path = Classes/MSAPIMethodsManager/MSAPIMethodsManager.m; sourceTree = "<group>"; };
 		2DDF2B111C501CB100330CEA /* MSAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAnimation.h; path = Classes/MSAnimation/MSAnimation.h; sourceTree = "<group>"; };
 		2DDF2B121C501CB100330CEA /* MSAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAnimation.m; path = Classes/MSAnimation/MSAnimation.m; sourceTree = "<group>"; };
-		2DE89C2B1C737C9900EE82D3 /* MSOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSOptionsView.h; path = Model/View/MSOptionsView/MSOptionsView.h; sourceTree = "<group>"; };
-		2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSOptionsView.m; path = Model/View/MSOptionsView/MSOptionsView.m; sourceTree = "<group>"; };
 		2DEAC5931CB115D700A665B1 /* MSManagerDownloads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSManagerDownloads.h; path = Classes/MSManagerDownloads/MSManagerDownloads.h; sourceTree = "<group>"; };
 		2DEAC5941CB115D700A665B1 /* MSManagerDownloads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSManagerDownloads.m; path = Classes/MSManagerDownloads/MSManagerDownloads.m; sourceTree = "<group>"; };
 		2DEAC5971CB11BCD00A665B1 /* MSUploadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSUploadInfo.h; path = MSUploadInfo/MSUploadInfo.h; sourceTree = "<group>"; };
@@ -425,7 +422,6 @@
 			isa = PBXGroup;
 			children = (
 				2DD1B6AE1CBD18E700C2EDB0 /* MSSavingProcessView */,
-				2DE89C2A1C737C5D00EE82D3 /* MSOptionsView */,
 				2D4C1E1A1C732F360077843B /* MSNewFolderView */,
 			);
 			name = VIew;
@@ -673,15 +669,6 @@
 				2DDF2B121C501CB100330CEA /* MSAnimation.m */,
 			);
 			name = MSAnimation;
-			sourceTree = "<group>";
-		};
-		2DE89C2A1C737C5D00EE82D3 /* MSOptionsView */ = {
-			isa = PBXGroup;
-			children = (
-				2DE89C2B1C737C9900EE82D3 /* MSOptionsView.h */,
-				2DE89C2C1C737C9900EE82D3 /* MSOptionsView.m */,
-			);
-			name = MSOptionsView;
 			sourceTree = "<group>";
 		};
 		2DEAC5921CB1159100A665B1 /* MSManagerDownloads */ = {
@@ -964,7 +951,6 @@
 				2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */,
 				2DDF2B131C501CB100330CEA /* MSAnimation.m in Sources */,
 				2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */,
-				2DE89C2D1C737C9900EE82D3 /* MSOptionsView.m in Sources */,
 				2D18BCC01C3F0B1200F923DF /* NSObject+Extension.m in Sources */,
 				2D77A6E81C9761F6008D1BDF /* MSPhotoCollection.m in Sources */,
 				2DD1B6B11CBD193B00C2EDB0 /* MSSavingProcessView.m in Sources */,

@@ -64,19 +64,22 @@
             [self.progressView setProgress: downloadProgress.fractionCompleted animated:YES];
         });
     } success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.progressView setProgress:1];
         [self.progressView setHidden:YES];
         self.status.text = @"Sucess!";
 
         [UIView animateWithDuration:1 animations:^{
             self.status.alpha = 0;
         } completion:^(BOOL finished) {
+            
             NSData *data = responseObject;
+            
             [self savingPhotoToCameraRoll:[UIImage imageWithData:data]];
-            [UIView animateWithDuration:1.0 animations:^{
+            [UIView animateWithDuration:0.5 animations:^{
                 self.alpha = 0;
             } completion:^(BOOL success) {
                 if (success) {
-                    [self removeFromSuperview];
+                    [self removeView];
                 }
             }];
         }];
