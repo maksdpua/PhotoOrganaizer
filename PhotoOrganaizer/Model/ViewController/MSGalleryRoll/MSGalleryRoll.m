@@ -33,7 +33,9 @@
 
 @end
 
-@implementation MSGalleryRoll
+@implementation MSGalleryRoll {
+    UIRefreshControl *_refreshControl;
+}
 
 #pragma mark - Lifecycle
 
@@ -42,14 +44,11 @@
     self.dataSource = [[MSGalleryRollDataSource alloc]initWithDelegate:self];
     self.uploadingThumbnails = [NSMutableArray new];
     self.imageLoadingOperationQueue = [NSOperationQueue new];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCollectionView) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
+    [self notificationsSetup];
 
     self.collectionView.alwaysBounceVertical = YES;
-    MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
-    if (layout) {
-        layout.delegate = self;
-    }
+    [self layoutSetup];
+    [self refreshControlSetup];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     [self createRequestToFolderContent];
 }
@@ -70,14 +69,32 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Setup
 
+- (void)refreshControlSetup {
+    _refreshControl = [[UIRefreshControl alloc] init];
+    _refreshControl.tintColor = [UIColor whiteColor];
+    [_refreshControl addTarget:self action:@selector(createRequestToFolderContent) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:_refreshControl];
+}
+
+- (void)layoutSetup {
+    MSPhotoLayout *layout = (MSPhotoLayout *)self.collectionView.collectionViewLayout;
+    if (layout) {
+        layout.delegate = self;
+    }
+}
+
+- (void)notificationsSetup {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadPhotosFromPhotoCollection:) name:kPhotosWasSelected object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadCollectionView) name:MANAGER_DOWNLOADS_DID_FINISH_NOTIFICATION object:nil];
+}
 
 #pragma mark - Requests and upload data
 
 //request to server
 
 - (void)createRequestToFolderContent {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     NSDictionary *parametrs = @{@"path" : [[MSFolderPathManager sharedManager] getLastPathInArray], @"recursive": @NO, @"include_media_info" : @YES, @"include_deleted" :@YES};    
     
     [self.requestManager createRequestWithPOSTmethodWithAuthAndJSONbodyAtURL:[NSString stringWithFormat:@"%@%@", KMainURL, kListFolder] dictionaryParametrsToJSON:parametrs classForFill:[MSFolder class] upload:^(NSProgress *uploadProgress) {
@@ -85,14 +102,9 @@
     } download:^(NSProgress *downloadProgress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-//        MSFolder *folder = [MSFolder MR_findFirstByAttribute:kPath withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
-//        NSArray *dataArray = [self sortPhotosInArray:folder.photos.allObjects andKey:@"clientModified"];
-//        self.contentArray = [NSMutableArray new];
-//        [self.contentArray addObjectsFromArray:dataArray];
-//        [self.collectionView reloadData];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [_refreshControl endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        [_refreshControl endRefreshing];
         NSLog(@"Error %@", error);
     }];
 }

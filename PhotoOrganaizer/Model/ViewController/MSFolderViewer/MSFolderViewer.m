@@ -28,13 +28,18 @@
 
 @end
 
-@implementation MSFolderViewer
+@implementation MSFolderViewer {
+    UIRefreshControl *_refreshControl;
+}
+
+#pragma mark - Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.requestManager = [[MSRequestManager alloc]initWithDelegate:self];
     self.dataSource = [[MSFolderViewerDataSource alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
+    [self refreshControlSetup];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -43,6 +48,15 @@
     [self tableViewBackgroundBlur];
     [self setBackgroundPhotoInTableView];
     
+}
+
+#pragma mark - Setup
+
+- (void)refreshControlSetup {
+    _refreshControl = [[UIRefreshControl alloc] init];
+    _refreshControl.tintColor = [UIColor whiteColor];
+    [_refreshControl addTarget:self action:@selector(requestForData) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:_refreshControl];
 }
 
 - (void)tableViewBackgroundBlur {
@@ -72,23 +86,18 @@
     } download:^(NSProgress *downloadProgress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
-//        MSFolder *folderContent = [MSFolder MR_findFirstByAttribute:@"path" withValue:[[MSFolderPathManager sharedManager] getLastPathInArray]];
         NSArray *fold = [MSFolder MR_findAllSortedBy:@"nameOfFolder" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"folder.path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]]];
-//        self.contentArray = [self sortPhotosInArray:folderContent.folders.allObjects andKey:@"nameOfFolder"];
         self.contentArray = fold;
                 NSArray *all = [MSFolder MR_findAll];
                 for (MSFolder *f in all) {
                     NSLog(@"Folder %@", f.nameOfFolder);
                 }
-        [self.tableView reloadData];
-
+//        [self.tableView reloadData];
+        [_refreshControl endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
+        [_refreshControl endRefreshing];
     }];
-}
-
-- (void)reloadDataAfterDismissCreateFolderView {
-    [self requestForData];
 }
 
 #pragma mark - Actions
