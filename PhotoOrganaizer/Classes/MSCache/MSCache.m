@@ -34,7 +34,8 @@ typedef void (^recieveBlock)(NSData *data);
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         MSThumbnail *thumbnail = [MSThumbnail MR_createEntity];
-        thumbnail.data = responseObject;
+        
+        thumbnail.data = [MSCache dataWithData:responseObject scaledToWidth:240];
         photo.imageThumbnail = thumbnail;
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         
@@ -44,20 +45,21 @@ typedef void (^recieveBlock)(NSData *data);
     }];
 }
 
-+ (NSData *)imageWithImage:(NSData *)data
-              scaledToSize:(CGSize)newSize {
-    UIImage *image = [UIImage imageWithData:data];
-    UIGraphicsBeginImageContext( newSize );
-
-    if (image.size.width>image.size.height) {
-        
-        [image drawInRect:CGRectMake(0,0,[@240 floatValue],[@480 floatValue])];
-    }
++ (NSData *)dataWithData:(NSData *)data
+              scaledToWidth: (CGFloat)i_width {
+    UIImage *sourceImage = [UIImage imageWithData:data];
+    float oldWidth = sourceImage.size.width;
+    float scaleFactor = i_width / oldWidth;
     
-//    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
-    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    float newHeight = sourceImage.size.height * scaleFactor;
+    float newWidth = oldWidth * scaleFactor;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return UIImageJPEGRepresentation(newImage, 1);
+    NSData *endData = UIImageJPEGRepresentation(newImage, 1);
+    return endData;
 }
 
 @end

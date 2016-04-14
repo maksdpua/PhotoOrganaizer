@@ -13,4 +13,7 @@
 
 - (void)cacheForImageWithKey:(MSPhoto *)photo completeBlock:(void(^)(NSData *responseData))complete errorBlock:(void(^)(NSError *error))fail;
 
++ (NSData *)dataWithData:(NSData *)data
+           scaledToWidth: (CGFloat)i_width;
+
 @end

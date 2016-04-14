@@ -290,7 +290,7 @@
                 [[NSOperationQueue mainQueue] addOperationWithBlock:^{
                     if (!weakLoadImageIntoCellOp.isCancelled) {
                         if (responseData) {
-                            UIImage *image = [UIImage imageWithData:responseData];
+                            UIImage *image = [UIImage imageWithData:[MSCache dataWithData:responseData scaledToWidth:240]];
                             if (image) {
                                 [MBProgressHUD hideAllHUDsForView:cell.contentView animated:YES];
                                 MSGalleryRollCell *updateCell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
