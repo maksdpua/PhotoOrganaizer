@@ -44,15 +44,20 @@ typedef void (^recieveBlock)(NSData *data);
     }];
 }
 
-+ (UIImage*)imageWithImage:(UIImage*)image
-              scaledToSize:(CGSize)newSize;
-{
++ (NSData *)imageWithImage:(NSData *)data
+              scaledToSize:(CGSize)newSize {
+    UIImage *image = [UIImage imageWithData:data];
     UIGraphicsBeginImageContext( newSize );
-    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+
+    if (image.size.width>image.size.height) {
+        
+        [image drawInRect:CGRectMake(0,0,[@240 floatValue],[@480 floatValue])];
+    }
+    
+//    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
     UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
-    return newImage;
+    return UIImageJPEGRepresentation(newImage, 1);
 }
 
 @end
