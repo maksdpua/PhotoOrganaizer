@@ -12,7 +12,7 @@
 static NSString *const kNameOfFolder = @"nameOfFolder";
 static NSString *const kIdFolder = @"idFolder";
 static NSString *const kRoot = @"root";
-
+static NSString *const kFolderTag = @"folder";
 
 @implementation MSFolder
 
@@ -23,7 +23,7 @@ static NSString *const kRoot = @"root";
 - (instancetype)initClassWithDictionary:(NSDictionary *)dictionary {
     [self checkOrCreateRootFolderEntity];
     for (NSDictionary *element in [dictionary valueForKey:@"entries"]) {
-        if ([[element valueForKey:kDotTag] isEqualToString:@"folder"]) {
+        if ([[element valueForKey:kDotTag] isEqualToString:kFolderTag]) {
             NSString *pathString = [NSString stringWithFormat:@"%@", [element valueForKey:kPathLower]];
             id obj = [self.class MR_findFirstByAttribute:kPath withValue:pathString];
             if (obj) {
@@ -65,6 +65,20 @@ static NSString *const kRoot = @"root";
         [root setValue:@"" forKey:kPath];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     }
+}
+
++ (void)createNewFolder:(id)object {
+    NSDictionary *info = object;
+    if ([self.class MR_findFirstByAttribute:@"path" withValue:[info valueForKey:kPathLower]])
+        return;
+    MSFolder *newFolder = [self.class MR_createEntity];
+    [newFolder setValue:[info valueForKey:kName] forKey:kNameOfFolder];
+    [newFolder setValue:[info valueForKey:kPathLower] forKey:kPath];
+    [newFolder setValue:kFolderTag forKey:kTag];
+    [newFolder setValue:[info valueForKey:kID] forKey:kIdFolder];
+    [newFolder checkForBackFolderAndAddWith:newFolder.path];
+    
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 @end

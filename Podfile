@@ -9,7 +9,6 @@ pod 'AFNetworking'
 pod 'MagicalRecord'
 pod 'pop'
 pod 'MBProgressHUD'
-pod 'UCZProgressView'
 
 end
 

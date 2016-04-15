@@ -53,7 +53,8 @@
 
 @interface MSPhotoLayout ()
 
-@property (nonatomic) NSMutableArray <MSPinterestLayoutAttributes *> *cache;
+//@property (nonatomic) NSMutableArray <MSPinterestLayoutAttributes *> *cache;
+@property (nonatomic) NSMutableDictionary *cellInfo;
 @property (nonatomic) NSMutableArray <MSPinterestLayoutAttributes *> *secondeCache;
 @property (nonatomic) NSMutableDictionary *dicCache;
 @property (nonatomic) CGFloat contentHeight;
@@ -87,7 +88,8 @@
 
 - (void)setup
 {
-    self.cache = [NSMutableArray new];
+//    self.cache = [NSMutableArray new];
+    self.cellInfo = [NSMutableDictionary new];
     self.secondeCache = [NSMutableArray new];
     self.numberOfColumns = 3;
     self.cellPadding = 1.f;
@@ -117,56 +119,57 @@
 - (NSArray <UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     
-    NSMutableArray *allAttributes = [NSMutableArray arrayWithArray:self.cache];
-    [allAttributes addObjectsFromArray:self.secondeCache];
-    NSMutableArray <UICollectionViewLayoutAttributes *> *layoutAttributes = [NSMutableArray new];
+//    NSMutableArray *allAttributes = [NSMutableArray arrayWithArray:self.cache];
+//    [allAttributes addObjectsFromArray:self.secondeCache];
+//    NSMutableArray <UICollectionViewLayoutAttributes *> *layoutAttributes = [NSMutableArray new];
+//    
+//    [allAttributes enumerateObjectsUsingBlock:^(MSPinterestLayoutAttributes * _Nonnull attributes, NSUInteger idx, BOOL * _Nonnull stop) {
+//        if (CGRectIntersectsRect(attributes.frame, rect)) {
+//            [layoutAttributes addObject:attributes];
+//        }
+//    }];
+//    return layoutAttributes;
     
-    [allAttributes enumerateObjectsUsingBlock:^(MSPinterestLayoutAttributes * _Nonnull attributes, NSUInteger idx, BOOL * _Nonnull stop) {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:self.cellInfo.count];
+    [self.cellInfo enumerateKeysAndObjectsUsingBlock:^(NSIndexPath*  _Nonnull key, MSPinterestLayoutAttributes*  _Nonnull obj, BOOL * _Nonnull stop) {
+        MSPinterestLayoutAttributes *attributes = self.cellInfo[key];
         if (CGRectIntersectsRect(attributes.frame, rect)) {
-            [layoutAttributes addObject:attributes];
-        }
-    }];
-    return layoutAttributes;
+            [array addObject:attributes];
+        }    }];
+
+    
+    return array;
+    
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if (indexPath.section == 0) {
-//        return [self.cache objectAtIndex:indexPath.row];
-//    } else {
-//        return [self.secondeCache objectAtIndex:indexPath.row];
-//    }
-//    
-//    for (UICollectionViewLayoutAttributes *attrs in layoutArr) {
-//        if ([attrs.indexPath isEqual:indexPath]) {
-//            return attrs;
+    return self.cellInfo[indexPath];
+//    NSMutableArray *allAttributes = [NSMutableArray arrayWithArray:self.cache];
+//    [allAttributes addObjectsFromArray:self.secondeCache];
+//    UICollectionViewLayoutAttributes *attributeAtIndexPath = [UICollectionViewLayoutAttributes new];
+//    for (UICollectionViewLayoutAttributes *attribute in allAttributes) {
+//        if ([attribute.indexPath isEqual:indexPath]) {
+//            attributeAtIndexPath = attribute;
 //        }
 //    }
-    NSMutableArray *allAttributes = [NSMutableArray arrayWithArray:self.cache];
-    [allAttributes addObjectsFromArray:self.secondeCache];
-    UICollectionViewLayoutAttributes *attributeAtIndexPath = [UICollectionViewLayoutAttributes new];
-    for (UICollectionViewLayoutAttributes *attribute in allAttributes) {
-        if ([attribute.indexPath isEqual:indexPath]) {
-            attributeAtIndexPath = attribute;
-        }
-    }
-    return attributeAtIndexPath;
+//    return attributeAtIndexPath;
 }
 
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-    if (itemIndexPath.section == 0) {
-        return [self.cache objectAtIndex:itemIndexPath.row];
-    } else {
-        return [self.secondeCache objectAtIndex:itemIndexPath.row];
-    }
-}
+//- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+//    if (itemIndexPath.section == 0) {
+//        return [self.cache objectAtIndex:itemIndexPath.row];
+//    } else {
+//        return [self.secondeCache objectAtIndex:itemIndexPath.row];
+//    }
+//}
 
-- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-    if (itemIndexPath.section == 0) {
-        return [self.cache objectAtIndex:itemIndexPath.row];
-    } else {
-        return [self.secondeCache objectAtIndex:itemIndexPath.row];
-    }
-}
+//- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+//    if (itemIndexPath.section == 0) {
+//        return [self.cache objectAtIndex:itemIndexPath.row];
+//    } else {
+//        return [self.secondeCache objectAtIndex:itemIndexPath.row];
+//    }
+//}
 
 
 #pragma mark - Interface
@@ -187,7 +190,7 @@
     for (int i = 0; i < self.numberOfColumns; i++) {
         [yOffset addObject:[NSNumber numberWithFloat:0.f]];
     }
-    self.cache = [NSMutableArray new];
+    NSMutableDictionary *cellInfo = [NSMutableDictionary new];
     self.secondeCache = [NSMutableArray new];
     self.contentHeight = 0;
     
@@ -196,6 +199,7 @@
         sectionCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
     }
 //    [self.collectionView numberOfSections]
+
     for (NSInteger section = 0; section < sectionCount; section++)
     {
         NSInteger itemsCount = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:section];
@@ -212,20 +216,20 @@
             MSPinterestLayoutAttributes *attributes = [MSPinterestLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
             attributes.photoHeight = photoHeight;
             attributes.frame = insetFrame;
-            if (section == 0) {
-                if (self.cache.count > indexPath.row) {
-                    [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
-                } else {
-                    [self.cache addObject:attributes];
-                }
-            } else if (section == 1) {
-                if (self.secondeCache.count > indexPath.row) {
-                    [self.secondeCache replaceObjectAtIndex:indexPath.row withObject:attributes];
-                } else {
-                    [self.secondeCache addObject:attributes];
-                }
-            }
-            
+//            if (section == 0) {
+//                if (self.cache.count > indexPath.row) {
+//                    [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
+//                } else {
+//                    [self.cache addObject:attributes];
+//                }
+//            } else if (section == 1) {
+//                if (self.secondeCache.count > indexPath.row) {
+//                    [self.secondeCache replaceObjectAtIndex:indexPath.row withObject:attributes];
+//                } else {
+//                    [self.secondeCache addObject:attributes];
+//                }
+//            }
+            [cellInfo setObject:attributes forKey:indexPath];
             
             //                if (self.cache.count > indexPath.row) {
             //                    [self.cache replaceObjectAtIndex:indexPath.row withObject:attributes];
@@ -238,8 +242,8 @@
             
             column = column >= (self.numberOfColumns - 1) ? 0 : ++column;
         }
-        
     }
+    self.cellInfo = cellInfo;
 }
 
 

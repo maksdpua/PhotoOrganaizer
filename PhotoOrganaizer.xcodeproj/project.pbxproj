@@ -14,6 +14,10 @@
 		2D18BCC91C3F0E9C00F923DF /* MSAPIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18BCC81C3F0E9C00F923DF /* MSAPIRequestManager.m */; };
 		2D1DAB981C47FA5500C7AA19 /* MSRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */; };
 		2D2AE90D1C57CFD100A726AD /* blackfolder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D2AE90C1C57CFD100A726AD /* blackfolder.png */; };
+		2D2C7A771CC1520900F68CBD /* Check_mark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D2C7A761CC1520900F68CBD /* Check_mark.png */; };
+		2D2C7A7B1CC15BC700F68CBD /* MSReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2C7A7A1CC15BC700F68CBD /* MSReachabilityManager.m */; };
+		2D2C7A801CC1621D00F68CBD /* MSAlertFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2C7A7F1CC1621D00F68CBD /* MSAlertFactory.m */; };
+		2D2C7A821CC16AF300F68CBD /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 2D2C7A811CC16AF300F68CBD /* search.png */; };
 		2D305AD51C726FAE00B4F018 /* MSGalleryRollNavigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D305AD41C726FAE00B4F018 /* MSGalleryRollNavigation.m */; };
 		2D330DF41C42E29A008897C7 /* MSAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D330DF31C42E29A008897C7 /* MSAuth.m */; };
 		2D38C77C1C4925C70081028D /* MSPhoto+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D38C7771C4925C70081028D /* MSPhoto+CoreDataProperties.m */; };
@@ -93,6 +97,12 @@
 		2D1DAB961C47FA5500C7AA19 /* MSRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSRequestManager.h; path = Classes/MSRequestManager/MSRequestManager.h; sourceTree = "<group>"; };
 		2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSRequestManager.m; path = Classes/MSRequestManager/MSRequestManager.m; sourceTree = "<group>"; };
 		2D2AE90C1C57CFD100A726AD /* blackfolder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackfolder.png; sourceTree = "<group>"; };
+		2D2C7A761CC1520900F68CBD /* Check_mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Check_mark.png; sourceTree = "<group>"; };
+		2D2C7A791CC15BC700F68CBD /* MSReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSReachabilityManager.h; path = Classes/MSReachabilityManager/MSReachabilityManager.h; sourceTree = "<group>"; };
+		2D2C7A7A1CC15BC700F68CBD /* MSReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSReachabilityManager.m; path = Classes/MSReachabilityManager/MSReachabilityManager.m; sourceTree = "<group>"; };
+		2D2C7A7E1CC1621D00F68CBD /* MSAlertFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAlertFactory.h; path = Factory/MSAlertFactory/MSAlertFactory.h; sourceTree = "<group>"; };
+		2D2C7A7F1CC1621D00F68CBD /* MSAlertFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSAlertFactory.m; path = Factory/MSAlertFactory/MSAlertFactory.m; sourceTree = "<group>"; };
+		2D2C7A811CC16AF300F68CBD /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		2D305AD31C726FAE00B4F018 /* MSGalleryRollNavigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSGalleryRollNavigation.h; path = Model/NavigationController/MSGalleryRollNavigation/MSGalleryRollNavigation.h; sourceTree = "<group>"; };
 		2D305AD41C726FAE00B4F018 /* MSGalleryRollNavigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MSGalleryRollNavigation.m; path = Model/NavigationController/MSGalleryRollNavigation/MSGalleryRollNavigation.m; sourceTree = "<group>"; };
 		2D330DF21C42E29A008897C7 /* MSAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MSAuth.h; path = Classes/Auth/MSAuth.h; sourceTree = "<group>"; };
@@ -238,6 +248,8 @@
 		2D18BCBA1C3F070700F923DF /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2D2C7A7D1CC161E300F68CBD /* MSAlertFactory */,
+				2D2C7A781CC15B9E00F68CBD /* MSReachabilityManager */,
 				2D9312A91CB569CA004E13D0 /* MSFolderViewerDataSource */,
 				2DF4F2CC1CB551E200088053 /* MSBlurEffect */,
 				2DEAC5921CB1159100A665B1 /* MSManagerDownloads */,
@@ -299,6 +311,24 @@
 				2D1DAB971C47FA5500C7AA19 /* MSRequestManager.m */,
 			);
 			name = MSRequestManager;
+			sourceTree = "<group>";
+		};
+		2D2C7A781CC15B9E00F68CBD /* MSReachabilityManager */ = {
+			isa = PBXGroup;
+			children = (
+				2D2C7A791CC15BC700F68CBD /* MSReachabilityManager.h */,
+				2D2C7A7A1CC15BC700F68CBD /* MSReachabilityManager.m */,
+			);
+			name = MSReachabilityManager;
+			sourceTree = "<group>";
+		};
+		2D2C7A7D1CC161E300F68CBD /* MSAlertFactory */ = {
+			isa = PBXGroup;
+			children = (
+				2D2C7A7E1CC1621D00F68CBD /* MSAlertFactory.h */,
+				2D2C7A7F1CC1621D00F68CBD /* MSAlertFactory.m */,
+			);
+			name = MSAlertFactory;
 			sourceTree = "<group>";
 		};
 		2D305AD21C726F6D00B4F018 /* MSGalleryRollNavigation */ = {
@@ -448,6 +478,8 @@
 		2D8E46D81C4578D50035B8B9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2D2C7A811CC16AF300F68CBD /* search.png */,
+				2D2C7A761CC1520900F68CBD /* Check_mark.png */,
 				2D8E46D91C45791F0035B8B9 /* glossy_emoticon_button.png */,
 				2DDF2B061C4FEEF100330CEA /* folder-generic.png */,
 				2D2AE90C1C57CFD100A726AD /* blackfolder.png */,
@@ -839,9 +871,11 @@
 				2D74FDAD1CBE830900457C0B /* MSSavingProcessView.xib in Resources */,
 				2D906FBD1C3EFD5400DF01A4 /* Assets.xcassets in Resources */,
 				2D8E46DA1C45791F0035B8B9 /* glossy_emoticon_button.png in Resources */,
+				2D2C7A821CC16AF300F68CBD /* search.png in Resources */,
 				2D906FB81C3EFD5400DF01A4 /* Main.storyboard in Resources */,
 				2D4C1E1D1C732F670077843B /* MSCreateNewFolderView.xib in Resources */,
 				2D2AE90D1C57CFD100A726AD /* blackfolder.png in Resources */,
+				2D2C7A771CC1520900F68CBD /* Check_mark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -930,6 +964,7 @@
 				2D4570741C40186400934FF5 /* LoginService.m in Sources */,
 				2DDF2B0B1C4FF12B00330CEA /* UIImage+SharedPics.m in Sources */,
 				2D095CCA1CA8144D00247518 /* MSGalleryRollDataSource.m in Sources */,
+				2D2C7A7B1CC15BC700F68CBD /* MSReachabilityManager.m in Sources */,
 				2D906FAF1C3EFD5400DF01A4 /* main.m in Sources */,
 				2D305AD51C726FAE00B4F018 /* MSGalleryRollNavigation.m in Sources */,
 				FCBA44B41C53932C00471F0B /* MSFolder.m in Sources */,
@@ -944,6 +979,7 @@
 				2DEAC5991CB11BCD00A665B1 /* MSUploadInfo.m in Sources */,
 				2D8EED971C8B0933008BB5FF /* MSThumbnail.m in Sources */,
 				2D9044571C8DD18C00A4DF1E /* MSFolderPathManager.m in Sources */,
+				2D2C7A801CC1621D00F68CBD /* MSAlertFactory.m in Sources */,
 				2DDF2B0F1C50095700330CEA /* MSAPIMethodsManager.m in Sources */,
 				2D988E661C7DA56500BEDAF1 /* MSPhotoAlbumCell.m in Sources */,
 				2DD1082C1C6CC18B00EB1757 /* MSGalleryRoll.m in Sources */,

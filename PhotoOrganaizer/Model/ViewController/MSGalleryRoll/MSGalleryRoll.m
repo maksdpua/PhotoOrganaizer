@@ -92,6 +92,22 @@
 
 #pragma mark - Requests and upload data
 
+- (void)checkForPhotos {
+//    UILabel *noContentFolders;
+//    if (![self.dataSource countOfModels] || [[MSManagerDownloads sharedManager] modelsCount]>0) {
+//        noContentFolders = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.width/4)];
+//        [noContentFolders setCenter:self.view.center];
+//        noContentFolders.textAlignment = NSTextAlignmentCenter;
+//        noContentFolders.text = @"No photos";
+//        noContentFolders.textColor = [UIColor whiteColor];
+//        noContentFolders.backgroundColor = [UIColor clearColor];
+//        [self.presentedViewController.view addSubview:noContentFolders];
+//    } else {
+//        [noContentFolders removeFromSuperview];
+//        
+//    }
+}
+
 //request to server
 
 - (void)createRequestToFolderContent {
@@ -102,6 +118,7 @@
     } download:^(NSProgress *downloadProgress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self checkForPhotos];
         [_refreshControl endRefreshing];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [_refreshControl endRefreshing];
@@ -112,8 +129,8 @@
 #pragma mark - Notifications methods
 
 - (void)uploadPhotosFromPhotoCollection:(NSNotification *)notification {
+    [self checkForPhotos];
     [self.collectionView reloadData];
-
 }
 
 - (void)reloadCollectionView {

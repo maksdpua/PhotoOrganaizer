@@ -13,9 +13,15 @@
 + (UIImage *)folderPic {
     return [UIImage imageNamed:@"folder-generic"];
 }
+
 + (UIImage *)smilePic {
     return [UIImage imageNamed:@"glossy_emoticon_button"];
 }
+
++ (UIImage *)checkmark {
+    return [UIImage imageNamed:@"Check_mark"];
+}
+
 
 + (UIImage *)imageWithImage:(UIImage *)sourceImage scaledToWidth:(float) i_width {
     

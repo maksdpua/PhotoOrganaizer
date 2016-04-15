@@ -7,7 +7,6 @@
 //
 
 #import "MSGalleryRollLoadCell.h"
-#import "UCZProgressView.h"
 #import "MSUploadInfo.h"
 #import "MSBlurEffect.h"
 

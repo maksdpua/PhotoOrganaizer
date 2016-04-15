@@ -40,10 +40,13 @@
     self.dataSource = [[MSFolderViewerDataSource alloc]initWithDelegate:self];
     self.title = [[MSFolderPathManager sharedManager] getLastPathInArray];
     [self refreshControlSetup];
+    [self notificationsSetup];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.dataSource = [[MSFolderViewerDataSource alloc] initWithDelegate:self];
+    [self.tableView reloadData];
     [self requestForData];
     [self tableViewBackgroundBlur];
     [self setBackgroundPhotoInTableView];
@@ -57,6 +60,10 @@
     _refreshControl.tintColor = [UIColor whiteColor];
     [_refreshControl addTarget:self action:@selector(requestForData) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:_refreshControl];
+}
+
+- (void)notificationsSetup {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestForData) name:kCreateFolder object:nil];
 }
 
 - (void)tableViewBackgroundBlur {
@@ -74,6 +81,21 @@
     }
 }
 
+- (void)checkForFolders {
+//    UILabel *noContentFolders;
+//    if (![self.dataSource countOfModels]) {
+//        noContentFolders = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.width/4)];
+//        [noContentFolders setCenter:self.view.center];
+//        noContentFolders.textAlignment = NSTextAlignmentCenter;
+//        noContentFolders.text = @"No folders";
+//        noContentFolders.textColor = [UIColor whiteColor];
+//        noContentFolders.backgroundColor = [UIColor clearColor];
+//        [self.view addSubview:noContentFolders];
+//    } else {
+//        [noContentFolders removeFromSuperview];
+//    }
+}
+
 - (NSData *)getRandomPhotoFromSelectedFolder {
     MSThumbnail *thumbnail = [[MSThumbnail MR_findAll] lastObject];
     return thumbnail.data;
@@ -87,13 +109,15 @@
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
         NSArray *fold = [MSFolder MR_findAllSortedBy:@"nameOfFolder" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"folder.path == %@", [[MSFolderPathManager sharedManager] getLastPathInArray]]];
+        [self checkForFolders];
         self.contentArray = fold;
                 NSArray *all = [MSFolder MR_findAll];
                 for (MSFolder *f in all) {
                     NSLog(@"Folder %@", f.nameOfFolder);
                 }
-//        [self.tableView reloadData];
+
         [_refreshControl endRefreshing];
+        [self.tableView reloadData];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@", error);
         [_refreshControl endRefreshing];

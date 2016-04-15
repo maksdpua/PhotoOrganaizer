@@ -23,7 +23,7 @@
 
 - (void)setupWithImage:(UIImage *)image {
     self.photo.image = image;
-    self.checkmark.image = [UIImage smilePic];
+    self.checkmark.image = [UIImage checkmark];
     [self.checkmark setHidden:YES];
 }
 

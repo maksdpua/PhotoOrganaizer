@@ -56,6 +56,9 @@
     } download:^(NSProgress *downloadProgress) {
         
     } success:^(NSURLSessionDataTask *task, id responseObject) {
+        [MSFolder createNewFolder:responseObject];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kCreateFolder object:nil];
+        
         NSLog(@"Success %@", responseObject);
             [self cancelButton:nil];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -74,7 +77,6 @@
         self.blurView.effect = nil;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
-        
     }];
 }
 

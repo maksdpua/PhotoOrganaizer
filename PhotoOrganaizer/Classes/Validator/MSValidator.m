@@ -12,7 +12,7 @@
 
 + (BOOL)isPhotoPathExtension:(NSString *)name {
     
-    NSArray *arrayOfPhotosFilePath = @[@"png",@"jpeg",@"jpg", @"JPG", @"PNG"];
+    NSArray *arrayOfPhotosFilePath = @[@"png",@"jpeg",@"jpg", @"JPG", @"PNG", @"tiff", @"bmp", @"gif"];
     for (NSString* photoFilePath in arrayOfPhotosFilePath) {
         if ([photoFilePath isEqualToString:[name pathExtension]]) {
             return YES;

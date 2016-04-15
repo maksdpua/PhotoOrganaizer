@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MSManagerDownloads.h"
+#import "MSReachabilityManager.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"PhotoOrganaizer"];
     [MSManagerDownloads sharedManager];
+    [MSReachabilityManager sharedManager];
     return YES;
 }
 
