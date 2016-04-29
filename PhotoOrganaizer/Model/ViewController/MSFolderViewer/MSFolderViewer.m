@@ -85,14 +85,14 @@
 //    UILabel *noContentFolders;
 //    if (![self.dataSource countOfModels]) {
 //        noContentFolders = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.width/4)];
-//        [noContentFolders setCenter:self.view.center];
+//        [noContentFolders setCenter:self.tableView.center];
 //        noContentFolders.textAlignment = NSTextAlignmentCenter;
 //        noContentFolders.text = @"No folders";
 //        noContentFolders.textColor = [UIColor whiteColor];
 //        noContentFolders.backgroundColor = [UIColor clearColor];
-//        [self.view addSubview:noContentFolders];
-//    } else {
-//        [noContentFolders removeFromSuperview];
+//        [self.tableView addSubview:noContentFolders];
+//    } else if(!noContentFolders){
+//        [noContentFolders setHidden:YES];
 //    }
 }
 
